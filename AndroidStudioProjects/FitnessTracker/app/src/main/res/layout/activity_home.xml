@@ -17,20 +17,20 @@
 
     <Button
         android:id="@+id/button2"
-        android:text="@string/history"
         style="@style/HomeButton"
+        android:text="@string/history"
         android:layout_toEndOf="@+id/button"/>
 
     <Button
         android:id="@+id/button3"
-        android:text="Button"
         style="@style/HomeButton"
+        android:text="Button"
         android:layout_below="@+id/button"/>
 
     <Button
         android:id="@+id/button4"
-        android:text="@string/settings"
         style="@style/HomeButton"
+        android:text="@string/settings"
         android:layout_toEndOf="@+id/button3"
         android:layout_below="@+id/button2"/>
 
