@@ -16,7 +16,8 @@
         <item name="android:layout_height">195dp</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- Checkboxes in NewActivity -->
+    <style name="NewActivity">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

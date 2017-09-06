@@ -15,13 +15,92 @@
         tools:layout_editor_absoluteY="16dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:id="@+id/textInputLayout">
 
         <EditText
+            android:id="@+id/exercise_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/exercise_name"
             android:textSize="24sp"/>
     </android.support.design.widget.TextInputLayout>
+
+    <!-- Options for tracking activity -->
+
+    <CheckBox
+        android:id="@+id/set_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sets"
+        android:layout_below="@+id/spinner"
+        android:layout_marginTop="250dp"
+        android:layout_alignLeft="@+id/textInputLayout"
+        style="@style/NewActivity"/>
+
+    <CheckBox
+        android:id="@+id/rep_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repetitions"
+        android:layout_alignTop="@id/set_checkbox"
+        android:layout_centerHorizontal="true"
+        style="@style/NewActivity"/>
+    <!--
+        android:layout_below="@+id/spinner"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"/> -->
+
+    <CheckBox
+        android:id="@+id/weight_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weight"
+        android:layout_alignTop="@id/set_checkbox"
+        android:layout_alignRight="@id/textInputLayout"
+        style="@style/NewActivity"/>
+
+    <CheckBox
+        android:id="@+id/time_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:layout_below="@id/set_checkbox"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@id/set_checkbox"
+        style="@style/NewActivity"/>
+
+    <CheckBox
+        android:id="@+id/speed_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speed"
+        android:layout_alignTop="@id/time_checkbox"
+        android:layout_alignLeft="@id/rep_checkbox"
+        style="@style/NewActivity"/>
+
+    <CheckBox
+        android:id="@+id/rest_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rest_time"
+        android:layout_alignLeft="@id/weight_checkbox"
+        android:layout_alignTop="@id/time_checkbox"
+        style="@style/NewActivity"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/done_create_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rest_checkbox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="@string/done" />
+
 
 </RelativeLayout>

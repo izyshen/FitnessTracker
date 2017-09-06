@@ -7,4 +7,11 @@
     <string name="start">Start</string>
     <string name="press_to_start_workout">Press to start workout!</string>
     <string name="exercise_name">Exercise name</string>
+    <string name="repetitions">Repetitions</string>
+    <string name="sets">Sets</string>
+    <string name="weight">Weight</string>
+    <string name="time">Time</string>
+    <string name="speed">Speed</string>
+    <string name="rest_time">Rest time</string>
+    <string name="done">Done</string>
 </resources>

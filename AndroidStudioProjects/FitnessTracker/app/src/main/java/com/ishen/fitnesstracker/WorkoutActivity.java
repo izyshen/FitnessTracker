@@ -3,58 +3,33 @@ package com.ishen.fitnesstracker;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+// List view: {views: listof_activities.xml}
 
 public class WorkoutActivity extends AppCompatActivity {
-
-    Button bt_start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        bt_start = (Button) findViewById(R.id.button_start);
-
-        // start button creates a new workout item
-        bt_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newActivityIntent = new Intent(WorkoutActivity.this, NewActivity.class);
-                startActivity(newActivityIntent);
-            }
-        });
-
+        populateListView();
     }
 
-}
+    private void populateListView() {
+        // Create listof Activities
+        String[] myItems = {"Blue", "Green"};
 
+        // build adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,                       // context for activity
+                R.layout.listof_activities, // Layout to use(create)
+                myItems);                   // Items to be displayed
 
-/*
-public class Home extends AppCompatActivity {
-
-    Button bt1, bt2, bt3, bt4;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-        bt1 = (Button) findViewById(R.id.button);
-        bt2 = (Button) findViewById(R.id.button2);
-        bt3 = (Button) findViewById(R.id.button3);
-        bt4 = (Button) findViewById(R.id.button4);
-
-        // takes user to workout activity
-        bt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View V) {
-                Intent workoutIntent = new Intent(Home.this, WorkoutActivity.class);
-                startActivity(workoutIntent);
-            }
-
-        });
+        // config listview
+        ListView list = (ListView) findViewById(R.id.listViewMain);
+        list.setAdapter(adapter);
     }
 }
-*/
