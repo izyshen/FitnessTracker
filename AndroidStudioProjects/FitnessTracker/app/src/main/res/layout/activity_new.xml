@@ -88,11 +88,13 @@
         android:layout_alignTop="@id/time_checkbox"
         style="@style/NewActivity"/>
 
+    <!-- stores muscle group worked out -->
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/muscle_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- adds exercise to database of activities -->
     <Button
         android:id="@+id/done_create_activity"
         android:layout_width="wrap_content"

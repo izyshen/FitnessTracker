@@ -14,4 +14,13 @@
     <string name="speed">Speed</string>
     <string name="rest_time">Rest time</string>
     <string name="done">Done</string>
+    <string-array name="type_array">
+        <item>Arms</item>
+        <item>Back</item>
+        <item>Cardio</item>
+        <item>Shoulders</item>
+        <item>Chest</item>
+        <item>Legs</item>
+        <item>Glutes</item>
+    </string-array>
 </resources>

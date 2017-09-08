@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-// List view: {views: listof_activities.xml}
+// List view: {views: strings.xml}
 
 public class WorkoutActivity extends AppCompatActivity {
 
