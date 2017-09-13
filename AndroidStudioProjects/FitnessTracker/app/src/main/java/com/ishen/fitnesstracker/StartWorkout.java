@@ -21,7 +21,7 @@ public class StartWorkout extends AppCompatActivity {
         bt_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newActivityIntent = new Intent(StartWorkout.this, NewActivity.class);
+                Intent newActivityIntent = new Intent(StartWorkout.this, AddActivity.class);
                 startActivity(newActivityIntent);
             }
         });

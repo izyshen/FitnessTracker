@@ -2,11 +2,13 @@ package com.ishen.fitnesstracker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class NewActivity extends AppCompatActivity {
+public class NewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner muscle_spinner;
 
@@ -29,5 +31,15 @@ public class NewActivity extends AppCompatActivity {
 
         // apply adapter to spinner
         muscle_spinner.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
