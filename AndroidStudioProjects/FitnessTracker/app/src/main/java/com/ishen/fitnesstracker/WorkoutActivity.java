@@ -4,20 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 // List view: {views: strings.xml}
 
 public class WorkoutActivity extends AppCompatActivity {
 
+    Button add_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        populateListView();
+        //populateListView();
     }
 
+/*
+
+    // produces a list of exercises done by the user that day
     private void populateListView() {
         // Create listof Activities
         String[] myItems = {"Blue", "Green"};
@@ -31,5 +37,6 @@ public class WorkoutActivity extends AppCompatActivity {
         // config listview
         ListView list = (ListView) findViewById(R.id.listViewMain);
         list.setAdapter(adapter);
-    }
+        */
 }
+

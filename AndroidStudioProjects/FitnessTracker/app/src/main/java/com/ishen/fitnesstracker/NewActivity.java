@@ -8,23 +8,26 @@ import android.widget.Spinner;
 
 public class NewActivity extends AppCompatActivity {
 
+    private Spinner muscle_spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new);
+
+        muscle_spinner = (Spinner) findViewById(R.id.muscle_spinner);
+        muscle_spinner.setOnItemSelectedListener(this);
+
+        // array adapter with string array and spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.muscle_type_array,
+                android.R.layout.simple_spinner_item);
+
+        // layout for list of choices
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // apply adapter to spinner
+        muscle_spinner.setAdapter(adapter);
     }
-
-    Spinner spinner = (Spinner) findViewById(R.id.muscle_spinner);
-
-    // array adapter with string array and spinner layout
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.type_array,
-            android.R.layout.simple_spinner_item);
-
-    // layout for list of choices
-     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // apply adapter to spinner
-    spinner.setAdapter(adapter);
-    
 }
