@@ -7,13 +7,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    ActivityDatabase myDB;
     Button bt_add;
+    EditText editText;
 
     private Spinner sp_type;
+
+    // textviews are hidden
+    TextView nameview = (TextView)findViewById(R.id.editName);
+    TextView editview = (TextView) findViewById(R.id.editSet);
+    TextView weightview = (TextView) findViewById(R.id.editWeight);
+
 
     // to choose existing exercise
     private static final String[]paths = {"item 1", "item 2", "item 3"};
@@ -24,6 +34,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_add);
 
         bt_add = (Button) findViewById(R.id.button_add);
+        editText = (EditText) findViewById(editText);
 
         // adds an exercise to workout activity
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +55,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_type.setAdapter(adapter);
         sp_type.setOnItemSelectedListener(this);
+
+        //
+
 
     }
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {

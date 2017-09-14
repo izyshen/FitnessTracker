@@ -7,6 +7,47 @@
     android:layout_height="match_parent"
     tools:context="com.ishen.fitnesstracker.AddActivity">
 
+    <TextView
+        android:id="@+id/editName"
+        style="@style/AddActivityEditableText"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="41dp"
+        android:text="@string/exercise_name" />
+
+    <TextView
+        android:id="@+id/editWeight"
+        style="@style/AddActivityEditableText"
+        android:layout_below="@id/editName"
+        android:layout_marginTop="10dp"
+        android:text="@string/exercise_weight" />
+
+    <TextView
+        android:id="@+id/editSet"
+        style="@style/AddActivityEditableText"
+        android:layout_below="@id/editWeight"
+        android:layout_marginTop="10dp"
+        android:text="@string/number_of_sets"/>
+
+    <TextView
+        android:id="@+id/editRep"
+        style="@style/AddActivityEditableText"
+        android:layout_below="@id/editSet"
+        android:layout_marginTop="10dp"
+        android:text="@string/number_of_reps"/>
+
+    <TextView
+        android:id="@+id/editTime"
+        style="@style/AddActivityEditableText"
+        android:layout_below="@id/editRep"
+        android:layout_marginTop="10dp"
+        android:text="@string/time"/>
+
+    <Spinner
+        android:id="@+id/exercise_type_sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editSet"/>
+
     <Button
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
@@ -15,14 +56,5 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"/>
-
-    <Spinner
-        android:id="@+id/exercise_type_sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="95dp" />
-
 
 </RelativeLayout>

@@ -15,6 +15,9 @@
     <string name="rest_time">Rest time</string>
     <string name="done">Done</string>
     <string name="add_exercise">Add Exercise</string>
+    <string name="exercise_weight">Exercise Weight</string>
+    <string name="number_of_sets">Number of Sets</string>
+    <string name="number_of_reps">Number of Reps</string>
     <string-array name="muscle_type_array">
         <item>Arms</item>
         <item>Back</item>
