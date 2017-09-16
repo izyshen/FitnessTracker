@@ -23,7 +23,7 @@ public class ActivityDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE" +
+        String createTable = "CREATE TABLE " +
                 TABLE_NAME +
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "ITEM1 TEXT)";
@@ -31,7 +31,7 @@ public class ActivityDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
     }
 

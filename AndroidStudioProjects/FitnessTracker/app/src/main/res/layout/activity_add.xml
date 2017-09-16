@@ -7,35 +7,37 @@
     android:layout_height="match_parent"
     tools:context="com.ishen.fitnesstracker.AddActivity">
 
-    <TextView
+    <!-- TODO: make name not-editable -->
+    <EditText
         android:id="@+id/editName"
         style="@style/AddActivityEditableText"
         android:layout_alignParentTop="true"
         android:layout_marginTop="41dp"
         android:text="@string/exercise_name" />
 
-    <TextView
+    <EditText
         android:id="@+id/editWeight"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editName"
         android:layout_marginTop="10dp"
         android:text="@string/exercise_weight" />
 
-    <TextView
+    <EditText
         android:id="@+id/editSet"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editWeight"
         android:layout_marginTop="10dp"
         android:text="@string/number_of_sets"/>
 
-    <TextView
+    <EditText
         android:id="@+id/editRep"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editSet"
         android:layout_marginTop="10dp"
         android:text="@string/number_of_reps"/>
 
-    <TextView
+    <!-- TODO: change time, reps and sets to spinner with numbers-->
+    <EditText
         android:id="@+id/editTime"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editRep"
@@ -56,6 +58,7 @@
         android:text="@string/add_exercise"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="40dp"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

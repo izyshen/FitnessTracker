@@ -18,6 +18,7 @@
     <string name="exercise_weight">Exercise Weight</string>
     <string name="number_of_sets">Number of Sets</string>
     <string name="number_of_reps">Number of Reps</string>
+    <string name="add">+</string>
     <string-array name="muscle_type_array">
         <item>Arms</item>
         <item>Back</item>
