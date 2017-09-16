@@ -20,13 +20,15 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private Spinner sp_type;
 
     // textviews are hidden
-    TextView nameview = (TextView)findViewById(R.id.editName);
-    TextView editview = (TextView) findViewById(R.id.editSet);
+    TextView nameview = (TextView) findViewById(R.id.editName);
+    TextView setview = (TextView) findViewById(R.id.editSet);
     TextView weightview = (TextView) findViewById(R.id.editWeight);
+    TextView repview = (TextView) findViewById(R.id.editRep);
+    TextView timeview = (TextView) findViewById(R.id.editTime);
 
 
     // to choose existing exercise
-    private static final String[]paths = {"item 1", "item 2", "item 3"};
+    private static final String[]paths = {"Bicep Curls", "Leg Press", "Planks"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_add);
 
         bt_add = (Button) findViewById(R.id.button_add);
-        editText = (EditText) findViewById(editText);
+        //editText = (EditText) findViewById(editText);
 
         // adds an exercise to workout activity
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -60,14 +62,25 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
 
     }
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
+    // displays information for activity based on spinner selection
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        // display name
+        nameview.setVisibility(View.VISIBLE);
         switch(position) {
             case 0:
+                weightview.setVisibility(View.VISIBLE);
+                setview.setVisibility(View.VISIBLE);
+                repview.setVisibility(View.VISIBLE);
                 break;
             case 1:
+                weightview.setVisibility(View.VISIBLE);
+                setview.setVisibility(View.VISIBLE);
+                repview.setVisibility(View.VISIBLE);
                 break;
             case 2:
+                setview.setVisibility(View.VISIBLE);
+                timeview.setVisibility(View.VISIBLE);
                 break;
 
         }
