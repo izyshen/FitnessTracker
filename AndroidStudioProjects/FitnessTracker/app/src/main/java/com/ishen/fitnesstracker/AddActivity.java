@@ -107,6 +107,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         repview.setVisibility(View.INVISIBLE);
                         weightview.setVisibility(View.INVISIBLE);
                         timeview.setVisibility(View.VISIBLE);
+                        bt_add.setVisibility(View.VISIBLE);
                         break;
                 }
             }

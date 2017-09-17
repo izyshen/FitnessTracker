@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/editSpeed"
         style="@style/AddActivityEditableText"
-        android:layout_below="@id/editRep"
+        android:layout_below="@id/editTime"
         android:layout_marginTop="10dp"
         android:text="@string/speed"/>
 
