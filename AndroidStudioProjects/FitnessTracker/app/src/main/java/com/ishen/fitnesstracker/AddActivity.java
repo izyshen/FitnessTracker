@@ -1,6 +1,7 @@
 package com.ishen.fitnesstracker;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ActivityDatabase myDB;
     Button bt_add;
-    EditText nameview;
+    String name;
     EditText setview;
     EditText weightview;
     EditText repview;
@@ -35,7 +39,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
-        nameview = (EditText) findViewById(R.id.editName);
+        //nameview = (EditText) findViewById(R.id.editName);
         setview = (EditText) findViewById(R.id.editSet);
         weightview = (EditText) findViewById(R.id.editWeight);
         repview = (EditText) findViewById(R.id.editRep);
@@ -47,10 +51,12 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String chosen_exercise = nameview.getText().toString();
+                //String chosen_exercise = nameview.getText().toString();
+                String chosen_exercise = name;
                 if (chosen_exercise.length() != 0) {
                     add_data(chosen_exercise);
-                    nameview.setText("");
+                    //nameview.setText("");
+
                 }
                 Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
                 startActivity(addActivityIntent);
@@ -58,7 +64,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         });
 
         // adapter for spinner of different exercise types
-        sp_type = (Spinner) findViewById(R.id.exercise_type_sp);
+        sp_type = (Spinner) findViewById(R.id.choose_exercise_sp);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(
                 AddActivity.this,
                 android.R.layout.simple_spinner_item,
@@ -71,10 +77,11 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // TODO: make properties show up in sequence, not based on relative positions
+                name = paths[i];
                 switch(i) {
-                    // properties according to selected activity from spinner
+                    // properties according to selected activity from `inner
                     case 1:
-                        nameview.setVisibility(View.VISIBLE);
+                        //nameview.setVisibility(View.VISIBLE);
                         weightview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.VISIBLE);
                         repview.setVisibility(View.VISIBLE);
@@ -83,7 +90,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         bt_add.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        nameview.setVisibility(View.VISIBLE);
+                        //nameview.setVisibility(View.VISIBLE);
                         weightview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.VISIBLE);
                         repview.setVisibility(View.VISIBLE);
@@ -92,7 +99,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         bt_add.setVisibility(View.VISIBLE);
                         break;
                     case 3:
-                        nameview.setVisibility(View.VISIBLE);
+                        //nameview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.VISIBLE);
                         timeview.setVisibility(View.VISIBLE);
                         repview.setVisibility(View.INVISIBLE);
@@ -101,7 +108,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         bt_add.setVisibility(View.VISIBLE);
                         break;
                     case 4:
-                        nameview.setVisibility(View.VISIBLE);
+                        //nameview.setVisibility(View.VISIBLE);
                         speedview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.INVISIBLE);
                         repview.setVisibility(View.INVISIBLE);

@@ -17,11 +17,13 @@ import java.util.ArrayList;
 import static com.ishen.fitnesstracker.R.id.add_activity;
 
 public class WorkoutActivity extends AppCompatActivity {
+
+    private static final String TAG = "WorkoutActivity";
     
     Button add_btn;
     ActivityDatabase myDB;
 
-    @Override
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);

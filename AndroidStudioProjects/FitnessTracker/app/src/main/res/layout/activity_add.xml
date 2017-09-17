@@ -8,17 +8,18 @@
     tools:context="com.ishen.fitnesstracker.AddActivity">
 
     <!-- TODO: make name not-editable -->
-    <EditText
-        android:id="@+id/editName"
-        style="@style/AddActivityEditableText"
+    <Spinner
+        android:id="@+id/choose_exercise_sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="41dp"
-        android:text="@string/exercise_name" />
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:id="@+id/editWeight"
         style="@style/AddActivityEditableText"
-        android:layout_below="@id/editName"
+        android:layout_below="@id/choose_exercise_sp"
         android:layout_marginTop="10dp"
         android:text="@string/exercise_weight" />
 
@@ -50,13 +51,6 @@
         android:layout_below="@id/editTime"
         android:layout_marginTop="10dp"
         android:text="@string/speed"/>
-
-    <Spinner
-        android:id="@+id/exercise_type_sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/button_add"
