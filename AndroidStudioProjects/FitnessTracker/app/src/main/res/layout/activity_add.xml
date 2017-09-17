@@ -44,6 +44,13 @@
         android:layout_marginTop="10dp"
         android:text="@string/time"/>
 
+    <EditText
+        android:id="@+id/editSpeed"
+        style="@style/AddActivityEditableText"
+        android:layout_below="@id/editRep"
+        android:layout_marginTop="10dp"
+        android:text="@string/speed"/>
+
     <Spinner
         android:id="@+id/exercise_type_sp"
         android:layout_width="match_parent"
