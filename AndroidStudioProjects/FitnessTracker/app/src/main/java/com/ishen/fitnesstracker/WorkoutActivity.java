@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -19,7 +20,7 @@ import static com.ishen.fitnesstracker.R.id.add_activity;
 public class WorkoutActivity extends AppCompatActivity {
 
     private static final String TAG = "WorkoutActivity";
-    
+
     Button add_btn;
     ActivityDatabase myDB;
 
@@ -59,9 +60,6 @@ public class WorkoutActivity extends AppCompatActivity {
                 list_view.setAdapter(listAdapter);
             }
         }
-
-
-        // listview with multiple columns
     }
 // TODO: make added exercises editable
     // TODO: change listadapter to show multiple columns
