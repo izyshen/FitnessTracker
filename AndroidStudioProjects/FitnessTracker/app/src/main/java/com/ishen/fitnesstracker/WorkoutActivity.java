@@ -13,18 +13,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.ishen.fitnesstracker.R.id.add_activity;
 
 public class WorkoutActivity extends AppCompatActivity {
 
-    private static final String TAG = "WorkoutActivity";
-
     Button add_btn;
     //ActivityDatabase myDB;
     ActivityDatabase2 myDB2;
-    ArrayList<Exercise> exerciselist;
+    ArrayList<Exercise> exercise_list;
     ListView listview;
     Exercise exercise;
 
@@ -50,11 +49,11 @@ public class WorkoutActivity extends AppCompatActivity {
         // obtain contents of DB
         //ArrayList<String> activity_list = new ArrayList<>();
         //Cursor data = myDB.getListContents();
-        exerciselist = new ArrayList<>();
+        exercise_list = new ArrayList<>();
         Cursor data = myDB2.getListContents();
 
         // populate list with data from DB
-        if (data.getCount() == 0) {
+        if ((data.getCount()) == 0) {
             Toast.makeText(WorkoutActivity.this,
                     "Please add your first exercise of the day",
                     Toast.LENGTH_LONG).show();
@@ -68,13 +67,13 @@ public class WorkoutActivity extends AppCompatActivity {
             }*/
             while(data.moveToNext()) {
                 exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
-                exerciselist.add(exercise);
+                exercise_list.add(exercise);
             }
             three_part_list_adapter adapter = new three_part_list_adapter(
                     this,
                     R.layout.activity_workout_layout,
-                    exerciselist);
-            listview = (ListView) findViewById(R.id.activity_listview);
+                    exercise_list);
+            ////listview = (ListView) findViewById(R.id.activity_listview);
             listview.setAdapter(adapter);
         }
     }

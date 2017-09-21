@@ -23,7 +23,7 @@ import static java.lang.reflect.Array.getLength;
 
 public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    ActivityDatabase myDB;
+    //ActivityDatabase myDB;
     ActivityDatabase2 myDB2;
     Button bt_add;
     String name;
@@ -33,7 +33,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private Spinner sp_type;
 
     // to choose existing exercise
-    private static final String[]paths = {"","Bicep Curls", "Leg Press", "Planks", "Treadmill"};
+    private static String[]paths = {"","Bicep Curls", "Leg Press", "Planks", "Treadmill"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 int len_categories = categories.length;
 
                 for (int i=0; i<len_categories-1; i++) {
-                    if (categories[i].getText().toString() != null) {
+                    if ((categories[i].getText().toString()).length() != 0) {
                         exercise_b1 = categories[i].getText().toString();
                         box1_pos = i;
                         break;
@@ -75,7 +75,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 }
                 box1_pos++;
                 for (int j=box1_pos; j<len_categories-1; j++) {
-                    if (categories[j].getText().toString() != null) {
+                    if ((categories[j].getText().toString()).length() != 0) {
                         exercise_b2 = categories[j].getText().toString();
                         break;
                     }
@@ -87,6 +87,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 if (chosen_exercise.length() != 0) {
                     //add_data(chosen_exercise);
                     add_data2(chosen_exercise, exercise_b1, exercise_b2);
+                    weightview.setText("");
+                    setview.setText("");
+                    timeview.setText("");
+                    speedview.setText("");
 
                 } else {
                     Toast.makeText(AddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
@@ -156,6 +160,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         });
     }
 
+    /*
     public void add_data(String chosen_exercise) {
         boolean insert_data = myDB.addData(chosen_exercise);
 
@@ -165,6 +170,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             Toast.makeText(AddActivity.this, "Oops, you messed up.", Toast.LENGTH_LONG).show();
         }
     }
+    */
 
     public void add_data2(String chosen_exercise, String box1, String box2) {
         boolean insert_data2 = myDB2.add_Data2(chosen_exercise, box1, box2);

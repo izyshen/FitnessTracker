@@ -42,8 +42,9 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
     public boolean add_Data2(String name, String box1, String box2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, box1);
-        contentValues.put(COL3, box2);
+        contentValues.put(COL2, name);
+        contentValues.put(COL3, box1);
+        contentValues.put(COL4, box2);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 

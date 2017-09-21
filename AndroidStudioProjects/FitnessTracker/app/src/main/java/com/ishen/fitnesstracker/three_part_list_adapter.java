@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by WingsOfRetribution on 2017-09-21.
  */
-
+/* duplicate:
 public class three_part_list_adapter extends ArrayAdapter<Exercise> {
 
     private LayoutInflater m_inflater;
@@ -30,7 +30,7 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
     }
 
     public View getView(int position, View convertView, ViewGroup parents) {
-        convertView = m_inflater.inflate(m_view_resource_id,null);
+        convertView = m_inflater.inflate(m_view_resource_id, null);
 
         Exercise exercise = exercises.get(position);
 
@@ -49,6 +49,44 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
                 disp_box2.setText((exercise.getDisp_box2()));
             }
         }
+        return convertView;
+    }
+}
+*/
+
+
+public class three_part_list_adapter extends ArrayAdapter<Exercise> {
+
+    private Context mycontext;
+    int my_resource;
+
+    public three_part_list_adapter(
+            Context context,
+            int resource,
+            ArrayList<Exercise> exercises) {
+        super(context, resource, exercises);
+        mycontext = context;
+        my_resource = resource;
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        String name = getItem(position).getDisp_name();
+        String box1 = getItem(position).getDisp_box1();
+        String box2 = getItem(position).getDisp_box2();
+
+        Exercise exercise = new Exercise(name, box1, box2);
+
+        LayoutInflater inflater = LayoutInflater.from(mycontext);
+        convertView = inflater.inflate(my_resource, parent, false);
+
+        TextView disp_name = (TextView) convertView.findViewById(R.id.layout_exercise_name);
+        TextView disp_box1 = (TextView) convertView.findViewById(R.id.layout_box1);
+        TextView disp_box2 = (TextView) convertView.findViewById(R.id.layout_box2);
+
+        disp_name.setText(name);
+        disp_box1.setText(box1);
+        disp_box2.setText(box2);
+
         return convertView;
     }
 }

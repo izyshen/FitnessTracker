@@ -21,21 +21,21 @@
         style="@style/AddActivityEditableText"
         android:layout_below="@id/choose_exercise_sp"
         android:layout_marginTop="10dp"
-        android:text="@string/exercise_weight" />
+        android:hint="@string/exercise_weight" />
 
     <EditText
         android:id="@+id/editSet"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editWeight"
         android:layout_marginTop="10dp"
-        android:text="@string/number_of_sets"/>
+        android:hint="@string/number_of_sets"/>
 
     <EditText
         android:id="@+id/editRep"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editSet"
         android:layout_marginTop="10dp"
-        android:text="@string/number_of_reps"/>
+        android:hint="@string/number_of_reps"/>
 
     <!-- TODO: change time, reps and sets to spinner with numbers-->
     <EditText
@@ -43,14 +43,14 @@
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editRep"
         android:layout_marginTop="10dp"
-        android:text="@string/time"/>
+        android:hint="@string/time"/>
 
     <EditText
         android:id="@+id/editSpeed"
         style="@style/AddActivityEditableText"
         android:layout_below="@id/editTime"
         android:layout_marginTop="10dp"
-        android:text="@string/speed"/>
+        android:hint="@string/speed"/>
 
     <Button
         android:id="@+id/button_add"
