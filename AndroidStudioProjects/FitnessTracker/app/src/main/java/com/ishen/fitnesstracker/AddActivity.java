@@ -14,18 +14,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import static java.lang.reflect.Array.getLength;
-
-public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddActivity extends AppCompatActivity {
 
     //ActivityDatabase myDB;
     ActivityDatabase2 myDB2;
-    Button bt_add;
+    Button bt_add, bt_view;
     String name;
     EditText setview, weightview, repview, timeview, speedview;
 
@@ -42,6 +35,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
+        bt_view = (Button) findViewById(R.id.button_view);
         setview = (EditText) findViewById(R.id.editSet);
         weightview = (EditText) findViewById(R.id.editWeight);
         repview = (EditText) findViewById(R.id.editRep);
@@ -49,6 +43,14 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         speedview = (EditText) findViewById(R.id.editSpeed);
         //myDB = new ActivityDatabase(this);
         myDB2 = new ActivityDatabase2(this);
+
+        bt_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
+                startActivity(addActivityIntent);
+            }
+        });
 
         // adds an exercise to workout activity
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -91,13 +93,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                     setview.setText("");
                     timeview.setText("");
                     speedview.setText("");
-
+                    Toast.makeText(AddActivity.this, "Exercise added", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(AddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }
-
-                Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
-                startActivity(addActivityIntent);
             }
         });
 
@@ -125,6 +124,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         timeview.setVisibility(View.INVISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
+                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         weightview.setVisibility(View.VISIBLE);
@@ -133,6 +133,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         timeview.setVisibility(View.INVISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
+                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 3:
                         setview.setVisibility(View.VISIBLE);
@@ -141,6 +142,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         weightview.setVisibility(View.VISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
+                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 4:
                         speedview.setVisibility(View.VISIBLE);
@@ -149,6 +151,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                         weightview.setVisibility(View.INVISIBLE);
                         timeview.setVisibility(View.VISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
+                        bt_view.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -180,15 +183,5 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         } else {
             Toast.makeText(AddActivity.this, "Another mistake! :( ", Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }
