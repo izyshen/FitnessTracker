@@ -5,37 +5,25 @@ package com.ishen.fitnesstracker;
  */
 
 public class Exercise {
-    public String name;
-    public String box1;
-    public String box2;
+    public String disp_name;
+    public String disp_box1;
+    public String disp_box2;
 
     public Exercise(String name, String box1, String box2) {
-        this.name = name;
-        this.box1 = box1;
-        this.box2 = box2;
+        disp_name = name;
+        disp_box1 = box1;
+        disp_box2 = box2;
     }
 
-    public String getName() {
-        return name;
+    public String getDisp_name() {
+        return disp_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDisp_box1() {
+        return disp_box1;
     }
 
-    public String getBox1() {
-        return box1;
-    }
-
-    public void setBox1(String box1) {
-        this.box1 = box1;
-    }
-
-    public String getBox2() {
-        return box2;
-    }
-
-    public void setBox2(String box2) {
-        this.box2 = box2;
+    public String getDisp_box2() {
+        return disp_box2;
     }
 }

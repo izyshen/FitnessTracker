@@ -22,16 +22,21 @@ public class WorkoutActivity extends AppCompatActivity {
     private static final String TAG = "WorkoutActivity";
 
     Button add_btn;
-    ActivityDatabase myDB;
+    //ActivityDatabase myDB;
+    ActivityDatabase2 myDB2;
+    ArrayList<Exercise> exerciselist;
+    ListView listview;
+    Exercise exercise;
 
-@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
         add_btn = (Button) findViewById(add_activity);
         ListView list_view = (ListView) findViewById(R.id.activity_listview);
-        myDB = new ActivityDatabase(this);
+        //myDB = new ActivityDatabase(this);
+        myDB2 = new ActivityDatabase2(this);
 
         // add brings you to add an existing activity
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -43,8 +48,10 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
         // obtain contents of DB
-        ArrayList<String> activity_list = new ArrayList<>();
-        Cursor data = myDB.getListContents();
+        //ArrayList<String> activity_list = new ArrayList<>();
+        //Cursor data = myDB.getListContents();
+        exerciselist = new ArrayList<>();
+        Cursor data = myDB2.getListContents();
 
         // populate list with data from DB
         if (data.getCount() == 0) {
@@ -52,13 +59,23 @@ public class WorkoutActivity extends AppCompatActivity {
                     "Please add your first exercise of the day",
                     Toast.LENGTH_LONG).show();
         } else {
-            while(data.moveToNext()) {
+            /*while(data.moveToNext()) {
                 activity_list.add(data.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_list_item_1,
                         activity_list);
                 list_view.setAdapter(listAdapter);
+            }*/
+            while(data.moveToNext()) {
+                exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
+                exerciselist.add(exercise);
             }
+            three_part_list_adapter adapter = new three_part_list_adapter(
+                    this,
+                    R.layout.activity_workout_layout,
+                    exerciselist);
+            listview = (ListView) findViewById(R.id.activity_listview);
+            listview.setAdapter(adapter);
         }
     }
 // TODO: make added exercises editable

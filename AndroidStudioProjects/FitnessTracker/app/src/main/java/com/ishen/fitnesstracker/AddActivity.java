@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -25,11 +27,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     ActivityDatabase2 myDB2;
     Button bt_add;
     String name;
-    EditText setview;
-    EditText weightview;
-    EditText repview;
-    EditText timeview;
-    EditText speedview;
+    EditText setview, weightview, repview, timeview, speedview;
+
 
     private Spinner sp_type;
 
@@ -65,7 +64,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
                 // priority of information going in boxes of multiple column listview
                 EditText[] categories = {weightview, setview, repview, timeview, speedview};
-                int len_categories = getLength(categories);
+                int len_categories = categories.length;
 
                 for (int i=0; i<len_categories-1; i++) {
                     if (categories[i].getText().toString() != null) {
@@ -89,7 +88,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                     //add_data(chosen_exercise);
                     add_data2(chosen_exercise, exercise_b1, exercise_b2);
 
+                } else {
+                    Toast.makeText(AddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }
+
                 Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
                 startActivity(addActivityIntent);
             }
@@ -158,14 +160,20 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         boolean insert_data = myDB.addData(chosen_exercise);
 
         if (insert_data == true) {
-            Toast.makeText(AddActivity.this, "Successfully added Data", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddActivity.this, "Successfully added Data.", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(AddActivity.this, "Oops, you messed up", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddActivity.this, "Oops, you messed up.", Toast.LENGTH_LONG).show();
         }
     }
 
     public void add_data2(String chosen_exercise, String box1, String box2) {
-        boolean insert_data2 = myDB2.addData(chosen_exercise, box1, box2);
+        boolean insert_data2 = myDB2.add_Data2(chosen_exercise, box1, box2);
+
+        if (insert_data2 == true) {
+            Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(AddActivity.this, "Another mistake! :( ", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

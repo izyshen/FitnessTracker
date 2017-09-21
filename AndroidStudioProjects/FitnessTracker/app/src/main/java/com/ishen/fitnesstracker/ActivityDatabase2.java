@@ -35,10 +35,11 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
     // storing values in db
-    public boolean addData(String name, String box1, String box2) {
+    public boolean add_Data2(String name, String box1, String box2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, box1);
