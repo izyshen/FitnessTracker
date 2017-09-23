@@ -33,7 +33,7 @@ public class WorkoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout);
 
         add_btn = (Button) findViewById(add_activity);
-        ListView list_view = (ListView) findViewById(R.id.activity_listview);
+        listview = (ListView) findViewById(R.id.activity_listview);
         //myDB = new ActivityDatabase(this);
         myDB2 = new ActivityDatabase2(this);
 
@@ -73,7 +73,6 @@ public class WorkoutActivity extends AppCompatActivity {
                     this,
                     R.layout.activity_workout_layout,
                     exercise_list);
-            ////listview = (ListView) findViewById(R.id.activity_listview);
             listview.setAdapter(adapter);
         }
     }

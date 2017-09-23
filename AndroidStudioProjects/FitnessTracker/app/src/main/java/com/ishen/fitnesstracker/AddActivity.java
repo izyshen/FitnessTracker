@@ -44,6 +44,7 @@ public class AddActivity extends AppCompatActivity {
         //myDB = new ActivityDatabase(this);
         myDB2 = new ActivityDatabase2(this);
 
+        // view workout activity list
         bt_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +54,7 @@ public class AddActivity extends AppCompatActivity {
         });
 
         // adds an exercise to workout activity
+        /*
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +77,7 @@ public class AddActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                //Toast.makeText(AddActivity.this, "Hello!", Toast.LENGTH_LONG).show();
                 box1_pos++;
                 for (int j=box1_pos; j<len_categories-1; j++) {
                     if ((categories[j].getText().toString()).length() != 0) {
@@ -99,10 +102,26 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         });
+        */
+
+        bt_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String chosen_exercise = name;
+                String exercise_b1 = weightview.getText().toString();
+                String exercise_b2 = setview.getText().toString();
+                add_data2(chosen_exercise, exercise_b1, exercise_b2);
+                weightview.setText("");
+                setview.setText("");
+                timeview.setText("");
+                speedview.setText("");
+                Toast.makeText(AddActivity.this, "Exercise added", Toast.LENGTH_LONG).show();
+            }
+        });
 
         // adapter for spinner of different exercise types
         sp_type = (Spinner) findViewById(R.id.choose_exercise_sp);
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 AddActivity.this,
                 android.R.layout.simple_spinner_item,
                 paths);
@@ -175,8 +194,8 @@ public class AddActivity extends AppCompatActivity {
     }
     */
 
-    public void add_data2(String chosen_exercise, String box1, String box2) {
-        boolean insert_data2 = myDB2.add_Data2(chosen_exercise, box1, box2);
+    public void add_data2(String name, String box1, String box2) {
+        boolean insert_data2 = myDB2.add_Data2(name, box1, box2);
 
         if (insert_data2 == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();

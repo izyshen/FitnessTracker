@@ -28,7 +28,7 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE " +
                 TABLE_NAME +
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NAME TEXT, BOX1 TEXT, BOX2 TEXT)";
+                " NAME TEXT," + " BOX1 TEXT," + " BOX2 TEXT);";
         db.execSQL(createTable);
     }
 
@@ -50,8 +50,7 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
 
         if (result == -1) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
