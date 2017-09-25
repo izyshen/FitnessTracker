@@ -18,7 +18,7 @@ public class AddActivity extends AppCompatActivity {
 
     //ActivityDatabase myDB;
     ActivityDatabase2 myDB2;
-    Button bt_add, bt_view;
+    Button bt_add;
     String name;
     EditText setview, weightview, repview, timeview, speedview;
 
@@ -35,7 +35,6 @@ public class AddActivity extends AppCompatActivity {
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
-        bt_view = (Button) findViewById(R.id.button_view);
         setview = (EditText) findViewById(R.id.editSet);
         weightview = (EditText) findViewById(R.id.editWeight);
         repview = (EditText) findViewById(R.id.editRep);
@@ -44,23 +43,11 @@ public class AddActivity extends AppCompatActivity {
         //myDB = new ActivityDatabase(this);
         myDB2 = new ActivityDatabase2(this);
 
-        // view workout activity list
-        bt_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
-                startActivity(addActivityIntent);
-            }
-        });
-
-        // adds an exercise to workout activity
-        /*
+        // adds an exercise and brings user back to workout activity listview
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String chosen_exercise = name;
-
-                // new
 
                 String exercise_b1 = "";
                 String exercise_b2 = "";
@@ -70,24 +57,20 @@ public class AddActivity extends AppCompatActivity {
                 EditText[] categories = {weightview, setview, repview, timeview, speedview};
                 int len_categories = categories.length;
 
-                for (int i=0; i<len_categories-1; i++) {
+                for (int i=0; i<=len_categories-1; i++) {
                     if ((categories[i].getText().toString()).length() != 0) {
                         exercise_b1 = categories[i].getText().toString();
                         box1_pos = i;
                         break;
                     }
                 }
-                //Toast.makeText(AddActivity.this, "Hello!", Toast.LENGTH_LONG).show();
                 box1_pos++;
-                for (int j=box1_pos; j<len_categories-1; j++) {
+                for (int j=box1_pos; j<=len_categories-1; j++) {
                     if ((categories[j].getText().toString()).length() != 0) {
                         exercise_b2 = categories[j].getText().toString();
                         break;
                     }
                 }
-
-
-                // new up until here
 
                 if (chosen_exercise.length() != 0) {
                     //add_data(chosen_exercise);
@@ -96,14 +79,16 @@ public class AddActivity extends AppCompatActivity {
                     setview.setText("");
                     timeview.setText("");
                     speedview.setText("");
-                    Toast.makeText(AddActivity.this, "Exercise added", Toast.LENGTH_LONG).show();
+                    repview.setText("");
                 } else {
                     Toast.makeText(AddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 }
+                Intent addActivityIntent = new Intent(AddActivity.this, WorkoutActivity.class);
+                startActivity(addActivityIntent);
             }
         });
-        */
 
+        /*
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +102,7 @@ public class AddActivity extends AppCompatActivity {
                 speedview.setText("");
             }
         });
+        */
 
         // adapter for spinner of different exercise types
         sp_type = (Spinner) findViewById(R.id.choose_exercise_sp);
@@ -142,7 +128,6 @@ public class AddActivity extends AppCompatActivity {
                         timeview.setVisibility(View.INVISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         weightview.setVisibility(View.VISIBLE);
@@ -151,7 +136,6 @@ public class AddActivity extends AppCompatActivity {
                         timeview.setVisibility(View.INVISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 3:
                         setview.setVisibility(View.VISIBLE);
@@ -160,7 +144,6 @@ public class AddActivity extends AppCompatActivity {
                         weightview.setVisibility(View.VISIBLE);
                         speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        bt_view.setVisibility(View.VISIBLE);
                         break;
                     case 4:
                         speedview.setVisibility(View.VISIBLE);
@@ -169,7 +152,6 @@ public class AddActivity extends AppCompatActivity {
                         weightview.setVisibility(View.INVISIBLE);
                         timeview.setVisibility(View.VISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        bt_view.setVisibility(View.VISIBLE);
                         break;
                 }
             }

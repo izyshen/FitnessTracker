@@ -82,6 +82,5 @@ public class WorkoutActivity extends AppCompatActivity {
         }
     }
 // TODO: make added exercises editable
-    // TODO: change listadapter to show multiple columns
 }
 
