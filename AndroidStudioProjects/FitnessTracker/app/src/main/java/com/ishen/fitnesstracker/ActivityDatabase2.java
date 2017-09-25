@@ -3,8 +3,10 @@ package com.ishen.fitnesstracker;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by WingsOfRetribution on 2017-09-17.
@@ -41,14 +43,24 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
     // storing values in db
     public boolean add_Data2(String name, String box1, String box2) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL2, name);
-        contentValues.put(COL3, box1);
-        contentValues.put(COL4, box2);
+        ContentValues content_values = new ContentValues();
+        content_values.put(COL2, name);
+        content_values.put(COL3, box1);
+        content_values.put(COL4, box2);
 
-        long result = db.insert(TABLE_NAME, null, contentValues);
+        //long result = db.insert(TABLE_NAME, null, content_values);
 
-        if (result == -1) {
+        long mid = 0;
+
+        try {
+            mid = db.insertOrThrow(TABLE_NAME, null, content_values);
+        }
+        catch(SQLException e) {
+            Log.e("Exception", "SQLException" + String.valueOf(e.getMessage()));
+            e.printStackTrace();
+        }
+
+        if (mid == -1) {
             return false;
         } else {
             return true;

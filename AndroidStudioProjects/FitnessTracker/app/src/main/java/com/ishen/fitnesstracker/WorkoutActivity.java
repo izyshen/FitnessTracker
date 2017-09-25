@@ -2,6 +2,7 @@ package com.ishen.fitnesstracker;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,12 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static com.ishen.fitnesstracker.R.id.activity_listview;
 import static com.ishen.fitnesstracker.R.id.add_activity;
 
 public class WorkoutActivity extends AppCompatActivity {
+
+    private static final String TAG = "WorkoutActivity";
 
     Button add_btn;
     //ActivityDatabase myDB;
@@ -28,7 +32,7 @@ public class WorkoutActivity extends AppCompatActivity {
     Exercise exercise;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
@@ -73,6 +77,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     this,
                     R.layout.activity_workout_layout,
                     exercise_list);
+            listview = (ListView) findViewById(R.id.activity_listview);
             listview.setAdapter(adapter);
         }
     }

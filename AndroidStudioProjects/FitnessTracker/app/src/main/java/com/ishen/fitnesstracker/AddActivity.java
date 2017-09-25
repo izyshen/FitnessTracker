@@ -115,7 +115,6 @@ public class AddActivity extends AppCompatActivity {
                 setview.setText("");
                 timeview.setText("");
                 speedview.setText("");
-                Toast.makeText(AddActivity.this, "Exercise added", Toast.LENGTH_LONG).show();
             }
         });
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by WingsOfRetribution on 2017-09-21.
  */
-/* duplicate:
+
 public class three_part_list_adapter extends ArrayAdapter<Exercise> {
 
     private LayoutInflater m_inflater;
@@ -29,15 +29,15 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
         m_view_resource_id = textViewResourceId;
     }
 
-    public View getView(int position, View convertView, ViewGroup parents) {
-        convertView = m_inflater.inflate(m_view_resource_id, null);
+    public View getView(int position, View convert_view, ViewGroup parents) {
+        convert_view = m_inflater.inflate(m_view_resource_id, null);
 
         Exercise exercise = exercises.get(position);
 
         if (exercise != null) {
-            TextView disp_name = (TextView) convertView.findViewById(R.id.layout_exercise_name);
-            TextView disp_box1 = (TextView) convertView.findViewById(R.id.layout_box1);
-            TextView disp_box2 = (TextView) convertView.findViewById(R.id.layout_box2);
+            TextView disp_name = (TextView) convert_view.findViewById(R.id.layout_exercise_name);
+            TextView disp_box1 = (TextView) convert_view.findViewById(R.id.layout_box1);
+            TextView disp_box2 = (TextView) convert_view.findViewById(R.id.layout_box2);
 
             if (disp_name != null) {
                 disp_name.setText((exercise.getDisp_name()));
@@ -49,12 +49,12 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
                 disp_box2.setText((exercise.getDisp_box2()));
             }
         }
-        return convertView;
+        return convert_view;
     }
 }
-*/
 
 
+/*
 public class three_part_list_adapter extends ArrayAdapter<Exercise> {
 
     private Context mycontext;
@@ -90,3 +90,4 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
         return convertView;
     }
 }
+*/
