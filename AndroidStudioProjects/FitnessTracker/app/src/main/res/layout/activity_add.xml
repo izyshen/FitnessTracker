@@ -13,43 +13,91 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp" />
 
-    <EditText
-        android:id="@+id/editWeight"
-        style="@style/AddActivityEditableText"
-        android:layout_below="@id/choose_exercise_sp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/exercise_weight" />
 
-    <EditText
-        android:id="@+id/editSet"
-        style="@style/AddActivityEditableText"
-        android:layout_below="@id/editWeight"
-        android:layout_marginTop="10dp"
-        android:hint="@string/number_of_sets"/>
+    <!--TODO: change time, reps and sets to spinner with numbers-->
+<!-- TODO: look at this in a relative layout-->
+    <LinearLayout
+        android:id="@+id/weight_wrapper"
+        style="@style/AddActivityWrappers"
+        android:layout_below="@id/choose_exercise_sp">
+        <EditText
+            android:id="@+id/editWeight"
+            style="@style/AddActivityEditableText"
+            android:layout_marginTop="10dp"
+            android:hint="@string/exercise_weight" />
+        <Spinner
+            android:id="@+id/weight_unit_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editWeight"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"/>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/editRep"
-        style="@style/AddActivityEditableText"
-        android:layout_below="@id/editSet"
-        android:layout_marginTop="10dp"
-        android:hint="@string/number_of_reps"/>
+    <LinearLayout
+        android:id="@+id/set_wrapper"
+        style="@style/AddActivityWrappers"
+        android:layout_below="@id/weight_wrapper">
+        <EditText
+            android:id="@+id/editSet"
+            style="@style/AddActivityEditableText"
+            android:layout_marginTop="10dp"
+            android:hint="@string/number_of_sets" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rep_wrapper"
+        style="@style/AddActivityWrappers"
+        android:layout_below="@id/set_wrapper">
+        <EditText
+            android:id="@+id/editRep"
+            style="@style/AddActivityEditableText"
+            android:layout_marginTop="10dp"
+            android:hint="@string/number_of_reps"/>
+    </LinearLayout>
 
     <!-- TODO: change time, reps and sets to spinner with numbers-->
-    <EditText
-        android:id="@+id/editTime"
-        style="@style/AddActivityEditableText"
-        android:layout_below="@id/editRep"
-        android:layout_marginTop="10dp"
-        android:hint="@string/time"/>
 
-    <EditText
-        android:id="@+id/editSpeed"
-        style="@style/AddActivityEditableText"
-        android:layout_below="@id/editTime"
-        android:layout_marginTop="10dp"
-        android:hint="@string/speed"/>
+    <LinearLayout
+        android:id="@+id/time_wrapper"
+        style="@style/AddActivityWrappers"
+        android:layout_below="@id/rep_wrapper">
+        <EditText
+            android:id="@+id/editTime"
+            style="@style/AddActivityEditableText"
+            android:layout_marginTop="10dp"
+            android:hint="@string/time" />
+        <Spinner
+            android:id="@+id/time_unit_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editTime"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/speed_wrapper"
+        style="@style/AddActivityWrappers"
+        android:layout_below="@id/time_wrapper">
+        <EditText
+            android:id="@+id/editSpeed"
+            style="@style/AddActivityEditableText"
+            android:layout_marginTop="10dp"
+            android:hint="@string/speed" />
+        <Spinner
+            android:id="@+id/speed_unit_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editSpeed"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_add"
