@@ -144,6 +144,7 @@ public class AddActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_type.setAdapter(adapter);
+        sp_type.setPrompt("Exercise");
         //sp_type.setOnItemSelectedListener(this);
         sp_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

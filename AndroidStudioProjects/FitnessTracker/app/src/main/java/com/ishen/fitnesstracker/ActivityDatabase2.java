@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class ActivityDatabase2 extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "activity_lst.db";
+    public static final String DATABASE_NAME = "daily_activity.db";
     public static final String TABLE_NAME = "activity_data";
     public static final String COL1 = "ID";
     public static final String COL2 = "NAME";
