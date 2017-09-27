@@ -24,11 +24,19 @@ public class AddActivity extends AppCompatActivity {
     Spinner weight_sp, time_sp, speed_sp, sp_type;
 
     // to choose existing exercise
+    //TODO: make custom activities that can be added to list
+    // TODO: choose how many items are displayed on screen; scrollable
     private static String[]info_priority = {"","Bicep Curls", "Leg Press", "Planks", "Treadmill"};
+
+
     // choose units
     String[] weight_units = {"lbs", "kg"};
     String[] speed_units = {"mph", "kph"};
     String[] time_units = {"hrs", "mins", "secs"};
+
+    String chosen_weight_unit;
+    String chosen_speed_unit;
+    String chosen_time_unit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +63,8 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String chosen_exercise = name;
 
-                String exercise_b1 = "";
-                String exercise_b2 = "";
+                StringBuilder exercise_b1 = new StringBuilder();
+                StringBuilder exercise_b2 = new StringBuilder();
                 int box1_pos = 0;
 
                 // priority of information going in boxes of multiple column listview
@@ -65,7 +73,14 @@ public class AddActivity extends AppCompatActivity {
 
                 for (int i = 0; i <= len_categories - 1; i++) {
                     if ((categories[i].getText().toString()).length() != 0) {
-                        exercise_b1 = categories[i].getText().toString();
+                        exercise_b1.append(categories[i].getText().toString());
+                        if (categories[i] == weightview) {
+                            exercise_b1.append(chosen_weight_unit);
+                        } else if (categories[i] == timeview) {
+                            exercise_b1.append(chosen_time_unit);
+                        } else if (categories[i] == speedview) {
+                            exercise_b1.append(chosen_speed_unit);
+                        }
                         box1_pos = i;
                         break;
                     }
@@ -73,14 +88,21 @@ public class AddActivity extends AppCompatActivity {
                 box1_pos++;
                 for (int j = box1_pos; j <= len_categories - 1; j++) {
                     if ((categories[j].getText().toString()).length() != 0) {
-                        exercise_b2 = categories[j].getText().toString();
+                        exercise_b2.append(categories[j].getText().toString());
+                        if (categories[j] == weightview) {
+                            exercise_b2.append(chosen_weight_unit);
+                        } else if (categories[j] == timeview) {
+                            exercise_b2.append(chosen_time_unit);
+                        } else if (categories[j] == speedview) {
+                            exercise_b2.append(chosen_speed_unit);
+                        }
                         break;
                     }
                 }
 
                 if (chosen_exercise.length() != 0) {
                     //add_data(chosen_exercise);
-                    add_data2(chosen_exercise, exercise_b1, exercise_b2);
+                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString());
                     weightview.setText("");
                     setview.setText("");
                     timeview.setText("");
@@ -178,11 +200,47 @@ public class AddActivity extends AppCompatActivity {
         weight_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weight_sp.setAdapter(weight_adapter);
 
+        weight_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                chosen_weight_unit = weight_units[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         speed_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         speed_sp.setAdapter(speed_adapter);
 
+        speed_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                chosen_speed_unit = speed_units[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         time_sp.setAdapter(time_adapter);
+
+        time_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                chosen_time_unit = time_units[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     /*
