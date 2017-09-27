@@ -126,30 +126,45 @@ public class AddActivity extends AppCompatActivity {
                         weightview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.VISIBLE);
                         repview.setVisibility(View.VISIBLE);
+                        timeview.setVisibility(View.INVISIBLE);
+                        speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
                         weight_sp.setVisibility(View.VISIBLE);
+                        time_sp.setVisibility(View.INVISIBLE);
+                        speed_sp.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
                         weightview.setVisibility(View.VISIBLE);
                         setview.setVisibility(View.VISIBLE);
                         repview.setVisibility(View.VISIBLE);
+                        timeview.setVisibility(View.INVISIBLE);
+                        speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
                         weight_sp.setVisibility(View.VISIBLE);
+                        time_sp.setVisibility(View.INVISIBLE);
+                        speed_sp.setVisibility(View.INVISIBLE);
                         break;
                     case 3:
-                        setview.setVisibility(View.VISIBLE);
-                        timeview.setVisibility(View.VISIBLE);
                         weightview.setVisibility(View.VISIBLE);
+                        setview.setVisibility(View.VISIBLE);
+                        repview.setVisibility(View.INVISIBLE);
+                        timeview.setVisibility(View.INVISIBLE);
+                        speedview.setVisibility(View.INVISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        time_sp.setVisibility(View.VISIBLE);
                         weight_sp.setVisibility(View.VISIBLE);
+                        time_sp.setVisibility(View.VISIBLE);
+                        speed_sp.setVisibility(View.INVISIBLE);
                         break;
                     case 4:
-                        speedview.setVisibility(View.VISIBLE);
+                        weightview.setVisibility(View.INVISIBLE);
+                        setview.setVisibility(View.INVISIBLE);
+                        repview.setVisibility(View.INVISIBLE);
                         timeview.setVisibility(View.VISIBLE);
+                        speedview.setVisibility(View.VISIBLE);
                         bt_add.setVisibility(View.VISIBLE);
-                        speed_sp.setVisibility(View.VISIBLE);
+                        weight_sp.setVisibility(View.INVISIBLE);
                         time_sp.setVisibility(View.VISIBLE);
+                        speed_sp.setVisibility(View.VISIBLE);
                         break;
                 }
             }
