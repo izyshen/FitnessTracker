@@ -26,7 +26,8 @@ public class AddActivity extends AppCompatActivity {
     // to choose existing exercise
     //TODO: make custom activities that can be added to list
     // TODO: choose how many items are displayed on screen; scrollable
-    private static String[]info_priority = {"","Bicep Curls", "Leg Press", "Planks", "Treadmill"};
+    private static String[]info_priority =
+            {"","Bicep Curls", "Leg Press", "Planks", "Treadmill", "Custom Exercise"};
 
 
     // choose units
@@ -80,8 +81,12 @@ public class AddActivity extends AppCompatActivity {
                             exercise_b1.append(chosen_time_unit);
                         } else if (categories[i] == speedview) {
                             exercise_b1.append(chosen_speed_unit);
+                        } else if (categories[i] == setview) {      // gives sets x reps in workout_activity
+                            exercise_b1.append(" x ");
+                            exercise_b1.append(repview.getText().toString());
+                            box1_pos++;
                         }
-                        box1_pos = i;
+                        box1_pos += i;
                         break;
                     }
                 }
@@ -95,6 +100,9 @@ public class AddActivity extends AppCompatActivity {
                             exercise_b2.append(chosen_time_unit);
                         } else if (categories[j] == speedview) {
                             exercise_b2.append(chosen_speed_unit);
+                        } else if (categories[j] == setview) {      // gives sets x reps in workout_activity
+                            exercise_b2.append(" x ");
+                            exercise_b2.append(repview.getText().toString());
                         }
                         break;
                     }
@@ -188,6 +196,9 @@ public class AddActivity extends AppCompatActivity {
                         time_sp.setVisibility(View.VISIBLE);
                         speed_sp.setVisibility(View.VISIBLE);
                         break;
+                    case 5:
+                        Intent newActivityIntent = new Intent(AddActivity.this, NewActivity.class);
+                        startActivity(newActivityIntent);
                 }
             }
 
