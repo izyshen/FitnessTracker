@@ -9,25 +9,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
 
-    //ActivityDatabase myDB;
+    ActivityDatabase activityDB;
     ActivityDatabase2 myDB2;
     Button bt_add;
     String name;
     EditText setview, weightview, repview, timeview, speedview;
     Spinner weight_sp, time_sp, speed_sp, sp_type;
+    ArrayList<ExerciseProperties> properties;
+    ExerciseProperties exercise;
 
     // to choose existing exercise
     //TODO: make custom activities that can be added to list
     // TODO: choose how many items are displayed on screen; scrollable
-    private static String[]info_priority =
-            {"","Bicep Curls", "Leg Press", "Planks", "Treadmill", "Custom Exercise"};
+
+//    private static String[] info_priority =
+  //          {"","Bicep Curls", "Leg Press", "Planks", "Treadmill", "Custom Exercise"};
 
 
     // choose units
@@ -55,8 +58,8 @@ public class AddActivity extends AppCompatActivity {
         weight_sp = (Spinner) findViewById(R.id.weight_unit_sp);
         time_sp = (Spinner) findViewById(R.id.time_unit_sp);
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
-        //myDB = new ActivityDatabase(this);
         myDB2 = new ActivityDatabase2(this);
+        activityDB = new ActivityDatabase(this);
 
         // adds an exercise and brings user back to workout activity listview
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +127,20 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        // Creates arraylist for items in spinner
+        final ArrayList<String> listof_exercises = new ArrayList<String>();
+        listof_exercises.add("");
+        listof_exercises.add("Bicep Curls");
+        listof_exercises.add("Leg Press");
+        listof_exercises.add("Planks");
+        listof_exercises.add("Treadmill");
+        listof_exercises.add("Custom Exercise");
+
         // adapter for spinner of different exercise types and units
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 AddActivity.this,
                 android.R.layout.simple_spinner_item,
-                info_priority);
+                listof_exercises);
         ArrayAdapter<String> weight_adapter = new ArrayAdapter<String>(
                 AddActivity.this,
                 android.R.layout.simple_spinner_item,
@@ -150,7 +162,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // TODO: make properties show up in sequence, not based on relative positions
-                name = info_priority[i];
+                name = listof_exercises.get(i);
                 switch (i) {
                     // properties according to selected activity from spinner
                     case 1:
@@ -276,5 +288,33 @@ public class AddActivity extends AppCompatActivity {
                     "Error inserting data. Please contact app developer.", Toast.LENGTH_LONG).show();
         }
     }
+
+    /*
+    // adapter to add new elements info_priority
+    properties = new ArrayList<>();
+    Cursor activity_data = activityDB.getListContents();
+
+    // populate list with data from DB
+        if ((activity_data.getCount()) == 0) {
+        Toast.makeText(AddActivity.this,
+                "Please add your first exercise of the day",
+                Toast.LENGTH_LONG).show();
+    } else {
+        while(activity_data.moveToNext()) {
+            exercise = new ExerciseProperties(activity_data.getString(1), activity_data.getInt(2),
+                    activity_data.getInt(3), activity_data.getInt(4), activity_data.getInt(5),
+                    activity_data.getInt(6), activity_data.getInt(7));
+            info_priority.add(activity_data.getString(1));
+            activity_listview.add(exercise);   //// THIS NEEDS TO ADD TO LIST, NOT LISTVIEW
+        }
+        three_part_list_adapter adapter = new three_part_list_adapter(
+                this,
+                R.layout.activity_workout_layout,
+                exercise_list);
+        listview = (ListView) findViewById(R.id.activity_listview);
+        listview.setAdapter(adapter);
+    }
+
+    */
 }
 

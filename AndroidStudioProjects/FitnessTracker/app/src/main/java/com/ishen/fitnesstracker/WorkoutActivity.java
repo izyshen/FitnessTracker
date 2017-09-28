@@ -62,13 +62,6 @@ public class WorkoutActivity extends AppCompatActivity {
                     "Please add your first exercise of the day",
                     Toast.LENGTH_LONG).show();
         } else {
-            /*while(data.moveToNext()) {
-                activity_list.add(data.getString(1));
-                ListAdapter listAdapter = new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_1,
-                        activity_list);
-                list_view.setAdapter(listAdapter);
-            }*/
             while(data.moveToNext()) {
                 exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
                 exercise_list.add(exercise);
