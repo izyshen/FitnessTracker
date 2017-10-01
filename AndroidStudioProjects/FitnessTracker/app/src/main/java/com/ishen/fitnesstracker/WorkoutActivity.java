@@ -17,7 +17,6 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static com.ishen.fitnesstracker.R.id.activity_listview;
 import static com.ishen.fitnesstracker.R.id.add_activity;
 
 public class WorkoutActivity extends AppCompatActivity {

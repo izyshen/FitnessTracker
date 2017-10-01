@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Spinner;
 
 /**
  * Created by WingsOfRetribution on 2017-09-17.
@@ -16,6 +17,7 @@ public class ActivityDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "activity_lst.db";
     public static final String TABLE_NAME = "activity_lst";
+    private static final int DATABASE_VERSION = 1;
     public static final String COL1 = "ID";
     public static final String COL2 = "NAME";
     public static final String COL3 = "WEIGHT";
@@ -26,9 +28,10 @@ public class ActivityDatabase extends SQLiteOpenHelper {
     public static final String COL8 = "REST";
 
     public ActivityDatabase(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // creating table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " +
@@ -77,7 +80,7 @@ public class ActivityDatabase extends SQLiteOpenHelper {
 
     // obtaining contents of db
     public Cursor getListContents() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
     }
