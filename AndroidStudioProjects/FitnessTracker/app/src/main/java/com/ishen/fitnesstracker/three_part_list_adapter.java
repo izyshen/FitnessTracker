@@ -35,18 +35,18 @@ public class three_part_list_adapter extends ArrayAdapter<Exercise> {
         Exercise exercise = exercises.get(position);
 
         if (exercise != null) {
-            TextView disp_name = (TextView) convert_view.findViewById(R.id.layout_exercise_name);
-            TextView disp_box1 = (TextView) convert_view.findViewById(R.id.layout_box1);
-            TextView disp_box2 = (TextView) convert_view.findViewById(R.id.layout_box2);
+            TextView disp_name = convert_view.findViewById(R.id.layout_exercise_name);
+            TextView disp_box1 = convert_view.findViewById(R.id.layout_box1);
+            TextView disp_box2 = convert_view.findViewById(R.id.layout_box2);
 
             if (disp_name != null) {
-                disp_name.setText((exercise.getDisp_name()));
+                disp_name.setText(exercise.getDisp_name());
             }
             if (disp_box1 != null) {
-                disp_box1.setText((exercise.getDisp_box1()));
+                disp_box1.setText(exercise.getDisp_box1());
             }
             if (disp_box2 != null) {
-                disp_box2.setText((exercise.getDisp_box2()));
+                disp_box2.setText(exercise.getDisp_box2());
             }
         }
         return convert_view;

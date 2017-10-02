@@ -1,5 +1,6 @@
 package com.ishen.fitnesstracker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +27,6 @@ public class AddActivity extends AppCompatActivity {
     ExerciseProperties exercise;
     int num_activities;
 
-    // to choose existing exercise
-    //TODO: make custom activities that can be added to list
     // TODO: choose how many items are displayed on screen; scrollable
 
     // choose units
@@ -134,8 +133,20 @@ public class AddActivity extends AppCompatActivity {
         listof_exercises.add("Custom Exercise");
         num_activities = 5;
 
-        // dynamically add new elements to listof_exercises based on user input in NewActivity
+        // Pre-added exercises (default)
         properties = new ArrayList<>();
+        // parameters for ExerciseProperties:
+        // String name, int weight, int sets, int reps, int time, int speed, int rest
+        exercise = new ExerciseProperties(listof_exercises.get(1), 1, 1, 1, 0, 0, 0);
+        properties.add(exercise);
+        exercise = new ExerciseProperties(listof_exercises.get(2), 1, 1, 1, 0, 0, 0);
+        properties.add(exercise);
+        exercise = new ExerciseProperties(listof_exercises.get(3), 1, 1, 0, 1, 0, 0);
+        properties.add(exercise);
+        exercise = new ExerciseProperties(listof_exercises.get(4), 0, 0, 0, 1, 1, 0);
+        properties.add(exercise);
+
+        // dynamically add new elements to listof_exercises based on user input in NewActivity
         Cursor activity_data = activityDB.getListContents();
         if ((activity_data.getCount()) == 0) {
             Toast.makeText(AddActivity.this,
@@ -143,12 +154,12 @@ public class AddActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         } else {
             while (activity_data.moveToNext()) {
-                exercise = new ExerciseProperties(activity_data.getString(1), activity_data.getInt(2),
-                        activity_data.getInt(3), activity_data.getInt(4), activity_data.getInt(5),
-                        activity_data.getInt(6), activity_data.getInt(7));
+                //exercise = new ExerciseProperties(activity_data.getString(1), activity_data.getInt(2),
+                //        activity_data.getInt(3), activity_data.getInt(4), activity_data.getInt(5),
+                //        activity_data.getInt(6), activity_data.getInt(7));
                 listof_exercises.add(num_activities, activity_data.getString(1));
                 num_activities++;
-                properties.add(exercise);
+                //properties.add(exercise);
             }
             Toast.makeText(AddActivity.this,
                     "Custom exercises added",
@@ -182,6 +193,23 @@ public class AddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // TODO: make properties show up in sequence, not based on relative positions
                 name = listof_exercises.get(i);
+                /*
+                exercise_list_adapter ex_adapter = new exercise_list_adapter(
+                        getParent(),
+                        R.layout.activity_add,
+                        properties
+                );
+                sp_type.setAdapter(ex_adapter);
+                */
+
+                /*three_part_list_adapter adapter = new three_part_list_adapter(
+                        this,
+                        R.layout.activity_workout_layout,
+                        exercise_list);
+                listview = (ListView) findViewById(R.id.activity_listview);
+                listview.setAdapter(adapter);
+                */
+                /*
                 switch (i) {
                     // properties according to selected activity from spinner
                     case 1:
@@ -232,6 +260,7 @@ public class AddActivity extends AppCompatActivity {
                         Intent newActivityIntent = new Intent(AddActivity.this, NewActivity.class);
                         startActivity(newActivityIntent);
                 }
+                */
             }
 
             @Override

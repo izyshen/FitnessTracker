@@ -19,6 +19,7 @@
 
     <!--TODO: change time, reps and sets to spinner with numbers-->
 <!-- TODO: look at this in a relative layout-->
+
     <LinearLayout
         android:id="@+id/weight_wrapper"
         style="@style/AddActivityWrappers"
@@ -111,3 +112,4 @@
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
+

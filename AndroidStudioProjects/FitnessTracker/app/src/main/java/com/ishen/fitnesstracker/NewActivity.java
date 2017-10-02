@@ -104,5 +104,5 @@ public class NewActivity extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    // TODO: find out how to store info from checked boxes and display in AddActivity CURRENT*************************
+    // TODO: find out how to store info from checked boxes and display in AddActivity
 }
