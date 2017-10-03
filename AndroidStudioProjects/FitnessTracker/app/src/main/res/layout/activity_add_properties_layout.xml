@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ishen.fitnesstracker.AddActivity">
+    android:layout_centerHorizontal="true"
+    android:weightSum="100">
 
-    <!--TODO: create prompt for choosing an exercise -->
-    <Spinner
-        android:id="@+id/choose_exercise_sp"
+    <EditText
+        android:id="@+id/layout_general_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp">
-    </Spinner>
+        android:layout_height="60dp"
+        android:textAlignment="center"
+        android:layout_weight="30"/>
 
-    <!--TODO: change time, reps and sets to spinner with numbers-->
-<!-- TODO: look at this in a relative layout-->
+    <Spinner
+        android:id="@+id/layout_general_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="70"/>
+
 
     <!--
-    <ListView
-        android:id="@+id/properties_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/choose_exercise_sp"/>
-        -->
     <LinearLayout
         android:id="@+id/weight_wrapper"
         style="@style/AddActivityWrappers"
@@ -68,7 +61,7 @@
             android:layout_marginTop="10dp"
             android:hint="@string/number_of_reps"/>
     </LinearLayout>
-
+    TODO: make reps, sets and weights in spinners with numbers
     <LinearLayout
         android:id="@+id/time_wrapper"
         style="@style/AddActivityWrappers"
@@ -106,17 +99,5 @@
             android:visibility="invisible"
             android:layout_gravity="bottom"/>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_exercise"
-        android:layout_marginBottom="40dp"
-        android:visibility="invisible"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
-
-    <!--TODO: make reps, sets and weights in spinners with numbers-->
+    -->
+</LinearLayout>

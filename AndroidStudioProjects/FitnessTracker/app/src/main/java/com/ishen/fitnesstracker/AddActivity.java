@@ -10,10 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -126,12 +128,12 @@ public class AddActivity extends AppCompatActivity {
         // Creates arraylist for items in spinner
         final ArrayList<String> listof_exercises = new ArrayList<String>();
         listof_exercises.add("");
-        listof_exercises.add("Bicep Curls");
-        listof_exercises.add("Leg Press");
-        listof_exercises.add("Planks");
-        listof_exercises.add("Treadmill");
+        //listof_exercises.add("Bicep Curls");
+        //listof_exercises.add("Leg Press");
+        //listof_exercises.add("Planks");
+        //listof_exercises.add("Treadmill");
         listof_exercises.add("Custom Exercise");
-        num_activities = 5;
+        num_activities = 1;
 
         // Pre-added exercises (default)
         properties = new ArrayList<>();
@@ -139,18 +141,22 @@ public class AddActivity extends AppCompatActivity {
         // String name, int weight, int sets, int reps, int time, int speed, int rest
         exercise = new ExerciseProperties(listof_exercises.get(1), 1, 1, 1, 0, 0, 0);
         properties.add(exercise);
+        activityDB.add_new_activity(listof_exercises.get(1), 1, 1, 1, 0, 0, 0);
         exercise = new ExerciseProperties(listof_exercises.get(2), 1, 1, 1, 0, 0, 0);
         properties.add(exercise);
+        activityDB.add_new_activity(listof_exercises.get(2), 1, 1, 1, 0, 0, 0);
         exercise = new ExerciseProperties(listof_exercises.get(3), 1, 1, 0, 1, 0, 0);
         properties.add(exercise);
+        activityDB.add_new_activity(listof_exercises.get(3), 1, 1, 0, 1, 0, 0);
         exercise = new ExerciseProperties(listof_exercises.get(4), 0, 0, 0, 1, 1, 0);
         properties.add(exercise);
+        activityDB.add_new_activity(listof_exercises.get(4), 0, 0, 0, 1, 1, 0);
 
         // dynamically add new elements to listof_exercises based on user input in NewActivity
-        Cursor activity_data = activityDB.getListContents();
+        final Cursor activity_data = activityDB.getListContents();
         if ((activity_data.getCount()) == 0) {
             Toast.makeText(AddActivity.this,
-                    "No added exercises",
+                    "You made a mistake in adding in activities for the spinner",
                     Toast.LENGTH_LONG).show();
         } else {
             while (activity_data.moveToNext()) {
@@ -162,7 +168,7 @@ public class AddActivity extends AppCompatActivity {
                 //properties.add(exercise);
             }
             Toast.makeText(AddActivity.this,
-                    "Custom exercises added",
+                    "Exercises added to spinner",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -193,6 +199,58 @@ public class AddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // TODO: make properties show up in sequence, not based on relative positions
                 name = listof_exercises.get(i);
+
+
+                //ArrayList<ExerciseProperties> property_list = new ArrayList<>();
+                // access DB to see which properties the activity has
+                Cursor property_data = activityDB.getListContents();
+
+                while (property_data.moveToNext()) {
+                    exercise = new ExerciseProperties(property_data.getString(1), property_data.getInt(2),
+                            property_data.getInt(3), property_data.getInt(4), property_data.getInt(5),
+                            property_data.getInt(6), property_data.getInt(7));
+                    Toast.makeText(AddActivity.this, property_data.getString(1), Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddActivity.this, property_data.getInt(2), Toast.LENGTH_LONG).show();
+                    if (exercise.getWeightbox() == 1) {
+                        weightview.setVisibility(View.VISIBLE);
+                        weight_sp.setVisibility(View.VISIBLE);
+                    } else {
+                        weightview.setVisibility(View.INVISIBLE);
+                        weight_sp.setVisibility(View.INVISIBLE);
+                    }
+                    if (exercise.getSetbox() == 1) {
+                        setview.setVisibility(View.VISIBLE);
+                    } else {
+                        setview.setVisibility(View.INVISIBLE);
+                    }
+                    if (exercise.getRepbox() == 1) {
+                        repview.setVisibility(View.VISIBLE);
+                    } else {
+                        repview.setVisibility(View.INVISIBLE);
+                    }
+                    if (exercise.getTimebox() == 1) {
+                        timeview.setVisibility(View.VISIBLE);
+                        time_sp.setVisibility(View.VISIBLE);
+                    } else {
+                        timeview.setVisibility(View.INVISIBLE);
+                        time_sp.setVisibility(View.INVISIBLE);
+                    }
+                    if (exercise.getSpeedbox() == 1) {
+                        speedview.setVisibility(View.VISIBLE);
+                        speed_sp.setVisibility(View.VISIBLE);
+                    } else {
+                        speedview.setVisibility(View.INVISIBLE);
+                        speed_sp.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+                /*
+                exercise_list_adapter ex_adapter = new exercise_list_adapter (
+                    getApplicationContext(), R.layout.activity_add, properties
+                );
+                ListView properties_listview = (ListView) findViewById(R.id.properties_listview);
+                properties_listview.setAdapter(ex_adapter);
+                */
                 /*
                 exercise_list_adapter ex_adapter = new exercise_list_adapter(
                         getParent(),
@@ -202,13 +260,6 @@ public class AddActivity extends AppCompatActivity {
                 sp_type.setAdapter(ex_adapter);
                 */
 
-                /*three_part_list_adapter adapter = new three_part_list_adapter(
-                        this,
-                        R.layout.activity_workout_layout,
-                        exercise_list);
-                listview = (ListView) findViewById(R.id.activity_listview);
-                listview.setAdapter(adapter);
-                */
                 /*
                 switch (i) {
                     // properties according to selected activity from spinner

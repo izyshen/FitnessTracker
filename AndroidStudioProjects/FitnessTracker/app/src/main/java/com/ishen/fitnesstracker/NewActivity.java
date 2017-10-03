@@ -81,10 +81,12 @@ public class NewActivity extends AppCompatActivity implements AdapterView.OnItem
                 if (rest_box.isChecked()) {
                     rest=1;
                 }
-                centralActivityDB.add_new_activity(edit_name.getText().toString(),
+                Boolean did_it_add = centralActivityDB.add_new_activity(edit_name.getText().toString(),
                         weight, set, rep, speed, time, rest);
 
-                String test = edit_name.getText().toString()+weight+set+rep+speed+time+rest;
+                Toast.makeText(NewActivity.this, did_it_add.toString(), Toast.LENGTH_LONG).show();
+
+                String test = "New activity check: " + edit_name.getText().toString()+weight+set+rep+speed+time+rest;
                 Toast.makeText(NewActivity.this,
                         test,
                         Toast.LENGTH_LONG).show();
