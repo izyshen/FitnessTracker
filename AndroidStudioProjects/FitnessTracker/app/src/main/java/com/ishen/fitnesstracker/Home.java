@@ -29,13 +29,14 @@ public class Home extends AppCompatActivity {
             }
 
         });
+
+        // allows user to review workouts from previous days
+        bt_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View V) {
+                Intent historyIntent = new Intent(Home.this, HistoryCalendarView.class);
+                startActivity(historyIntent);
+            }
+        });
     }
 }
-
-
-/* TODO CURRENT PLAN: adapter views create listviews, gridviews and spinner contents
- -> change properties into elements of an external listview
-        -> if exercise has weight property, add item in external listview
-        -> ** display items in a for loop type fashion (for all elements in list, add to listview)
-        -> use custom layout like in workout activity
-*/

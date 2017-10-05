@@ -19,7 +19,9 @@
         <activity android:name=".WorkoutActivity" />
         <activity android:name=".NewActivity" />
         <activity android:name=".StartWorkout" />
-        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".my_calendar_view" />
+        <activity android:name=".HistoryDisplay"></activity>
     </application>
 
 </manifest>

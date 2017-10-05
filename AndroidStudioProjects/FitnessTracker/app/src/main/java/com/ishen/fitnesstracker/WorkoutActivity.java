@@ -5,16 +5,11 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.ishen.fitnesstracker.R.id.add_activity;
@@ -24,8 +19,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private static final String TAG = "WorkoutActivity";
 
     Button add_btn;
-    //ActivityDatabase myDB;
-    ActivityDatabase2 myDB2;
+    DailyExercises myDB;
     ArrayList<Exercise> exercise_list;
     ListView listview;
     Exercise exercise;
@@ -37,8 +31,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         add_btn = (Button) findViewById(add_activity);
         listview = (ListView) findViewById(R.id.activity_listview);
-        //myDB = new ActivityDatabase(this);
-        myDB2 = new ActivityDatabase2(this);
+        myDB = new DailyExercises(this);
 
         // add brings you to add an existing activity
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -50,10 +43,8 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
         // obtain contents of DB
-        //ArrayList<String> activity_list = new ArrayList<>();
-        //Cursor data = myDB.getListContents();
         exercise_list = new ArrayList<>();
-        Cursor data = myDB2.getListContents();
+        Cursor data = myDB.getListContents();
 
         // populate list with data from DB
         if ((data.getCount()) == 0) {
@@ -73,6 +64,6 @@ public class WorkoutActivity extends AppCompatActivity {
             listview.setAdapter(adapter);
         }
     }
-// TODO: make added exercises editable
+// TODO: make added exercises editable/deletable
 }
 

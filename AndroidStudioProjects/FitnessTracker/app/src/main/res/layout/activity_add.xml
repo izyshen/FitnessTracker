@@ -17,17 +17,6 @@
         android:layout_marginTop="30dp">
     </Spinner>
 
-    <!--TODO: change time, reps and sets to spinner with numbers-->
-<!-- TODO: look at this in a relative layout-->
-
-    <!--
-    <ListView
-        android:id="@+id/properties_listview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/choose_exercise_sp"/>
-        -->
     <LinearLayout
         android:id="@+id/weight_wrapper"
         style="@style/AddActivityWrappers"

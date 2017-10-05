@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class AddActivity extends AppCompatActivity {
 
     ActivityDatabase activityDB;
-    ActivityDatabase2 myDB2;
+    DailyExercises myDB;
     Button bt_add;
     String name;
     EditText setview, weightview, repview, timeview, speedview;
@@ -53,7 +53,7 @@ public class AddActivity extends AppCompatActivity {
         weight_sp = (Spinner) findViewById(R.id.weight_unit_sp);
         time_sp = (Spinner) findViewById(R.id.time_unit_sp);
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
-        myDB2 = new ActivityDatabase2(this);
+        myDB = new DailyExercises(this);
         activityDB = new ActivityDatabase(this);
 
         // adds an exercise and brings user back to workout activity listview
@@ -290,7 +290,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void add_data2(String name, String box1, String box2) {
-        boolean insert_data2 = myDB2.add_Data2(name, box1, box2);
+        boolean insert_data2 = myDB.add_Data(name, box1, box2);
 
         if (insert_data2 == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();

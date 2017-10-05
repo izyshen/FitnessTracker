@@ -12,7 +12,7 @@ import android.util.Log;
  * Created by WingsOfRetribution on 2017-09-17.
  */
 
-public class ActivityDatabase2 extends SQLiteOpenHelper {
+public class DailyExercises extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "daily_activity.db";
     public static final String TABLE_NAME = "activity_data";
@@ -21,7 +21,7 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
     public static final String COL3 = "BOX1";
     public static final String COL4 = "BOX2";
 
-    public ActivityDatabase2(Context context) {
+    public DailyExercises(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -41,7 +41,7 @@ public class ActivityDatabase2 extends SQLiteOpenHelper {
     }
 
     // storing values in db
-    public boolean add_Data2(String name, String box1, String box2) {
+    public boolean add_Data(String name, String box1, String box2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(COL2, name);
