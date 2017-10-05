@@ -1,6 +1,5 @@
 package com.ishen.fitnesstracker;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -110,7 +107,6 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if (chosen_exercise.length() != 0) {
-                    //add_data(chosen_exercise);
                     add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString());
                     weightview.setText("");
                     setview.setText("");
@@ -137,20 +133,16 @@ public class AddActivity extends AppCompatActivity {
 
         // Pre-added exercises (default)
         properties = new ArrayList<>();
-        // parameters for ExerciseProperties:
-        // String name, int weight, int sets, int reps, int time, int speed, int rest
+        /* parameters for ExerciseProperties:
+        String name, int weight, int sets, int reps, int time, int speed, int rest */
         exercise = new ExerciseProperties("Bicep Curls", 1, 1, 1, 0, 0, 0);
         properties.add(exercise);
-        //activityDB.add_new_activity("Bicep Curls", 1, 1, 1, 0, 0, 0);
         exercise = new ExerciseProperties("Leg Press", 1, 1, 1, 0, 0, 0);
         properties.add(exercise);
-        //activityDB.add_new_activity("Leg Press", 1, 1, 1, 0, 0, 0);
         exercise = new ExerciseProperties("Planks", 1, 1, 0, 1, 0, 0);
         properties.add(exercise);
-        //activityDB.add_new_activity("Planks", 1, 1, 0, 1, 0, 0);
         exercise = new ExerciseProperties("Treadmill", 0, 0, 0, 1, 1, 0);
         properties.add(exercise);
-        //activityDB.add_new_activity("Treadmill", 0, 0, 0, 1, 1, 0);
 
         // dynamically add new elements to listof_exercises based on user input in NewActivity
         final Cursor activity_data = activityDB.getListContents();
@@ -193,16 +185,21 @@ public class AddActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_type.setAdapter(adapter);
-        //sp_type.setPrompt("Exercise");
-        //sp_type.setOnItemSelectedListener(this);
         sp_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // TODO: make properties show up in sequence, not based on relative positions
                 name = listof_exercises.get(i);
 
+                if (i == num_activities) {
+                    Intent newActivityIntent = new Intent(AddActivity.this, NewActivity.class);
+                    startActivity(newActivityIntent);
+                    return;
+                }
+
+                // displays desired properties for chosen exercise
                 for(ExerciseProperties exercise : properties) {
-                    if (name == exercise.getDisp_name()) {
+                    if (exercise.getDisp_name().equals(name)) {
                         if (exercise.getWeightbox() == 1) {
                             weightview.setVisibility(View.VISIBLE);
                             weight_sp.setVisibility(View.VISIBLE);
@@ -234,128 +231,10 @@ public class AddActivity extends AppCompatActivity {
                             speedview.setVisibility(View.INVISIBLE);
                             speed_sp.setVisibility(View.INVISIBLE);
                         }
+                        bt_add.setVisibility(View.VISIBLE);
                         break;
                     }
                 }
-
-                //ArrayList<ExerciseProperties> property_list = new ArrayList<>();
-                // access DB to see which properties the activity has
-
-                /*
-                Cursor property_data = activityDB.getListContents();
-
-                while (property_data.moveToNext()) {
-                    pos++;
-                    if (pos!=i) {
-                        continue;
-                    }
-                    exercise = new ExerciseProperties(property_data.getString(1), property_data.getInt(2),
-                            property_data.getInt(3), property_data.getInt(4), property_data.getInt(5),
-                            property_data.getInt(6), property_data.getInt(7));
-                    Toast.makeText(AddActivity.this, property_data.getString(1), Toast.LENGTH_LONG).show();
-                    Toast.makeText(AddActivity.this, property_data.getInt(2), Toast.LENGTH_LONG).show();
-                    if (exercise.getWeightbox() == 1) {
-                        weightview.setVisibility(View.VISIBLE);
-                        weight_sp.setVisibility(View.VISIBLE);
-                    } else {
-                        weightview.setVisibility(View.INVISIBLE);
-                        weight_sp.setVisibility(View.INVISIBLE);
-                    }
-                    if (exercise.getSetbox() == 1) {
-                        setview.setVisibility(View.VISIBLE);
-                    } else {
-                        setview.setVisibility(View.INVISIBLE);
-                    }
-                    if (exercise.getRepbox() == 1) {
-                        repview.setVisibility(View.VISIBLE);
-                    } else {
-                        repview.setVisibility(View.INVISIBLE);
-                    }
-                    if (exercise.getTimebox() == 1) {
-                        timeview.setVisibility(View.VISIBLE);
-                        time_sp.setVisibility(View.VISIBLE);
-                    } else {
-                        timeview.setVisibility(View.INVISIBLE);
-                        time_sp.setVisibility(View.INVISIBLE);
-                    }
-                    if (exercise.getSpeedbox() == 1) {
-                        speedview.setVisibility(View.VISIBLE);
-                        speed_sp.setVisibility(View.VISIBLE);
-                    } else {
-                        speedview.setVisibility(View.INVISIBLE);
-                        speed_sp.setVisibility(View.INVISIBLE);
-                    }
-
-                }
-                */
-                /*
-                exercise_list_adapter ex_adapter = new exercise_list_adapter (
-                    getApplicationContext(), R.layout.activity_add, properties
-                );
-                ListView properties_listview = (ListView) findViewById(R.id.properties_listview);
-                properties_listview.setAdapter(ex_adapter);
-                */
-                /*
-                exercise_list_adapter ex_adapter = new exercise_list_adapter(
-                        getParent(),
-                        R.layout.activity_add,
-                        properties
-                );
-                sp_type.setAdapter(ex_adapter);
-                */
-
-                /*
-                switch (i) {
-                    // properties according to selected activity from spinner
-                    case 1:
-                        weightview.setVisibility(View.VISIBLE);
-                        setview.setVisibility(View.VISIBLE);
-                        repview.setVisibility(View.VISIBLE);
-                        timeview.setVisibility(View.INVISIBLE);
-                        speedview.setVisibility(View.INVISIBLE);
-                        bt_add.setVisibility(View.VISIBLE);
-                        weight_sp.setVisibility(View.VISIBLE);
-                        time_sp.setVisibility(View.INVISIBLE);
-                        speed_sp.setVisibility(View.INVISIBLE);
-                        break;
-                    case 2:
-                        weightview.setVisibility(View.VISIBLE);
-                        setview.setVisibility(View.VISIBLE);
-                        repview.setVisibility(View.VISIBLE);
-                        timeview.setVisibility(View.INVISIBLE);
-                        speedview.setVisibility(View.INVISIBLE);
-                        bt_add.setVisibility(View.VISIBLE);
-                        weight_sp.setVisibility(View.VISIBLE);
-                        time_sp.setVisibility(View.INVISIBLE);
-                        speed_sp.setVisibility(View.INVISIBLE);
-                        break;
-                    case 3:
-                        weightview.setVisibility(View.VISIBLE);
-                        setview.setVisibility(View.VISIBLE);
-                        repview.setVisibility(View.INVISIBLE);
-                        timeview.setVisibility(View.INVISIBLE);
-                        speedview.setVisibility(View.INVISIBLE);
-                        bt_add.setVisibility(View.VISIBLE);
-                        weight_sp.setVisibility(View.VISIBLE);
-                        time_sp.setVisibility(View.VISIBLE);
-                        speed_sp.setVisibility(View.INVISIBLE);
-                        break;
-                    case 4:
-                        weightview.setVisibility(View.INVISIBLE);
-                        setview.setVisibility(View.INVISIBLE);
-                        repview.setVisibility(View.INVISIBLE);
-                        timeview.setVisibility(View.VISIBLE);
-                        speedview.setVisibility(View.VISIBLE);
-                        bt_add.setVisibility(View.VISIBLE);
-                        weight_sp.setVisibility(View.INVISIBLE);
-                        time_sp.setVisibility(View.VISIBLE);
-                        speed_sp.setVisibility(View.VISIBLE);
-                        break;
-                    case 5:
-                        Intent newActivityIntent = new Intent(AddActivity.this, NewActivity.class);
-                        startActivity(newActivityIntent);
-                }
-                */
             }
 
             @Override
