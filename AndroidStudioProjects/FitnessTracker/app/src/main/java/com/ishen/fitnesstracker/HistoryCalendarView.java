@@ -16,7 +16,7 @@ public class HistoryCalendarView extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_History_Calendar_View);
+        setContentView(R.layout.activity_history_calendar_view);
         calendar = (CalendarView) findViewById(R.id.history_calendar_view);
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
