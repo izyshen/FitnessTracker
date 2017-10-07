@@ -65,8 +65,10 @@ public class WorkoutActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         } else {
             while(data.moveToNext()) {
-                exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
-                exercise_list.add(exercise);
+                if (data.getString(4).equals(date)) {
+                    exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
+                    exercise_list.add(exercise);
+                }
             }
             three_part_list_adapter adapter = new three_part_list_adapter(
                     this,
@@ -77,6 +79,7 @@ public class WorkoutActivity extends AppCompatActivity {
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    exercise_list.clear();
                     Intent return_main = new Intent(WorkoutActivity.this, Home.class);
                     startActivity(return_main);
                 }

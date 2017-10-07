@@ -21,6 +21,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
+    <!-- TODO: brings to a page/TOAST that states how much protein intake for gains, return home for now-->
     <Button
         android:id="@+id/complete_workout"
         android:layout_height="wrap_content"

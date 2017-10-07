@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class Home extends AppCompatActivity {
 
     Button bt_workout, bt_history, bt_button, bt_settings;
@@ -24,9 +26,13 @@ public class Home extends AppCompatActivity {
         bt_workout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
-
+                //TODO: if no workout activities for the day, do this
                 Intent workoutIntent = new Intent(Home.this, StartWorkout.class);
                 startActivity(workoutIntent);
+                /* else
+                Intent existing_workoutIntent = new Intent(Home.this, WorkoutActivity.java);
+                startActivity(existing_workoutIntent);
+                */
             }
         });
 

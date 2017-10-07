@@ -25,10 +25,9 @@ public class HistoryDisplay extends AppCompatActivity {
         setContentView(R.layout.activity_history_display);
 
         listview = (ListView) findViewById(R.id.history_listview);
-
+        prev_exercise_DB = new DailyExercises(this);
         Intent incoming_intent = getIntent();
         chosen_date = incoming_intent.getStringExtra("chosen_date");
-
         exercise_list = new ArrayList<>();
 
         Cursor data = prev_exercise_DB.getListContents();
