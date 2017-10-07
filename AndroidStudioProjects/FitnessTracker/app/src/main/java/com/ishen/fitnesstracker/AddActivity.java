@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,13 +14,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
     ActivityDatabase activityDB;
     DailyExercises myDB;
     Button bt_add;
-    String name;
+    String name, date;
     EditText setview, weightview, repview, timeview, speedview;
     Spinner weight_sp, time_sp, speed_sp, sp_type;
     ArrayList<ExerciseProperties> properties;
@@ -41,6 +43,12 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+        date = Integer.toString(day) + Integer.toString(month) + Integer.toString(year);
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
@@ -107,7 +115,7 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if (chosen_exercise.length() != 0) {
-                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString());
+                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), date);
                     weightview.setText("");
                     setview.setText("");
                     timeview.setText("");
@@ -289,8 +297,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void add_data2(String name, String box1, String box2) {
-        boolean insert_data2 = myDB.add_Data(name, box1, box2);
+
+    public void add_data2(String name, String box1, String box2, String date) {
+        boolean insert_data2 = myDB.add_Data(name, box1, box2, date);
 
         if (insert_data2 == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();

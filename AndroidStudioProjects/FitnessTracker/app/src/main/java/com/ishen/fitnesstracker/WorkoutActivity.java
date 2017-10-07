@@ -15,12 +15,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.ishen.fitnesstracker.R.id.add_activity;
+import static com.ishen.fitnesstracker.R.id.complete_workout;
 
 public class WorkoutActivity extends AppCompatActivity {
 
     private static final String TAG = "WorkoutActivity";
 
-    Button add_btn;
+    String date;
+    Button add_btn, done;
     DailyExercises myDB;
     ArrayList<Exercise> exercise_list;
     ListView listview;
@@ -31,8 +33,8 @@ public class WorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
 
-        String date;
         add_btn = (Button) findViewById(add_activity);
+        done = (Button) findViewById(complete_workout);
         listview = (ListView) findViewById(R.id.activity_listview);
         myDB = new DailyExercises(this);
 
@@ -70,10 +72,18 @@ public class WorkoutActivity extends AppCompatActivity {
                     this,
                     R.layout.activity_workout_layout,
                     exercise_list);
-            listview = (ListView) findViewById(R.id.activity_listview);
             listview.setAdapter(adapter);
+
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent return_main = new Intent(WorkoutActivity.this, Home.class);
+                    startActivity(return_main);
+                }
+            });
         }
     }
+
 // TODO: make added exercises editable/deletable
 }
 // the day's exercises are stored in an ArrayList <exercises> called exercise_list

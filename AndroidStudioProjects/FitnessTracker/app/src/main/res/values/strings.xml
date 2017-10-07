@@ -19,6 +19,7 @@
     <string name="number_of_sets">Number of Sets</string>
     <string name="number_of_reps">Number of Reps</string>
     <string name="add">+</string>
+    <string name="done_n_save"><![CDATA[Done & Save!]]></string>
 
     <!-- TODO: implement this-->
     <string-array name="muscle_type_array">

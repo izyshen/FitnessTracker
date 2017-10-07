@@ -20,6 +20,7 @@ public class DailyExercises extends SQLiteOpenHelper {
     public static final String COL2 = "NAME";
     public static final String COL3 = "BOX1";
     public static final String COL4 = "BOX2";
+    public static final String COL5 = "DATE";
 
     public DailyExercises(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -30,7 +31,7 @@ public class DailyExercises extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE " +
                 TABLE_NAME +
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " NAME TEXT," + " BOX1 TEXT," + " BOX2 TEXT);";
+                " NAME TEXT," + " BOX1 TEXT," + " BOX2 TEXT," + " DATE TEXT);";
         db.execSQL(createTable);
     }
 
@@ -41,14 +42,13 @@ public class DailyExercises extends SQLiteOpenHelper {
     }
 
     // storing values in db
-    public boolean add_Data(String name, String box1, String box2) {
+    public boolean add_Data(String name, String box1, String box2, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(COL2, name);
         content_values.put(COL3, box1);
         content_values.put(COL4, box2);
-
-        //long result = db.insert(TABLE_NAME, null, content_values);
+        content_values.put(COL5, date);
 
         long mid = 0;
 
@@ -69,7 +69,7 @@ public class DailyExercises extends SQLiteOpenHelper {
 
     // obtaining contents of db
     public Cursor getListContents() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
     }

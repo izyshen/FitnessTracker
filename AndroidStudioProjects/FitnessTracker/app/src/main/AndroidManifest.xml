@@ -20,7 +20,7 @@
         <activity android:name=".NewActivity" />
         <activity android:name=".StartWorkout" />
         <activity android:name=".AddActivity" />
-        <activity android:name=".my_calendar_view" />
+        <activity android:name=".HistoryCalendarView" />
         <activity android:name=".HistoryDisplay"></activity>
     </application>
 
