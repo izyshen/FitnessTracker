@@ -25,15 +25,14 @@ public class HistoryCalendarView extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView,
                                             int year, int month, int day) {
-                String date = Integer.toString(day) +
-                        Integer.toString(month+1) +
-                        Integer.toString(year);
-                Log.d(TAG, "onSelectedDayChange: ddmmyyyy " + date);
+                int date = (year*10000) +
+                        ((month+1)*100) +
+                        day;
+                Log.d(TAG, "onSelectedDayChange: yyyymmdd " + date);
 
                 Intent chosen_date_intent = new Intent(HistoryCalendarView.this, HistoryDisplay.class);
-                chosen_date_intent.putExtra("chosen_date", date);
+                chosen_date_intent.putExtra("chosen_date", Integer.toString(date));
                 startActivity(chosen_date_intent);
-
             }
         });
     }

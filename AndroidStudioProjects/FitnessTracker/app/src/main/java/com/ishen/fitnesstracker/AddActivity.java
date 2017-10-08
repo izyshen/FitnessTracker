@@ -21,7 +21,8 @@ public class AddActivity extends AppCompatActivity {
     ActivityDatabase activityDB;
     DailyExercises myDB;
     Button bt_add;
-    String name, date;
+    String name;
+    int date;
     EditText setview, weightview, repview, timeview, speedview;
     Spinner weight_sp, time_sp, speed_sp, sp_type;
     ArrayList<ExerciseProperties> properties;
@@ -48,7 +49,7 @@ public class AddActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
-        date = Integer.toString(day) + Integer.toString(month) + Integer.toString(year);
+        date = (year*10000) + (month*100) + day;
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
@@ -115,7 +116,7 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if (chosen_exercise.length() != 0) {
-                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), date);
+                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), Integer.toString(date));
                     weightview.setText("");
                     setview.setText("");
                     timeview.setText("");

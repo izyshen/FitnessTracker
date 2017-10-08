@@ -21,7 +21,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private static final String TAG = "WorkoutActivity";
 
-    String date;
+    int date;
     Button add_btn, done;
     DailyExercises myDB;
     ArrayList<Exercise> exercise_list;
@@ -42,8 +42,8 @@ public class WorkoutActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
-        date = Integer.toString(day) + Integer.toString(month) + Integer.toString(year);
-        Log.d(TAG, "onCreate: date value dd/mm/yyyy is " + date);
+        date = (year*10000) + (month*100) + day;
+        Log.d(TAG, "onCreate: date value yyyy/mm/dd is " + date);
 
         // add brings you to add an existing activity
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         } else {
             while(data.moveToNext()) {
-                if (data.getString(4).equals(date)) {
+                if (Integer.parseInt(data.getString(4)) == date) {
                     exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
                     exercise_list.add(exercise);
                 }
@@ -89,9 +89,4 @@ public class WorkoutActivity extends AppCompatActivity {
 
 // TODO: make added exercises editable/deletable
 }
-// the day's exercises are stored in an ArrayList <exercises> called exercise_list
-// create Database to store exercise_list and date, need to reset ArrayList to empty on the next day
-//
 
-// obtain current date
-// compare with date in DB; if same, keep list. Else clear exercise_list

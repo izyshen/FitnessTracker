@@ -17,7 +17,7 @@ public class ActivityDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "activity_lst.db";
     public static final String TABLE_NAME = "activity_lst";
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
     public static final String COL1 = "ID";
     public static final String COL2 = "NAME";
     public static final String COL3 = "WEIGHT";
