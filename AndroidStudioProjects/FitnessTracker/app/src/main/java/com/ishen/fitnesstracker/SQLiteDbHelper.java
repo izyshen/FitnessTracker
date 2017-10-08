@@ -107,7 +107,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
 
     // adding workout activities for the day in TABLE_WORKOUT
-    public boolean add_Data(String name, String box1, String box2, String date) {
+    public boolean add_data(String name, String box1, String box2, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(wkt_name, name);

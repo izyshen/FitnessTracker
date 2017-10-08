@@ -18,7 +18,8 @@ import static android.R.attr.name;
 
 public class NewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    ActivityDatabase centralActivityDB;
+    SQLiteDbHelper centralActivityDB;
+    //ActivityDatabase centralActivityDB;
     Button done;
     private Spinner muscle_spinner;
     CheckBox weight_box, set_box, rep_box, speed_box, time_box, rest_box;
@@ -39,7 +40,7 @@ public class NewActivity extends AppCompatActivity implements AdapterView.OnItem
         speed_box = (CheckBox) findViewById(R.id.speed_checkbox);
         time_box = (CheckBox) findViewById(R.id.time_checkbox);
         rest_box = (CheckBox) findViewById(R.id.rest_checkbox);
-        centralActivityDB = new ActivityDatabase(this);
+        centralActivityDB = new SQLiteDbHelper(this);
 
         // keeps track of what new activity's fields are (0 = box unchecked, 1 = box checked)
         weight = set = rep = speed = time = rest = 0;

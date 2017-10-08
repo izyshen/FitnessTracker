@@ -18,8 +18,9 @@ import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
-    ActivityDatabase activityDB;
-    DailyExercises myDB;
+    //ActivityDatabase activityDB;
+    SQLiteDbHelper activityDB, myDB;
+    //DailyExercises myDB;
     Button bt_add;
     String name;
     int date;
@@ -62,8 +63,10 @@ public class AddActivity extends AppCompatActivity {
         weight_sp = (Spinner) findViewById(R.id.weight_unit_sp);
         time_sp = (Spinner) findViewById(R.id.time_unit_sp);
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
-        myDB = new DailyExercises(this);
-        activityDB = new ActivityDatabase(this);
+        //myDB = new DailyExercises(this);
+        myDB = new SQLiteDbHelper(this);
+        //activityDB = new ActivityDatabase(this);
+        activityDB = new SQLiteDbHelper(this);
 
         // adds an exercise and brings user back to workout activity listview
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +157,7 @@ public class AddActivity extends AppCompatActivity {
         properties.add(exercise);
 
         // dynamically add new elements to listof_exercises based on user input in NewActivity
-        final Cursor activity_data = activityDB.getListContents();
+        final Cursor activity_data = activityDB.getACTListContents();
         if ((activity_data.getCount()) == 0) {
             Toast.makeText(AddActivity.this,
                     "No new activities added",
@@ -300,9 +303,9 @@ public class AddActivity extends AppCompatActivity {
 
 
     public void add_data2(String name, String box1, String box2, String date) {
-        boolean insert_data2 = myDB.add_Data(name, box1, box2, date);
+        boolean insert_data = myDB.add_data(name, box1, box2, date);
 
-        if (insert_data2 == true) {
+        if (insert_data == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(AddActivity.this,

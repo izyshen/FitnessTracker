@@ -23,7 +23,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
     int date;
     Button add_btn, done;
-    DailyExercises myDB;
+    //DailyExercises myDB;
+    SQLiteDbHelper myDB;
     ArrayList<Exercise> exercise_list;
     ListView listview;
     Exercise exercise;
@@ -36,7 +37,7 @@ public class WorkoutActivity extends AppCompatActivity {
         add_btn = (Button) findViewById(add_activity);
         done = (Button) findViewById(complete_workout);
         listview = (ListView) findViewById(R.id.activity_listview);
-        myDB = new DailyExercises(this);
+        myDB = new SQLiteDbHelper(this);
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -56,7 +57,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         // obtain contents of DB
         exercise_list = new ArrayList<>();
-        Cursor data = myDB.getListContents();
+        Cursor data = myDB.getWKTListContents();
 
         // populate list with data from DB
         if ((data.getCount()) == 0) {
