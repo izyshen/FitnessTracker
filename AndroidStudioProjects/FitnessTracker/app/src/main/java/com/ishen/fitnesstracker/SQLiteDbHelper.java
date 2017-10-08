@@ -139,4 +139,12 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getItemId(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + wkt_id + " FROM " +
+                TABLE_WORKOUT + " WHERE " + wkt_name + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
 }

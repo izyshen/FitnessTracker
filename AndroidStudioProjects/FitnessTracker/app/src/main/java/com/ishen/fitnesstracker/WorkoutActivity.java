@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -55,6 +56,11 @@ public class WorkoutActivity extends AppCompatActivity {
             }
         });
 
+        populate_list_view();
+    }
+
+    private void populate_list_view() {
+
         // obtain contents of DB
         exercise_list = new ArrayList<>();
         Cursor data = myDB.getWKTListContents();
@@ -86,6 +92,30 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
             });
         }
+
+        // makes items in listview editable/deletable
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String name = adapterView.getItemAtPosition(i).toString();
+                Cursor removal = myDB.getItemId(name);
+                int itemID = -1;
+                while (removal.moveToNext()) {
+                    itemID = removal.getInt(0);
+                }
+                if (itemID > -1) {
+                    Toast.makeText(WorkoutActivity.this, "itemID retrieved", Toast.LENGTH_LONG).show();
+                    Intent reviewIntent = new Intent(WorkoutActivity.this, EditActivity.class);
+                    reviewIntent.putExtra("id", itemID);
+                    reviewIntent.putExtra("name", name);
+                    startActivity(reviewIntent);
+                } else {
+                    Toast.makeText(WorkoutActivity.this, "No ID assoc. with name", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
 // TODO: make added exercises editable/deletable

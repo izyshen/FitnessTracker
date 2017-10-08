@@ -21,7 +21,8 @@
         <activity android:name=".StartWorkout" />
         <activity android:name=".AddActivity" />
         <activity android:name=".HistoryCalendarView" />
-        <activity android:name=".HistoryDisplay"></activity>
+        <activity android:name=".HistoryDisplay" />
+        <activity android:name=".EditActivity"></activity>
     </application>
 
 </manifest>

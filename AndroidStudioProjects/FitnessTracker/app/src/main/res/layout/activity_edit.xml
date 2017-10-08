@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ishen.fitnesstracker.EditActivity">
+
+    <TextView
+        android:id="@+id/review_name"
+        style="@style/ReviewProperties"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/review_weight"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_name"/>
+
+    <TextView
+        android:id="@+id/review_set"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_weight"/>
+
+    <TextView
+        android:id="@+id/review_reps"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_set"/>
+
+    <TextView
+        android:id="@+id/review_time"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_reps"/>
+
+    <TextView
+        android:id="@+id/review_speed"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_time"/>
+
+    <TextView
+        android:id="@+id/review_rest"
+        style="@style/ReviewProperties"
+        android:layout_below="@id/review_speed"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp">
+
+        <Button
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:id="@+id/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:layout_toRightOf="@id/button_edit"
+            android:layout_alignBottom="@id/button_edit"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+    <!--TODO: make reps, sets and weights in spinners with numbers-->
