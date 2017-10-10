@@ -16,8 +16,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static java.lang.Float.isNaN;
-
 public class AddActivity extends AppCompatActivity {
 
     //ActivityDatabase activityDB;

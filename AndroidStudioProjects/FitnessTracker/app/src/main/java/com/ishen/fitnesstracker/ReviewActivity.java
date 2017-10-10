@@ -8,13 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ReviewActivity extends AppCompatActivity {
 
     Button edit, delete;
     TextView name, weight, set, rep, time, speed, rest;
-    String chosen_name;
-    int id, chosen_date;
-    SQLiteDbHelper workoutDB;
+    String chosen_name, chosen_date;
+    int id;
+    SQLiteDbHelper historyDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,36 +33,34 @@ public class ReviewActivity extends AppCompatActivity {
         time = (TextView) findViewById(R.id.review_time);
         speed = (TextView) findViewById(R.id.review_speed);
         rest = (TextView) findViewById(R.id.review_rest);
+        historyDB = new SQLiteDbHelper(this);
         Intent workoutIntent = getIntent();
         id = workoutIntent.getIntExtra("id", -1);
         chosen_name = workoutIntent.getStringExtra("name");
-        chosen_date = workoutIntent.getIntExtra("date", -1);
+        chosen_date = Integer.toString(workoutIntent.getIntExtra("date", -1));
 
         name.setText(chosen_name);
 
-        final Cursor input_data = workoutDB.getWKTListContents();
-        if ((input_data.getCount()) == 0) {
+        final Cursor stored_data = historyDB.getHISTListContents();
+        if ((stored_data.getCount()) == 0) {
             Toast.makeText(ReviewActivity.this,
-                    "No workouts found",
+                    "No history found",
                     Toast.LENGTH_LONG).show();
         } else {
-            return;
-            /*
-            while (input_data.moveToNext()) {
-                if ((chosen_name == input_data.getString()) && chosen_date == input_data.getString()) {
-                    name.setText(input_data.getString());
+            while (stored_data.moveToNext()) {
+                if ((chosen_date.equals(stored_data.getString(8))) &&
+                        chosen_name.equals(stored_data.getString(1))) {
+                    weight.setText(stored_data.getString(2));
+                    set.setText(stored_data.getString(3));
+                    rep.setText(stored_data.getString(4));
+                    time.setText(stored_data.getString(5));
+                    speed.setText(stored_data.getString(6));
+                    rest.setText(stored_data.getString(7));
                 }
-                exercise = new ExerciseProperties(activity_data.getString(1), activity_data.getInt(2),
-                        activity_data.getInt(3), activity_data.getInt(4), activity_data.getInt(5),
-                        activity_data.getInt(6), activity_data.getInt(7));
-                listof_exercises.add(num_activities, activity_data.getString(1));
-                num_activities++;
-                properties.add(exercise);
             }
-            Toast.makeText(AddActivity.this,
-                    num_activities + "New exercises added to spinner",
+            Toast.makeText(ReviewActivity.this,
+                    "Activities done on " + chosen_date + " displayed",
                     Toast.LENGTH_LONG).show();
-            */
         }
 
 

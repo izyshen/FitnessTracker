@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,16 @@ public class HistoryDisplay extends AppCompatActivity {
                     exercise_list);
             listview.setAdapter(adapter);
             no_ex.setVisibility(View.INVISIBLE);
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                    String name = exercise_list.get(pos).getDisp_name();
+                    Intent reviewIntent = new Intent(HistoryDisplay.this, ReviewActivity.class);
+                    reviewIntent.putExtra("name", name);
+                    reviewIntent.putExtra("date", chosen_date);
+                    startActivity(reviewIntent);
+                }
+            });
         } else {
             if (chosen_date >= today_date) {
                 no_ex.setText("Hey! You didn't workout out this day... YET");
