@@ -16,15 +16,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static java.lang.Float.isNaN;
+
 public class AddActivity extends AppCompatActivity {
 
     //ActivityDatabase activityDB;
-    SQLiteDbHelper activityDB, myDB;
+    SQLiteDbHelper activityDB, workoutDB, historyDB;
     //DailyExercises myDB;
     Button bt_add;
     String name;
     int date;
-    EditText setview, weightview, repview, timeview, speedview;
+    EditText setview, weightview, repview, timeview, speedview, restview;
     Spinner weight_sp, time_sp, speed_sp, sp_type;
     ArrayList<ExerciseProperties> properties;
     ExerciseProperties exercise;
@@ -40,6 +42,13 @@ public class AddActivity extends AppCompatActivity {
     String chosen_weight_unit;
     String chosen_speed_unit;
     String chosen_time_unit;
+
+    StringBuilder weight = new StringBuilder();
+    StringBuilder set = new StringBuilder();
+    StringBuilder rep = new StringBuilder();
+    StringBuilder time = new StringBuilder();
+    StringBuilder speed = new StringBuilder();
+    //StringBuilder rest = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +72,9 @@ public class AddActivity extends AppCompatActivity {
         weight_sp = (Spinner) findViewById(R.id.weight_unit_sp);
         time_sp = (Spinner) findViewById(R.id.time_unit_sp);
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
-        //myDB = new DailyExercises(this);
-        myDB = new SQLiteDbHelper(this);
-        //activityDB = new ActivityDatabase(this);
+        workoutDB = new SQLiteDbHelper(this);
         activityDB = new SQLiteDbHelper(this);
+        historyDB = new SQLiteDbHelper(this);
 
         // adds an exercise and brings user back to workout activity listview
         bt_add.setOnClickListener(new View.OnClickListener() {
@@ -74,24 +82,58 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String chosen_exercise = name;
 
+                // list of properties (order is priority of info going in boxes of multiple column listview)
+                EditText properties[] = {weightview, setview, repview, timeview, speedview};
+                int len_properties = properties.length;
+
+                if (weightview.length() > 0) {
+                    weight.append(weightview.getText().toString());
+                    weight.append(chosen_weight_unit);
+                } else {
+                    weight.append("");
+                }
+                if (setview.length() > 0) {
+                    set.append(setview.getText().toString());
+                } else {
+                    set.append("");
+                }
+                if (repview.length() > 0) {
+                    rep.append(repview.getText().toString());
+                } else {
+                    rep.append("");
+                }
+                if (timeview.length() > 0) {
+                    time.append(timeview.getText().toString());
+                    time.append(chosen_time_unit);
+                } else {
+                    time.append("");
+                }
+                if (speedview.length() > 0) {
+                    speed.append(speedview.getText().toString());
+                    speed.append(chosen_speed_unit);
+                } else {
+                    speed.append("");
+                }
+
+                // Stores info in historyDB
+                store_all(name, weight.toString(), set.toString(), rep.toString(), time.toString(),
+                        speed.toString(), "", Integer.toString(date));
+
+                // Stores info in workoutDB to be displayed in workout activity
                 StringBuilder exercise_b1 = new StringBuilder();
                 StringBuilder exercise_b2 = new StringBuilder();
                 int box1_pos = 0;
 
-                // priority of information going in boxes of multiple column listview
-                EditText[] categories = {weightview, setview, repview, timeview, speedview};
-                int len_categories = categories.length;
-
-                for (int i = 0; i <= len_categories - 1; i++) {
-                    if ((categories[i].getText().toString()).length() != 0) {
-                        exercise_b1.append(categories[i].getText().toString());
-                        if (categories[i] == weightview) {
+                for (int i = 0; i <= len_properties - 1; i++) {
+                    if ((properties[i].getText().toString()).length() != 0) {
+                        exercise_b1.append(properties[i].getText().toString());
+                        if (properties[i] == weightview) {
                             exercise_b1.append(chosen_weight_unit);
-                        } else if (categories[i] == timeview) {
+                        } else if (properties[i] == timeview) {
                             exercise_b1.append(chosen_time_unit);
-                        } else if (categories[i] == speedview) {
+                        } else if (properties[i] == speedview) {
                             exercise_b1.append(chosen_speed_unit);
-                        } else if (categories[i] == setview) {      // gives sets x reps in workout_activity
+                        } else if (properties[i] == setview) {      // gives sets x reps in workout_activity
                             exercise_b1.append(" x ");
                             exercise_b1.append(repview.getText().toString());
                             box1_pos++;
@@ -101,16 +143,16 @@ public class AddActivity extends AppCompatActivity {
                     }
                 }
                 box1_pos++;
-                for (int j = box1_pos; j <= len_categories - 1; j++) {
-                    if ((categories[j].getText().toString()).length() != 0) {
-                        exercise_b2.append(categories[j].getText().toString());
-                        if (categories[j] == weightview) {
+                for (int j = box1_pos; j <= len_properties - 1; j++) {
+                    if ((properties[j].getText().toString()).length() != 0) {
+                        exercise_b2.append(properties[j].getText().toString());
+                        if (properties[j] == weightview) {
                             exercise_b2.append(chosen_weight_unit);
-                        } else if (categories[j] == timeview) {
+                        } else if (properties[j] == timeview) {
                             exercise_b2.append(chosen_time_unit);
-                        } else if (categories[j] == speedview) {
+                        } else if (properties[j] == speedview) {
                             exercise_b2.append(chosen_speed_unit);
-                        } else if (categories[j] == setview) {      // gives sets x reps in workout_activity
+                        } else if (properties[j] == setview) {      // gives sets x reps in workout_activity
                             exercise_b2.append(" x ");
                             exercise_b2.append(repview.getText().toString());
                         }
@@ -119,7 +161,7 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if (chosen_exercise.length() != 0) {
-                    add_data2(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), Integer.toString(date));
+                    add_partial(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), Integer.toString(date));
                     weightview.setText("");
                     setview.setText("");
                     timeview.setText("");
@@ -174,7 +216,6 @@ public class AddActivity extends AppCompatActivity {
             Toast.makeText(AddActivity.this,
                     num_activities + "New exercises added to spinner",
                     Toast.LENGTH_LONG).show();
-
         }
 
         // adapter for spinner of different exercise types and units
@@ -301,9 +342,20 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
+    public void store_all(String name, String weight, String set, String rep, String time, String speed, String rest, String date) {
+        boolean did_it_insert = historyDB.add_history(name, weight, set, rep, time, speed, rest, date);
 
-    public void add_data2(String name, String box1, String box2, String date) {
-        boolean insert_data = myDB.add_data(name, box1, box2, date);
+        if (did_it_insert == true) {
+            Toast.makeText(AddActivity.this, "History Data inserted successfully.", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(AddActivity.this,
+                    "Error inserting history data. Please contact app developer.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void add_partial(String name, String box1, String box2, String date) {
+        boolean insert_data = workoutDB.add_data(name, box1, box2, date);
 
         if (insert_data == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();

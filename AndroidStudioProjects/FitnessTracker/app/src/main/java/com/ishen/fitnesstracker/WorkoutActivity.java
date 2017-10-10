@@ -25,7 +25,7 @@ public class WorkoutActivity extends AppCompatActivity {
     int date;
     Button add_btn, done;
     //DailyExercises myDB;
-    SQLiteDbHelper myDB;
+    SQLiteDbHelper workoutDB;
     ArrayList<Exercise> exercise_list;
     ListView listview;
     Exercise exercise;
@@ -38,7 +38,7 @@ public class WorkoutActivity extends AppCompatActivity {
         add_btn = (Button) findViewById(add_activity);
         done = (Button) findViewById(complete_workout);
         listview = (ListView) findViewById(R.id.activity_listview);
-        myDB = new SQLiteDbHelper(this);
+        workoutDB = new SQLiteDbHelper(this);
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -63,7 +63,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         // obtain contents of DB
         exercise_list = new ArrayList<>();
-        Cursor data = myDB.getWKTListContents();
+        Cursor data = workoutDB.getWKTListContents();
 
         // populate list with data from DB
         if ((data.getCount()) == 0) {
@@ -99,16 +99,17 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = adapterView.getItemAtPosition(i).toString();
-                Cursor removal = myDB.getItemId(name);
+                Cursor removal = workoutDB.getItemId(name);
                 int itemID = -1;
                 while (removal.moveToNext()) {
                     itemID = removal.getInt(0);
                 }
                 if (itemID > -1) {
                     Toast.makeText(WorkoutActivity.this, "itemID retrieved", Toast.LENGTH_LONG).show();
-                    Intent reviewIntent = new Intent(WorkoutActivity.this, EditActivity.class);
+                    Intent reviewIntent = new Intent(WorkoutActivity.this, ReviewActivity.class);
                     reviewIntent.putExtra("id", itemID);
                     reviewIntent.putExtra("name", name);
+                    reviewIntent.putExtra("date", date);
                     startActivity(reviewIntent);
                 } else {
                     Toast.makeText(WorkoutActivity.this, "No ID assoc. with name", Toast.LENGTH_LONG).show();
