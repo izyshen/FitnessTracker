@@ -118,7 +118,10 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
     }
-
-// TODO: make added exercises editable/deletable
+    @Override
+    public void onBackPressed() {
+        Intent return_home = new Intent(WorkoutActivity.this, Home.class);
+        startActivity(return_home);
+    }
 }
 

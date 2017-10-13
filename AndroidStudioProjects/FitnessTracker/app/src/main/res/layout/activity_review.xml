@@ -12,7 +12,8 @@
         style="@style/ReviewProperties"
         android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/review_weight"

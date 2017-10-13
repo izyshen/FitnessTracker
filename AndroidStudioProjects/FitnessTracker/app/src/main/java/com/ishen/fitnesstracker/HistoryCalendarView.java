@@ -19,6 +19,8 @@ public class HistoryCalendarView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_calendar_view);
 
+        setTitle("Calendar");
+
         calendar = (CalendarView) findViewById(R.id.history_calendar_view);
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -35,5 +37,11 @@ public class HistoryCalendarView extends AppCompatActivity {
                 startActivity(chosen_date_intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent return_home = new Intent(HistoryCalendarView.this, Home.class);
+        startActivity(return_home);
     }
 }

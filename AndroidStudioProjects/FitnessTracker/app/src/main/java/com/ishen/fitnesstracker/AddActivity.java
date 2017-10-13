@@ -362,5 +362,10 @@ public class AddActivity extends AppCompatActivity {
                     "Error inserting data. Please contact app developer.", Toast.LENGTH_LONG).show();
         }
     }
+    @Override
+    public void onBackPressed() {
+        Intent return_home = new Intent(AddActivity.this, WorkoutActivity.class);
+        startActivity(return_home);
+    }
 }
 

@@ -40,6 +40,7 @@ public class ReviewActivity extends AppCompatActivity {
         chosen_date = Integer.toString(workoutIntent.getIntExtra("date", -1));
 
         name.setText(chosen_name);
+        setTitle(chosen_name);
 
         final Cursor stored_data = historyDB.getHISTListContents();
         if ((stored_data.getCount()) == 0) {
@@ -63,5 +64,11 @@ public class ReviewActivity extends AppCompatActivity {
                     "Activities done on " + chosen_date + " displayed",
                     Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent return_hist_display = new Intent(ReviewActivity.this, HistoryDisplay.class);
+        return_hist_display.putExtra("chosen_date", chosen_date);
+        startActivity(return_hist_display);
     }
 }

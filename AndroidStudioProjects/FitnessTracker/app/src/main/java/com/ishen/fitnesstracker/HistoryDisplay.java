@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.text.DateFormatSymbols;
 
 public class HistoryDisplay extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class HistoryDisplay extends AppCompatActivity {
     Exercise exercise;
     int chosen_date, today_date;
     TextView no_ex;
+    StringBuilder title_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,16 @@ public class HistoryDisplay extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         today_date = (year*10000) + (month*100) + day;
 
+        //12345678
+        int chosen_day = chosen_date%100;
+        int chosen_month = (chosen_date/100)%100;
+        int chosen_year = chosen_date/10000;
+
+        // change actionbar title
+        title_date = new StringBuilder();
+        title_date.append(new DateFormatSymbols().getMonths()[chosen_month-1]);
+        title_date.append(" " + chosen_day + ", " + chosen_year);
+        setTitle(title_date);
 
         Cursor data = prev_exercise_DB.getWKTListContents();
 
@@ -78,6 +90,11 @@ public class HistoryDisplay extends AppCompatActivity {
                 no_ex.setText("Looks like you took a break this day.");
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent return_calendar = new Intent(HistoryDisplay.this, HistoryCalendarView.class);
+        startActivity(return_calendar);
     }
 }
 

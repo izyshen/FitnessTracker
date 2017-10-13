@@ -106,5 +106,9 @@ public class NewActivity extends AppCompatActivity implements AdapterView.OnItem
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent return_home = new Intent(NewActivity.this, AddActivity.class);
+        startActivity(return_home);
+    }
 }
