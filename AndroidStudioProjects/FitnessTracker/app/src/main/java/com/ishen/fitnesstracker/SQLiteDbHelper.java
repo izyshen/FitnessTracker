@@ -44,7 +44,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String hist_id = "ID";
     public static final String hist_name = "NAME";
     public static final String hist_weight = "WEIGHT";
-    public static final String hist_set = "SET";
+    public static final String hist_set = "SETS";
     public static final String hist_reps = "REPS";
     public static final String hist_time = "TIME";
     public static final String hist_speed = "SPEED";

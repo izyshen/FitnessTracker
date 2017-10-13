@@ -18,7 +18,7 @@
 
     <!-- Checkboxes in NewActivity -->
     <style name="NewActivity">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <!-- Text wrappers in AddActivity-->
@@ -36,12 +36,15 @@
         <item name="android:gravity">center</item>
         <item name="android:inputType">numberDecimal</item>
         <item name="android:visibility">invisible</item>
+        <item name="android:textSize">20dp</item>
     </style>
 
+    <!-- Textview boxes in Review -->
     <style name = "ReviewProperties">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20dp</item>
     </style>
 </resources>

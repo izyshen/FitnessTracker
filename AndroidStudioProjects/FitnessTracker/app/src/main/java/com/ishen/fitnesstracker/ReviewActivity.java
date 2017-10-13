@@ -50,19 +50,18 @@ public class ReviewActivity extends AppCompatActivity {
             while (stored_data.moveToNext()) {
                 if ((chosen_date.equals(stored_data.getString(8))) &&
                         chosen_name.equals(stored_data.getString(1))) {
-                    weight.setText(stored_data.getString(2));
-                    set.setText(stored_data.getString(3));
-                    rep.setText(stored_data.getString(4));
-                    time.setText(stored_data.getString(5));
-                    speed.setText(stored_data.getString(6));
-                    rest.setText(stored_data.getString(7));
+                    weight.setText("Weight: " + stored_data.getString(2));
+                    set.setText("Set: " + stored_data.getString(3));
+                    rep.setText("Rep: " + stored_data.getString(4));
+                    time.setText("Time: " + stored_data.getString(5));
+                    speed.setText("Speed: " + stored_data.getString(6));
+                    rest.setText("Rest: " + stored_data.getString(7));
+                    break;
                 }
             }
             Toast.makeText(ReviewActivity.this,
                     "Activities done on " + chosen_date + " displayed",
                     Toast.LENGTH_LONG).show();
         }
-
-
     }
 }
