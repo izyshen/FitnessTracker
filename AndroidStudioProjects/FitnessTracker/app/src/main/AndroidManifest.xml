@@ -22,7 +22,8 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".HistoryCalendarView" />
         <activity android:name=".HistoryDisplay" />
-        <activity android:name=".ReviewActivity"/>
+        <activity android:name=".ReviewActivity" />
+        <activity android:name=".EditActivity"></activity>
     </application>
 
 </manifest>

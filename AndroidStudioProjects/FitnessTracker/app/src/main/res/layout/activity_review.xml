@@ -10,10 +10,11 @@
     <TextView
         android:id="@+id/review_name"
         style="@style/ReviewProperties"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="8dp"
         android:layout_alignParentTop="true"
         android:visibility="visible"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/review_weight"

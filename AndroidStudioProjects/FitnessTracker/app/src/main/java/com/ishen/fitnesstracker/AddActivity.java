@@ -18,9 +18,7 @@ import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
-    //ActivityDatabase activityDB;
     SQLiteDbHelper activityDB, workoutDB, historyDB;
-    //DailyExercises myDB;
     Button bt_add;
     String name;
     int date;
@@ -37,9 +35,7 @@ public class AddActivity extends AppCompatActivity {
     String[] speed_units = {"mph", "kph"};
     String[] time_units = {"hrs", "mins", "secs"};
 
-    String chosen_weight_unit;
-    String chosen_speed_unit;
-    String chosen_time_unit;
+    String chosen_weight_unit, chosen_speed_unit, chosen_time_unit;
 
     StringBuilder weight = new StringBuilder();
     StringBuilder set = new StringBuilder();

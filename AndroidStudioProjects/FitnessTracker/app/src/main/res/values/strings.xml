@@ -23,6 +23,8 @@
     <string name="no_workout">No Workout</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="editRest">Rest Time</string>
 
     <!-- TODO: implement this-->
     <string-array name="muscle_type_array">

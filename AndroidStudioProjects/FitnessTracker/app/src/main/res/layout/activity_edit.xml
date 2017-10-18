@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ishen.fitnesstracker.EditActivity">
+
+    <EditText
+        android:id="@+id/editWeight"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/exercise_weight" />
+
+    <Spinner
+        android:id="@+id/weight_unit_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:layout_toRightOf="@+id/editWeight"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/editSet"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/number_of_sets" />
+
+    <EditText
+        android:id="@+id/editRep"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/number_of_reps" />
+
+    <EditText
+        android:id="@+id/editTime"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/time" />
+
+    <Spinner
+        android:id="@+id/time_unit_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:layout_toRightOf="@+id/editTime"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/editSpeed"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/speed" />
+
+    <Spinner
+        android:id="@+id/speed_unit_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:layout_toRightOf="@+id/editSpeed"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/editRest"
+        style="@style/AddActivityEditableText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/editRest"/>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="@string/save" />
+
+</RelativeLayout>
+

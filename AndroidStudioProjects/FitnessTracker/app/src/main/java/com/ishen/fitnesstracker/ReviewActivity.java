@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,12 +52,42 @@ public class ReviewActivity extends AppCompatActivity {
             while (stored_data.moveToNext()) {
                 if ((chosen_date.equals(stored_data.getString(8))) &&
                         chosen_name.equals(stored_data.getString(1))) {
-                    weight.setText("Weight: " + stored_data.getString(2));
-                    set.setText("Set: " + stored_data.getString(3));
-                    rep.setText("Rep: " + stored_data.getString(4));
-                    time.setText("Time: " + stored_data.getString(5));
-                    speed.setText("Speed: " + stored_data.getString(6));
-                    rest.setText("Rest: " + stored_data.getString(7));
+                    if (stored_data.getString(2).length() > 0) {
+                        String str = "Weight: " + stored_data.getString(2);
+                        weight.setText(str);
+                    } else {
+                        weight.setVisibility(View.INVISIBLE);
+                    }
+                    if (stored_data.getString(3).length() > 0) {
+                        String str = "Set: " + stored_data.getString(3);
+                        set.setText(str);
+                    } else {
+                        set.setVisibility(View.INVISIBLE);
+                    }
+                    if (stored_data.getString(4).length() > 0) {
+                        String str = "Repetitions: " + stored_data.getString(4);
+                        rep.setText(str);
+                    } else {
+                        rep.setVisibility(View.INVISIBLE);
+                    }
+                    if (stored_data.getString(5).length() > 0) {
+                        String str = "Time: " + stored_data.getString(5);
+                        time.setText(str);
+                    } else {
+                        time.setVisibility(View.INVISIBLE);
+                    }
+                    if (stored_data.getString(6).length() > 0) {
+                        String str = "Speed: " + stored_data.getString(6);
+                        speed.setText(str);
+                    } else {
+                        speed.setVisibility(View.INVISIBLE);
+                    }
+                    if (stored_data.getString(7).length() > 0) {
+                        String str = "Rest: " + stored_data.getString(7);
+                        rest.setText(str);
+                    } else {
+                        rest.setVisibility(View.INVISIBLE);
+                    }
                     break;
                 }
             }
@@ -64,6 +95,22 @@ public class ReviewActivity extends AppCompatActivity {
                     "Activities done on " + chosen_date + " displayed",
                     Toast.LENGTH_LONG).show();
         }
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editIntent = new Intent(ReviewActivity.this, EditActivity.class);
+                editIntent.putExtra("ex_name", name.toString());
+                editIntent.putExtra("ex_weight", weight.toString());
+                editIntent.putExtra("ex_set", set.toString());
+                editIntent.putExtra("ex_rep", rep.toString());
+                editIntent.putExtra("ex_time", time.toString());
+                editIntent.putExtra("ex_speed", speed.toString());
+                editIntent.putExtra("ex_rest", rest.toString());
+
+                // pass along data from exercise and put as hint
+                startActivity(editIntent);
+            }
+        });
     }
     @Override
     public void onBackPressed() {
