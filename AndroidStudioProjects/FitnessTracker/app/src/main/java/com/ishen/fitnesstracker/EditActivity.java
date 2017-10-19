@@ -1,11 +1,13 @@
 package com.ishen.fitnesstracker;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -15,11 +17,10 @@ public class EditActivity extends AppCompatActivity {
     EditText weight, set, rep, time, speed, rest;
     Spinner weight_sp, time_sp, speed_sp;
     SQLiteDbHelper historyDB, workoutDB;
-    String weight_val, time_val, speed_val, rest_val,
-            weight_sp_val, time_sp_val, speed_sp_val,
-            chosen_weight_unit, chosen_speed_unit, chosen_time_unit,
-            ex_name, ex_weight, ex_set, ex_rep, ex_time, ex_speed, ex_rest,
+    String chosen_weight_unit, chosen_speed_unit, chosen_time_unit,
+            ex_name, ex_weight_val, ex_set_val, ex_rep_val, ex_time_val, ex_speed_val, ex_rest_val,
             chosen_date;
+    Button save;
 
     // Units for spinners
     String[] weight_units = {"lbs", "kg"};
@@ -34,15 +35,15 @@ public class EditActivity extends AppCompatActivity {
         // obtaining previously entered data for hints
         Intent prev_intent = getIntent();
         ex_name = prev_intent.getStringExtra("ex_name");
-        ex_weight = prev_intent.getStringExtra("ex_weight");
+        ex_weight_val = prev_intent.getStringExtra("ex_weight").replaceAll("[^0-9.]", "");
         chosen_weight_unit = prev_intent.getStringExtra("weight_unit");
-        ex_set = prev_intent.getStringExtra("ex_set");
-        ex_rep = prev_intent.getStringExtra("ex_rep");
-        ex_time = prev_intent.getStringExtra("ex_time");
+        ex_set_val = prev_intent.getStringExtra("ex_set");
+        ex_rep_val = prev_intent.getStringExtra("ex_rep");
+        ex_time_val = prev_intent.getStringExtra("ex_time").replaceAll("[^0-9.]", "");
         chosen_time_unit = prev_intent.getStringExtra("time_unit");
-        ex_speed = prev_intent.getStringExtra("ex_speed");
+        ex_speed_val = prev_intent.getStringExtra("ex_speed").replaceAll("[^0-9.]", "");
         chosen_speed_unit = prev_intent.getStringExtra("speed_unit");
-        ex_rest = prev_intent.getStringExtra("ex_rest");
+        ex_rest_val = prev_intent.getStringExtra("ex_rest");
         chosen_date = prev_intent.getStringExtra("chosen_date");
         setTitle(ex_name);
 
@@ -57,29 +58,30 @@ public class EditActivity extends AppCompatActivity {
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
         workoutDB = new SQLiteDbHelper(this);
         historyDB = new SQLiteDbHelper(this);
+        save = (Button) findViewById(R.id.button_save);
 
         // hides unnecessary text fields
-        if (ex_set.length() == 0) {
+        if (ex_set_val.length() == 0) {
             set.setVisibility(View.INVISIBLE);
         }
-        if (ex_rep.length() == 0) {
+        if (ex_rep_val.length() == 0) {
             rep.setVisibility(View.INVISIBLE);
         }
-        if (ex_rest.length() == 0) {
+        if (ex_rest_val.length() == 0) {
             rest.setVisibility(View.INVISIBLE);
         }
 
         // set hints
         String hint;
-        hint = "Weight: " + weight_val;
+        hint = "Weight: " + ex_weight_val;
         weight.setHint(hint);
-        hint = "Set: " + ex_set;
+        hint = "Set: " + ex_set_val;
         set.setHint(hint);
-        hint = "Reps: " + ex_rep;
+        hint = "Reps: " + ex_rep_val;
         rep.setHint(hint);
-        hint = "Time: " + time_val;
+        hint = "Time: " + ex_time_val;
         time.setHint(hint);
-        hint = "Speed: " + speed_val;
+        hint = "Speed: " + ex_speed_val;
         speed.setHint(hint);
         hint = "Rest Time: ";
         rest.setHint(hint);
@@ -98,13 +100,12 @@ public class EditActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,
                 speed_units);
 
+
         // if unit was stored, display spinner with same unit. else hide EditText and spinner
-        if (weight_sp_val.length() != 0) {
-            if (weight_sp_val.equals(weight_units[0])) {
-                chosen_weight_unit = weight_units[0];
+        if (chosen_weight_unit.length() != 0) {
+            if (chosen_weight_unit.equals(weight_units[0])) {
                 weight_sp.setSelection(0);
             } else {
-                chosen_weight_unit = weight_units[1];
                 weight_sp.setSelection(1);
             }
         } else {
@@ -112,15 +113,12 @@ public class EditActivity extends AppCompatActivity {
             weight.setVisibility(View.INVISIBLE);
         }
 
-        if (time_sp_val.length() != 0) {
-            if (time_sp_val.equals(time_units[0])) {
-                chosen_time_unit = time_units[0];
+        if (chosen_time_unit.length() != 0) {
+            if (chosen_time_unit.equals(time_units[0])) {
                 time_sp.setSelection(0);
-            } else if (time_sp_val.equals(time_units[1])) {
-                chosen_time_unit = time_units[1];
+            } else if (chosen_time_unit.equals(time_units[1])) {
                 time_sp.setSelection(1);
             } else {
-                chosen_time_unit = time_units[2];
                 time_sp.setSelection(2);
             }
         } else {
@@ -128,12 +126,10 @@ public class EditActivity extends AppCompatActivity {
             time.setVisibility(View.INVISIBLE);
         }
 
-        if (speed_sp_val.length() != 0) {
-            if (speed_sp_val.equals(speed_units[0])) {
-                chosen_speed_unit = speed_units[0];
+        if (chosen_speed_unit.length() != 0) {
+            if (chosen_speed_unit.equals(speed_units[0])) {
                 speed_sp.setSelection(0);
             } else {
-                chosen_speed_unit = speed_units[1];
                 speed_sp.setSelection(1);
             }
         } else {
@@ -186,13 +182,37 @@ public class EditActivity extends AppCompatActivity {
 
             }
         });
+
+        // saves changes and overrides entry in HistoryDB
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor rewrite = historyDB.getHISTListContents();
+                if (rewrite.getCount() == 0) {
+                    Toast.makeText(EditActivity.this, "Nothing in history", Toast.LENGTH_SHORT).show();
+                } else {
+                    while (rewrite.moveToNext()) {
+                        if ((rewrite.getString(1) == ex_name) &&
+                                (rewrite.getString(8) == chosen_date)) {
+                            rewrite.getString(2) = weight.getText().toString();
+                        }
+                    }
+                }
+
+
+                Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
+                reviewIntent.putExtra("name", ex_name);
+                reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
+                startActivity(reviewIntent);
+            }
+        })
     }
 
     @Override
     public void onBackPressed() {
-        Intent reviewIntent= new Intent(EditActivity.this, ReviewActivity.class);
+        Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
         reviewIntent.putExtra("name", ex_name);
-        reviewIntent.putExtra("date", chosen_date);
+        reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
         startActivity(reviewIntent);
     }
 }

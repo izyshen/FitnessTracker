@@ -119,6 +119,7 @@ public class ReviewActivity extends AppCompatActivity {
             speed_unit = "";
         }
 
+        // pass along data from exercise and put as hint
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,12 +135,11 @@ public class ReviewActivity extends AppCompatActivity {
                 editIntent.putExtra("speed_unit", speed_unit);
                 editIntent.putExtra("ex_rest", stored_data.getString(7));
                 editIntent.putExtra("chosen_date", chosen_date);
-
-                // pass along data from exercise and put as hint
                 startActivity(editIntent);
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         Intent return_hist_display = new Intent(ReviewActivity.this, HistoryDisplay.class);
