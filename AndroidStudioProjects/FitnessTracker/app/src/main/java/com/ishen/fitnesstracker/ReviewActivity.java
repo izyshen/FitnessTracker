@@ -17,7 +17,7 @@ public class ReviewActivity extends AppCompatActivity {
     TextView name, weight, set, rep, time, speed, rest;
     String chosen_name, chosen_date, weight_unit, time_unit, speed_unit;
     SQLiteDbHelper historyDB;
-
+    private int chosen_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,12 @@ public class ReviewActivity extends AppCompatActivity {
         speed = (TextView) findViewById(R.id.review_speed);
         rest = (TextView) findViewById(R.id.review_rest);
         historyDB = new SQLiteDbHelper(this);
+
+        // extra from previous intent
         Intent workoutIntent = getIntent();
         chosen_name = workoutIntent.getStringExtra("name");
         chosen_date = Integer.toString(workoutIntent.getIntExtra("date", -1));
+        chosen_id = workoutIntent.getIntExtra("id", -1);
 
         name.setText(chosen_name);
         setTitle(chosen_name);
@@ -48,8 +51,7 @@ public class ReviewActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         } else {
             while (stored_data.moveToNext()) {
-                if ((chosen_date.equals(stored_data.getString(8))) &&
-                        chosen_name.equals(stored_data.getString(1))) {
+                if (stored_data.getInt(0) == chosen_id) {
                     if (stored_data.getString(2).length() > 0) {
                         String str = "Weight: " + stored_data.getString(2);
                         weight.setText(str);
@@ -96,7 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         // checks if there is a given weight for the corresponding exercise
         String stored_weight = stored_data.getString(2);
-        if (stored_weight.length() > 3) {
+        if (stored_weight.length() > 2) {
             weight_unit = stored_weight.substring(stored_weight.length() - 4);
             weight_unit = weight_unit.replaceAll("[^a-z]", "");
         } else {
@@ -135,6 +137,7 @@ public class ReviewActivity extends AppCompatActivity {
                 editIntent.putExtra("speed_unit", speed_unit);
                 editIntent.putExtra("ex_rest", stored_data.getString(7));
                 editIntent.putExtra("chosen_date", chosen_date);
+                editIntent.putExtra("id", chosen_id);
                 startActivity(editIntent);
             }
         });

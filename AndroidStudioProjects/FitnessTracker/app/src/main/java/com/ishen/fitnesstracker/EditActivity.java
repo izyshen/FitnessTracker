@@ -21,6 +21,7 @@ public class EditActivity extends AppCompatActivity {
             ex_name, ex_weight_val, ex_set_val, ex_rep_val, ex_time_val, ex_speed_val, ex_rest_val,
             chosen_date;
     Button save;
+    int chosen_id;
 
     // Units for spinners
     String[] weight_units = {"lbs", "kg"};
@@ -45,6 +46,7 @@ public class EditActivity extends AppCompatActivity {
         chosen_speed_unit = prev_intent.getStringExtra("speed_unit");
         ex_rest_val = prev_intent.getStringExtra("ex_rest");
         chosen_date = prev_intent.getStringExtra("chosen_date");
+        chosen_id = prev_intent.getIntExtra("id", -1);
         setTitle(ex_name);
 
         weight = (EditText) findViewById(R.id.editWeight);
@@ -187,25 +189,35 @@ public class EditActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor rewrite = historyDB.getHISTListContents();
-                if (rewrite.getCount() == 0) {
-                    Toast.makeText(EditActivity.this, "Nothing in history", Toast.LENGTH_SHORT).show();
-                } else {
-                    while (rewrite.moveToNext()) {
-                        if ((rewrite.getString(1) == ex_name) &&
-                                (rewrite.getString(8) == chosen_date)) {
-                            rewrite.getString(2) = weight.getText().toString();
-                        }
-                    }
-                }
+                StringBuilder new_weight_str = new StringBuilder();
+                StringBuilder new_set_str = new StringBuilder();
+                StringBuilder new_rep_str = new StringBuilder();
+                StringBuilder new_time_str = new StringBuilder();
+                StringBuilder new_speed_str = new StringBuilder();
+                StringBuilder new_rest_str = new StringBuilder();
+                new_weight_str.append(weight.getText().toString() + chosen_weight_unit);
+                new_set_str.append(set.getText().toString());
+                new_rep_str.append(rep.getText().toString());
+                new_time_str.append(time.getText().toString() + chosen_time_unit);
+                new_speed_str.append(speed.getText().toString() + chosen_speed_unit);
+                new_rest_str.append(rest.getText().toString());
 
+                // Check null?
+                // updates the item at id with new values
+                historyDB.updateHistory(ex_weight_val, new_weight_str.toString(),
+                        ex_set_val, new_set_str.toString(), ex_rep_val, new_rep_str.toString(),
+                        ex_time_val, new_time_str.toString(), ex_speed_val, new_speed_str.toString(),
+                        ex_rest_val, new_rest_str.toString(), chosen_id, ex_name);
 
                 Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
                 reviewIntent.putExtra("name", ex_name);
                 reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
+                reviewIntent.putExtra("id", chosen_id);
                 startActivity(reviewIntent);
             }
-        })
+        });
+
+
     }
 
     @Override
@@ -213,6 +225,7 @@ public class EditActivity extends AppCompatActivity {
         Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
         reviewIntent.putExtra("name", ex_name);
         reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
+        reviewIntent.putExtra("id", chosen_id);
         startActivity(reviewIntent);
     }
 }

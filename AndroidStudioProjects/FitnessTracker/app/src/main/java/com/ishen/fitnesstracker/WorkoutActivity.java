@@ -105,7 +105,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     itemID = removal.getInt(0);
                 }
                 if (itemID > -1) {
-                    Toast.makeText(WorkoutActivity.this, "itemID retrieved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(WorkoutActivity.this, "itemID retrieved: " + itemID, Toast.LENGTH_LONG).show();
                     Intent reviewIntent = new Intent(WorkoutActivity.this, ReviewActivity.class);
                     reviewIntent.putExtra("id", itemID);
                     reviewIntent.putExtra("name", name);

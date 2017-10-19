@@ -18,6 +18,8 @@ import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddActivity";
+
     SQLiteDbHelper activityDB, workoutDB, historyDB;
     Button bt_add;
     String name;
@@ -74,6 +76,9 @@ public class AddActivity extends AppCompatActivity {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.d(TAG, "onClick: add button");
+                
                 String chosen_exercise = name;
 
                 // list of properties (order is priority of info going in boxes of multiple column listview)
@@ -194,6 +199,7 @@ public class AddActivity extends AppCompatActivity {
 
         // dynamically add new elements to listof_exercises based on user input in NewActivity
         final Cursor activity_data = activityDB.getACTListContents();
+        Log.d(TAG, "onCreate: Adding items to list of exercises");
         if ((activity_data.getCount()) == 0) {
             Toast.makeText(AddActivity.this,
                     "No new activities added",

@@ -13,6 +13,8 @@ import android.util.Log;
  */
 
 public class SQLiteDbHelper extends SQLiteOpenHelper {
+    
+    private static final String TAG = "SQLiteDbHelper";
 
     public static final String DATABASE_NAME = "activity_storage_db";
 
@@ -206,6 +208,42 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_HISTORY, null);
         return data;
+    }
+
+    // returns an ID matching a date and name;
+    public Cursor getHistoryItemID(String name, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + hist_id + " FROM " + TABLE_HISTORY + " WHERE " + hist_name
+                + " = '" + name + "'" + " AND " + hist_date + " = '" + date + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateHistory(String old_weight, String new_weight, String old_sets, String new_sets,
+                              String old_reps, String new_reps, String old_time, String new_time,
+                              String old_speed, String new_speed, String old_rest, String new_rest,
+                              int id, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_HISTORY + " SET " + hist_weight + " = '" + new_weight +
+                "' AND " + hist_set + " = '" + new_sets + "' AND " + hist_reps + " = '" + new_reps
+                + "' AND " + hist_time + " = '" + new_time + "' AND " + hist_speed + " = '" +
+                new_speed + "' AND " + hist_rest + " = '" + new_rest + "'" + " WHERE " + hist_id +
+                " = '" + id + "'" + " AND " + hist_name + " = '" + name + "'";
+        Log.d(TAG, "updateHistory: query: " + query);
+        Log.d(TAG, "updateHistory: name: " + name);
+        Log.d(TAG, "updateHistory: old_weights: " + old_weight);
+        Log.d(TAG, "updateHistory: weight: " + new_weight);
+        Log.d(TAG, "updateHistory: old_reps: " + old_reps);
+        Log.d(TAG, "updateHistory: reps: " + new_reps);
+        Log.d(TAG, "updateHistory: old_sets: " + old_sets);
+        Log.d(TAG, "updateHistory: sets: " + new_sets);
+        Log.d(TAG, "updateHistory: old_speed: " + old_speed);
+        Log.d(TAG, "updateHistory: speed: " + new_speed);
+        Log.d(TAG, "updateHistory: old_time: " + old_time);
+        Log.d(TAG, "updateHistory: time: " + new_time);
+        Log.d(TAG, "updateHistory: old_rest: " + old_rest);
+        Log.d(TAG, "updateHistory: rest: " + new_rest);
+        db.execSQL(query);
     }
 
 }

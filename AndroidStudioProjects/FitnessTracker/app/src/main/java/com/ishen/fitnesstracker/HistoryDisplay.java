@@ -17,6 +17,8 @@ import java.text.DateFormatSymbols;
 
 public class HistoryDisplay extends AppCompatActivity {
 
+    private static final String TAG = "HistoryDisplay";
+
     //DailyExercises prev_exercise_DB;
     SQLiteDbHelper prev_exercise_DB;
     ArrayList<Exercise> exercise_list;
@@ -25,6 +27,7 @@ public class HistoryDisplay extends AppCompatActivity {
     int chosen_date, today_date;
     TextView no_ex;
     StringBuilder title_date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +80,25 @@ public class HistoryDisplay extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                     String name = exercise_list.get(pos).getDisp_name();
-                    Intent reviewIntent = new Intent(HistoryDisplay.this, ReviewActivity.class);
-                    reviewIntent.putExtra("name", name);
-                    reviewIntent.putExtra("date", chosen_date);
-                    startActivity(reviewIntent);
+                    Log.d(TAG, "onItemClick: You clicked on " + name);
+
+                    // chosen itemID passed on to next activity
+                    Cursor data = prev_exercise_DB.getHistoryItemID(name, String.valueOf(chosen_date));
+                    int itemID = -1;
+                    while (data.moveToNext()) {
+                        itemID = data.getInt(0);
+                    }
+                    if (itemID > -1) {
+                        Log.d(TAG, "onItemClick: The ID is " + itemID);
+                        Intent reviewIntent = new Intent(HistoryDisplay.this, ReviewActivity.class);
+                        reviewIntent.putExtra("id", itemID);
+                        reviewIntent.putExtra("name", name);
+                        reviewIntent.putExtra("date", chosen_date);
+                        startActivity(reviewIntent);
+                    } else {
+                        Toast.makeText(HistoryDisplay.this,
+                                "No ID associated with that name and date", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         } else {
