@@ -8,15 +8,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class EditActivity extends AppCompatActivity {
 
     EditText weight, set, rep, time, speed, rest;
-    Spinner weight_sp, rep_sp, time_sp, speed_sp;
+    Spinner weight_sp, time_sp, speed_sp;
     SQLiteDbHelper historyDB, workoutDB;
     String weight_val, time_val, speed_val, rest_val,
-            weight_sp_val, time_sp_val, speed_sp_val, rest_sp_val,
-            chosen_weight_unit, chosen_speed_unit, chosen_time_unit;
+            weight_sp_val, time_sp_val, speed_sp_val,
+            chosen_weight_unit, chosen_speed_unit, chosen_time_unit,
+            ex_name, ex_weight, ex_set, ex_rep, ex_time, ex_speed, ex_rest,
+            chosen_date;
 
     // Units for spinners
     String[] weight_units = {"lbs", "kg"};
@@ -30,13 +33,17 @@ public class EditActivity extends AppCompatActivity {
 
         // obtaining previously entered data for hints
         Intent prev_intent = getIntent();
-        String ex_name = prev_intent.getStringExtra("ex_name");
-        String ex_weight = prev_intent.getStringExtra("ex_weight");
-        String ex_set = prev_intent.getStringExtra("ex_set");
-        String ex_rep = prev_intent.getStringExtra("ex_rep");
-        String ex_time = prev_intent.getStringExtra("ex_time");
-        String ex_speed = prev_intent.getStringExtra("ex_speed");
-        String ex_rest = prev_intent.getStringExtra("");
+        ex_name = prev_intent.getStringExtra("ex_name");
+        ex_weight = prev_intent.getStringExtra("ex_weight");
+        chosen_weight_unit = prev_intent.getStringExtra("weight_unit");
+        ex_set = prev_intent.getStringExtra("ex_set");
+        ex_rep = prev_intent.getStringExtra("ex_rep");
+        ex_time = prev_intent.getStringExtra("ex_time");
+        chosen_time_unit = prev_intent.getStringExtra("time_unit");
+        ex_speed = prev_intent.getStringExtra("ex_speed");
+        chosen_speed_unit = prev_intent.getStringExtra("speed_unit");
+        ex_rest = prev_intent.getStringExtra("ex_rest");
+        chosen_date = prev_intent.getStringExtra("chosen_date");
         setTitle(ex_name);
 
         weight = (EditText) findViewById(R.id.editWeight);
@@ -51,48 +58,31 @@ public class EditActivity extends AppCompatActivity {
         workoutDB = new SQLiteDbHelper(this);
         historyDB = new SQLiteDbHelper(this);
 
-        // hint setup
-        weight_val = ex_weight.replace("[^A-za-z]", "");
-        weight_sp_val = ex_weight.replace("[0-9]", "");
-        time_val = ex_time.replace("[^A-Za-z]", "");
-        time_sp_val = ex_time.replace("[0-9]", "");
-        speed_val = ex_speed.replace("[^A-Za-z]", "");
-        speed_sp_val = ex_speed.replace("[0-9]", "");
-        rest_val = ex_speed.replace("[^A-Za-z]", "");
-        rest_sp_val = ex_rest.replace("[0-9]", "");
+        // hides unnecessary text fields
+        if (ex_set.length() == 0) {
+            set.setVisibility(View.INVISIBLE);
+        }
+        if (ex_rep.length() == 0) {
+            rep.setVisibility(View.INVISIBLE);
+        }
+        if (ex_rest.length() == 0) {
+            rest.setVisibility(View.INVISIBLE);
+        }
 
         // set hints
-        weight.setHint(weight_val);
-        set.setHint(ex_set);
-        rep.setHint(ex_rep);
-        time.setHint(time_val);
-        speed.setHint(speed_val);
-        rest.setHint(rest_val);
-
-        if (weight_sp_val.equals(weight_units[0])) {
-            chosen_weight_unit = weight_units[0];
-            weight_sp.setSelection(0);
-        } else {
-            chosen_weight_unit = weight_units[1];
-            weight_sp.setSelection(1);
-        }
-        if (time_sp_val.equals(time_units[0])) {
-            chosen_time_unit = time_units[0];
-            time_sp.setSelection(0);
-        } else if (time_sp_val.equals(time_units[1])) {
-            chosen_time_unit = time_units[1];
-            time_sp.setSelection(1);
-        } else {
-            chosen_time_unit = time_units[2];
-            time_sp.setSelection(2);
-        }
-        if (speed_sp_val.equals(speed_units[0])) {
-            chosen_speed_unit = speed_units[0];
-            speed_sp.setSelection(0);
-        } else {
-            chosen_speed_unit = speed_units[1];
-            speed_sp.setSelection(1);
-        }
+        String hint;
+        hint = "Weight: " + weight_val;
+        weight.setHint(hint);
+        hint = "Set: " + ex_set;
+        set.setHint(hint);
+        hint = "Reps: " + ex_rep;
+        rep.setHint(hint);
+        hint = "Time: " + time_val;
+        time.setHint(hint);
+        hint = "Speed: " + speed_val;
+        speed.setHint(hint);
+        hint = "Rest Time: ";
+        rest.setHint(hint);
 
         // adapters for unit spinners
         ArrayAdapter<String> weight_adapter = new ArrayAdapter<String>(
@@ -107,6 +97,50 @@ public class EditActivity extends AppCompatActivity {
                 EditActivity.this,
                 android.R.layout.simple_spinner_item,
                 speed_units);
+
+        // if unit was stored, display spinner with same unit. else hide EditText and spinner
+        if (weight_sp_val.length() != 0) {
+            if (weight_sp_val.equals(weight_units[0])) {
+                chosen_weight_unit = weight_units[0];
+                weight_sp.setSelection(0);
+            } else {
+                chosen_weight_unit = weight_units[1];
+                weight_sp.setSelection(1);
+            }
+        } else {
+            weight_sp.setVisibility(View.INVISIBLE);
+            weight.setVisibility(View.INVISIBLE);
+        }
+
+        if (time_sp_val.length() != 0) {
+            if (time_sp_val.equals(time_units[0])) {
+                chosen_time_unit = time_units[0];
+                time_sp.setSelection(0);
+            } else if (time_sp_val.equals(time_units[1])) {
+                chosen_time_unit = time_units[1];
+                time_sp.setSelection(1);
+            } else {
+                chosen_time_unit = time_units[2];
+                time_sp.setSelection(2);
+            }
+        } else {
+            time_sp.setVisibility(View.INVISIBLE);
+            time.setVisibility(View.INVISIBLE);
+        }
+
+        if (speed_sp_val.length() != 0) {
+            if (speed_sp_val.equals(speed_units[0])) {
+                chosen_speed_unit = speed_units[0];
+                speed_sp.setSelection(0);
+            } else {
+                chosen_speed_unit = speed_units[1];
+                speed_sp.setSelection(1);
+            }
+        } else {
+            speed_sp.setVisibility(View.INVISIBLE);
+            speed.setVisibility(View.INVISIBLE);
+        }
+
 
         weight_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weight_sp.setAdapter(weight_adapter);
@@ -152,5 +186,13 @@ public class EditActivity extends AppCompatActivity {
 
             }
         });
-        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent reviewIntent= new Intent(EditActivity.this, ReviewActivity.class);
+        reviewIntent.putExtra("name", ex_name);
+        reviewIntent.putExtra("date", chosen_date);
+        startActivity(reviewIntent);
+    }
 }

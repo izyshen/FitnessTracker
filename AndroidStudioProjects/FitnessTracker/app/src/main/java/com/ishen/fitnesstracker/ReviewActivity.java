@@ -15,8 +15,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     Button edit, delete;
     TextView name, weight, set, rep, time, speed, rest;
-    String chosen_name, chosen_date;
-    int id;
+    String chosen_name, chosen_date, weight_unit, time_unit, speed_unit;
     SQLiteDbHelper historyDB;
 
 
@@ -36,7 +35,6 @@ public class ReviewActivity extends AppCompatActivity {
         rest = (TextView) findViewById(R.id.review_rest);
         historyDB = new SQLiteDbHelper(this);
         Intent workoutIntent = getIntent();
-        id = workoutIntent.getIntExtra("id", -1);
         chosen_name = workoutIntent.getStringExtra("name");
         chosen_date = Integer.toString(workoutIntent.getIntExtra("date", -1));
 
@@ -95,17 +93,47 @@ public class ReviewActivity extends AppCompatActivity {
                     "Activities done on " + chosen_date + " displayed",
                     Toast.LENGTH_LONG).show();
         }
+
+        // checks if there is a given weight for the corresponding exercise
+        String stored_weight = stored_data.getString(2);
+        if (stored_weight.length() > 3) {
+            weight_unit = stored_weight.substring(stored_weight.length() - 4);
+            weight_unit = weight_unit.replaceAll("[^a-z]", "");
+        } else {
+            weight_unit = "";
+        }
+        // checks if there is a given time
+        String stored_time = stored_data.getString(5);
+        if (stored_time.length() > 3) {
+            time_unit = stored_time.substring(stored_time.length() - 4);
+            time_unit = time_unit.replaceAll("[^a-z]", "");
+        } else {
+            time_unit = "";
+        }
+        // checks if there is a given speed
+        String stored_speed = stored_data.getString(6);
+        if (stored_speed.length() > 3) {
+            speed_unit = stored_speed.substring(stored_speed.length() - 4);
+            speed_unit = speed_unit.replaceAll("[^a-z]", "");
+        } else {
+            speed_unit = "";
+        }
+
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(ReviewActivity.this, EditActivity.class);
-                editIntent.putExtra("ex_name", name.toString());
-                editIntent.putExtra("ex_weight", weight.toString());
-                editIntent.putExtra("ex_set", set.toString());
-                editIntent.putExtra("ex_rep", rep.toString());
-                editIntent.putExtra("ex_time", time.toString());
-                editIntent.putExtra("ex_speed", speed.toString());
-                editIntent.putExtra("ex_rest", rest.toString());
+                editIntent.putExtra("ex_name", stored_data.getString(1));
+                editIntent.putExtra("ex_weight", stored_data.getString(2));
+                editIntent.putExtra("weight_unit", weight_unit);
+                editIntent.putExtra("ex_set", stored_data.getString(3));
+                editIntent.putExtra("ex_rep", stored_data.getString(4));
+                editIntent.putExtra("ex_time", stored_data.getString(5));
+                editIntent.putExtra("time_unit", time_unit);
+                editIntent.putExtra("ex_speed", stored_data.getString(6));
+                editIntent.putExtra("speed_unit", speed_unit);
+                editIntent.putExtra("ex_rest", stored_data.getString(7));
+                editIntent.putExtra("chosen_date", chosen_date);
 
                 // pass along data from exercise and put as hint
                 startActivity(editIntent);
