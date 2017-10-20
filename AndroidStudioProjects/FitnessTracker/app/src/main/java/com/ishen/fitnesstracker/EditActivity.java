@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,9 +15,11 @@ import android.widget.Toast;
 
 public class EditActivity extends AppCompatActivity {
 
+    private static final String TAG = "EditActivity";
+
     EditText weight, set, rep, time, speed, rest;
     Spinner weight_sp, time_sp, speed_sp;
-    SQLiteDbHelper historyDB, workoutDB;
+    SQLiteDbHelper historyDB;
     String chosen_weight_unit, chosen_speed_unit, chosen_time_unit,
             ex_name, ex_weight_val, ex_set_val, ex_rep_val, ex_time_val, ex_speed_val, ex_rest_val,
             chosen_date;
@@ -36,18 +39,22 @@ public class EditActivity extends AppCompatActivity {
         // obtaining previously entered data for hints
         Intent prev_intent = getIntent();
         ex_name = prev_intent.getStringExtra("ex_name");
-        ex_weight_val = prev_intent.getStringExtra("ex_weight").replaceAll("[^0-9.]", "");
+        ex_weight_val = prev_intent.getStringExtra("ex_weight").replaceAll("[A-Za-z]", "");
         chosen_weight_unit = prev_intent.getStringExtra("weight_unit");
         ex_set_val = prev_intent.getStringExtra("ex_set");
         ex_rep_val = prev_intent.getStringExtra("ex_rep");
-        ex_time_val = prev_intent.getStringExtra("ex_time").replaceAll("[^0-9.]", "");
+        ex_time_val = prev_intent.getStringExtra("ex_time").replaceAll("[A-Za-z]", "");
         chosen_time_unit = prev_intent.getStringExtra("time_unit");
-        ex_speed_val = prev_intent.getStringExtra("ex_speed").replaceAll("[^0-9.]", "");
+        ex_speed_val = prev_intent.getStringExtra("ex_speed").replaceAll("[A-Za-z]]", "");
         chosen_speed_unit = prev_intent.getStringExtra("speed_unit");
         ex_rest_val = prev_intent.getStringExtra("ex_rest");
         chosen_date = prev_intent.getStringExtra("chosen_date");
         chosen_id = prev_intent.getIntExtra("id", -1);
         setTitle(ex_name);
+
+        Log.d(TAG, "onCreate: replaced old ex_weight_val: " + ex_weight_val);
+        Log.d(TAG, "onCreate: replaced old ex_time_val: " + ex_time_val);
+        Log.d(TAG, "onCreate: replaced old ex_speed_val: " + ex_speed_val);
 
         weight = (EditText) findViewById(R.id.editWeight);
         set = (EditText) findViewById(R.id.editSet);
@@ -58,7 +65,6 @@ public class EditActivity extends AppCompatActivity {
         weight_sp = (Spinner) findViewById(R.id.weight_unit_sp);
         time_sp = (Spinner) findViewById(R.id.time_unit_sp);
         speed_sp = (Spinner) findViewById(R.id.speed_unit_sp);
-        workoutDB = new SQLiteDbHelper(this);
         historyDB = new SQLiteDbHelper(this);
         save = (Button) findViewById(R.id.button_save);
 
@@ -101,44 +107,6 @@ public class EditActivity extends AppCompatActivity {
                 EditActivity.this,
                 android.R.layout.simple_spinner_item,
                 speed_units);
-
-
-        // if unit was stored, display spinner with same unit. else hide EditText and spinner
-        if (chosen_weight_unit.length() != 0) {
-            if (chosen_weight_unit.equals(weight_units[0])) {
-                weight_sp.setSelection(0);
-            } else {
-                weight_sp.setSelection(1);
-            }
-        } else {
-            weight_sp.setVisibility(View.INVISIBLE);
-            weight.setVisibility(View.INVISIBLE);
-        }
-
-        if (chosen_time_unit.length() != 0) {
-            if (chosen_time_unit.equals(time_units[0])) {
-                time_sp.setSelection(0);
-            } else if (chosen_time_unit.equals(time_units[1])) {
-                time_sp.setSelection(1);
-            } else {
-                time_sp.setSelection(2);
-            }
-        } else {
-            time_sp.setVisibility(View.INVISIBLE);
-            time.setVisibility(View.INVISIBLE);
-        }
-
-        if (chosen_speed_unit.length() != 0) {
-            if (chosen_speed_unit.equals(speed_units[0])) {
-                speed_sp.setSelection(0);
-            } else {
-                speed_sp.setSelection(1);
-            }
-        } else {
-            speed_sp.setVisibility(View.INVISIBLE);
-            speed.setVisibility(View.INVISIBLE);
-        }
-
 
         weight_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weight_sp.setAdapter(weight_adapter);
@@ -185,6 +153,44 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: Correction-changing unit selection
+        // if unit was stored, display spinner with same unit. else hide EditText and spinner
+        if (chosen_weight_unit.length() != 0) {
+            if (chosen_weight_unit.equals(weight_units[0])) {
+                weight_sp.setSelection(0);
+            } else {
+                weight_sp.setSelection(1);
+            }
+        } else {
+            weight_sp.setVisibility(View.INVISIBLE);
+            weight.setVisibility(View.INVISIBLE);
+        }
+
+        if (chosen_time_unit.length() != 0) {
+            if (chosen_time_unit.equals(time_units[0])) {
+                time_sp.setSelection(0);
+            } else if (chosen_time_unit.equals(time_units[1])) {
+                time_sp.setSelection(1);
+            } else {
+                time_sp.setSelection(2);
+            }
+        } else {
+            time_sp.setVisibility(View.INVISIBLE);
+            time.setVisibility(View.INVISIBLE);
+        }
+
+        if (chosen_speed_unit.length() != 0) {
+            if (chosen_speed_unit.equals(speed_units[0])) {
+                speed_sp.setSelection(0);
+            } else {
+                speed_sp.setSelection(1);
+            }
+        } else {
+            speed_sp.setVisibility(View.INVISIBLE);
+            speed.setVisibility(View.INVISIBLE);
+        }
+
+
         // saves changes and overrides entry in HistoryDB
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,19 +201,31 @@ public class EditActivity extends AppCompatActivity {
                 StringBuilder new_time_str = new StringBuilder();
                 StringBuilder new_speed_str = new StringBuilder();
                 StringBuilder new_rest_str = new StringBuilder();
-                new_weight_str.append(weight.getText().toString() + chosen_weight_unit);
+
+                // new strings are either empty or contain values with selected units
+                if (weight.getText().toString().length() > 0) {
+                    new_weight_str.append(weight.getText().toString() + chosen_weight_unit);
+                }
                 new_set_str.append(set.getText().toString());
                 new_rep_str.append(rep.getText().toString());
-                new_time_str.append(time.getText().toString() + chosen_time_unit);
-                new_speed_str.append(speed.getText().toString() + chosen_speed_unit);
+                if (time.getText().toString().length() > 0) {
+                    new_time_str.append(time.getText().toString() + chosen_time_unit);
+                }
+                if (speed.getText().toString().length() > 0) {
+                    new_speed_str.append(speed.getText().toString() + chosen_speed_unit);
+                }
                 new_rest_str.append(rest.getText().toString());
 
-                // Check null?
+                // Check empty
                 // updates the item at id with new values
                 historyDB.updateHistory(ex_weight_val, new_weight_str.toString(),
                         ex_set_val, new_set_str.toString(), ex_rep_val, new_rep_str.toString(),
                         ex_time_val, new_time_str.toString(), ex_speed_val, new_speed_str.toString(),
                         ex_rest_val, new_rest_str.toString(), chosen_id, ex_name);
+
+                Log.d(TAG, "onClick: passing name: " + ex_name);
+                Log.d(TAG, "onClick: passing date: " + Integer.parseInt(chosen_date));
+                Log.d(TAG, "onClick: passing id: " + chosen_id);
 
                 Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
                 reviewIntent.putExtra("name", ex_name);
@@ -216,8 +234,6 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(reviewIntent);
             }
         });
-
-
     }
 
     @Override

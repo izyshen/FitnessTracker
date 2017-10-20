@@ -77,7 +77,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Log.d(TAG, "onClick: add button");
+                Log.d(TAG, "onClick: add button, adding: " + name);
                 
                 String chosen_exercise = name;
 

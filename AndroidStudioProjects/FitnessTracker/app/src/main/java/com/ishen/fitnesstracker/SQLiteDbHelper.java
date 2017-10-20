@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.PreparedStatement;
+
 /**
  * Created by WingsOfRetribution on 2017-10-06.
  */
@@ -30,7 +32,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String act_name = "NAME";
     public static final String act_weight = "WEIGHT";
     public static final String act_set = "SETS";
-    public static final String act_reps = "REPS";
+    public static final String act_rep = "REP";
     public static final String act_time = "TIME";
     public static final String act_speed = "SPEED";
     public static final String act_rest = "REST";
@@ -46,8 +48,8 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String hist_id = "ID";
     public static final String hist_name = "NAME";
     public static final String hist_weight = "WEIGHT";
-    public static final String hist_set = "SETS";
-    public static final String hist_reps = "REPS";
+    public static final String hist_set = "SET";
+    public static final String hist_rep = "REP";
     public static final String hist_time = "TIME";
     public static final String hist_speed = "SPEED";
     public static final String hist_rest = "REST";
@@ -63,7 +65,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
             TABLE_ACTIVITIES +
             " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " NAME INTEGER," + " WEIGHT INTEGER," +
-            " SETS INTEGER," + " REPS INTEGER," +
+            " SETS INTEGER," + " REP INTEGER," +
             " TIME INTEGER," + " SPEED INTEGER," + " REST INTEGER);";
 
     private static final String create_display_table = "CREATE TABLE " +
@@ -74,7 +76,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
             TABLE_HISTORY +
             " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " NAME TEXT," + " WEIGHT TEXT," +
-            " SETS TEXT," + " REPS TEXT," +
+            " SET TEXT," + " REP TEXT," +
             " TIME TEXT," + " SPEED TEXT," + " REST TEXT," + " DATE TEXT);";
 
 
@@ -95,13 +97,13 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // storing values in TABLE_ACTIVITIES
-    public boolean add_new_activity(String name, int weight, int sets, int reps, int time, int speed, int rest) {
+    public boolean add_new_activity(String name, int weight, int set, int rep, int time, int speed, int rest) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues entry_values = new ContentValues();
         entry_values.put(act_name, name);
         entry_values.put(act_weight, weight);
-        entry_values.put(act_set, sets);
-        entry_values.put(act_reps, reps);
+        entry_values.put(act_set, set);
+        entry_values.put(act_rep, rep);
         entry_values.put(act_time, time);
         entry_values.put(act_speed, speed);
         entry_values.put(act_rest, rest);
@@ -173,14 +175,14 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // storing values in TABLE_HISTORY
-    public boolean add_history(String name, String weight, String sets, String reps,
+    public boolean add_history(String name, String weight, String set, String rep,
                                     String time, String speed, String rest, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues entry_values = new ContentValues();
         entry_values.put(hist_name, name);
         entry_values.put(hist_weight, weight);
-        entry_values.put(hist_set, sets);
-        entry_values.put(hist_reps, reps);
+        entry_values.put(hist_set, set);
+        entry_values.put(hist_rep, rep);
         entry_values.put(hist_time, time);
         entry_values.put(hist_speed, speed);
         entry_values.put(hist_rest, rest);
@@ -212,38 +214,62 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     // returns an ID matching a date and name;
     public Cursor getHistoryItemID(String name, String date) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT " + hist_id + " FROM " + TABLE_HISTORY + " WHERE " + hist_name
                 + " = '" + name + "'" + " AND " + hist_date + " = '" + date + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public void updateHistory(String old_weight, String new_weight, String old_sets, String new_sets,
-                              String old_reps, String new_reps, String old_time, String new_time,
+    public void updateHistory(String old_weight, String new_weight, String old_set, String new_set,
+                              String old_rep, String new_rep, String old_time, String new_time,
                               String old_speed, String new_speed, String old_rest, String new_rest,
                               int id, String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+/*
         String query = "UPDATE " + TABLE_HISTORY + " SET " + hist_weight + " = '" + new_weight +
-                "' AND " + hist_set + " = '" + new_sets + "' AND " + hist_reps + " = '" + new_reps
+                "' AND " + hist_set + " = '" + new_set + "' AND " + hist_rep + " = '" + new_rep
                 + "' AND " + hist_time + " = '" + new_time + "' AND " + hist_speed + " = '" +
-                new_speed + "' AND " + hist_rest + " = '" + new_rest + "'" + " WHERE " + hist_id +
+                new_speed + "' AND " + hist_rest + " = '" + new_rest + "' WHERE " + hist_id +
                 " = '" + id + "'" + " AND " + hist_name + " = '" + name + "'";
+                */
+
+        String query = "UPDATE " + TABLE_HISTORY + " SET " + hist_weight + " = '" + new_weight + "', "
+                + hist_set + " = '" + new_set + "', " + hist_rep + " = '" + new_rep + "', "
+                + hist_time + " = '" + new_time + "', " + hist_speed + " = '" + new_speed + "', "
+                + hist_rest + " = '" + new_rest + "' WHERE " + hist_id + " = '" + id + "'";
+
         Log.d(TAG, "updateHistory: query: " + query);
+
         Log.d(TAG, "updateHistory: name: " + name);
         Log.d(TAG, "updateHistory: old_weights: " + old_weight);
         Log.d(TAG, "updateHistory: weight: " + new_weight);
-        Log.d(TAG, "updateHistory: old_reps: " + old_reps);
-        Log.d(TAG, "updateHistory: reps: " + new_reps);
-        Log.d(TAG, "updateHistory: old_sets: " + old_sets);
-        Log.d(TAG, "updateHistory: sets: " + new_sets);
+        Log.d(TAG, "updateHistory: old_rep: " + old_rep);
+        Log.d(TAG, "updateHistory: rep: " + new_rep);
+        Log.d(TAG, "updateHistory: old_set: " + old_set);
+        Log.d(TAG, "updateHistory: set: " + new_set);
         Log.d(TAG, "updateHistory: old_speed: " + old_speed);
         Log.d(TAG, "updateHistory: speed: " + new_speed);
         Log.d(TAG, "updateHistory: old_time: " + old_time);
         Log.d(TAG, "updateHistory: time: " + new_time);
         Log.d(TAG, "updateHistory: old_rest: " + old_rest);
         Log.d(TAG, "updateHistory: rest: " + new_rest);
+
         db.execSQL(query);
+
+
+        /*
+
+        PreparedStatement update_history = null;
+        //PreparedStatement update_display = null;
+
+        String update_history =
+                "update " + TABLE_HISTORY + "."
+
+        */
     }
 
+
+    // public function called by update history to update display info
 }

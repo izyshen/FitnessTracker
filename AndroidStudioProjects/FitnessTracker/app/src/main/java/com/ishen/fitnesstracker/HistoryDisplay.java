@@ -19,7 +19,6 @@ public class HistoryDisplay extends AppCompatActivity {
 
     private static final String TAG = "HistoryDisplay";
 
-    //DailyExercises prev_exercise_DB;
     SQLiteDbHelper prev_exercise_DB;
     ArrayList<Exercise> exercise_list;
     ListView listview;
@@ -47,20 +46,18 @@ public class HistoryDisplay extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         today_date = (year*10000) + (month*100) + day;
 
-        //12345678
         int chosen_day = chosen_date%100;
         int chosen_month = (chosen_date/100)%100;
         int chosen_year = chosen_date/10000;
 
-        // change actionbar title
+        // change actionbar title to date
         title_date = new StringBuilder();
         title_date.append(new DateFormatSymbols().getMonths()[chosen_month-1]);
         title_date.append(" " + chosen_day + ", " + chosen_year);
         setTitle(title_date);
 
-        Cursor data = prev_exercise_DB.getWKTListContents();
-
         // populate exercise_list with data from DB for chosen date
+        Cursor data = prev_exercise_DB.getWKTListContents();
         while(data.moveToNext()) {
             if (Integer.parseInt(data.getString(4))== (chosen_date)) {
                 exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));

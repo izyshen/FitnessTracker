@@ -19,7 +19,6 @@ import static android.R.attr.name;
 public class NewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     SQLiteDbHelper centralActivityDB;
-    //ActivityDatabase centralActivityDB;
     Button done;
     private Spinner muscle_spinner;
     CheckBox weight_box, set_box, rep_box, speed_box, time_box, rest_box;
