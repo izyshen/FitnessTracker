@@ -24,7 +24,6 @@ public class WorkoutActivity extends AppCompatActivity {
 
     int date;
     Button add_btn, done;
-    //DailyExercises myDB;
     SQLiteDbHelper workoutDB;
     ArrayList<Exercise> exercise_list;
     ListView listview;

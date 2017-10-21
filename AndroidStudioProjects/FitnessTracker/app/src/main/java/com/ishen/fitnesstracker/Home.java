@@ -34,7 +34,6 @@ public class Home extends AppCompatActivity {
                     Intent workoutIntent = new Intent(Home.this, StartWorkout.class);
                     startActivity(workoutIntent);
                 }
-                //TODO: if no workout activities for the day, do this
                 else {
                     Intent existing_workoutIntent = new Intent(Home.this, WorkoutActivity.class);
                     startActivity(existing_workoutIntent);
