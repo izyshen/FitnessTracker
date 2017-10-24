@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = "EditActivity";
@@ -25,6 +27,7 @@ public class EditActivity extends AppCompatActivity {
             chosen_date;
     Button save;
     int chosen_id;
+    ArrayList<ExerciseProperties> properties;
 
     // Units for spinners
     String[] weight_units = {"lbs", "kg"};
@@ -217,7 +220,7 @@ public class EditActivity extends AppCompatActivity {
                 new_rest_str.append(rest.getText().toString());
 
                 // Check empty
-                // updates the item at id with new values
+                // updates the item at chosen_id with new values
                 historyDB.updateHistory(ex_weight_val, new_weight_str.toString(),
                         ex_set_val, new_set_str.toString(), ex_rep_val, new_rep_str.toString(),
                         ex_time_val, new_time_str.toString(), ex_speed_val, new_speed_str.toString(),
@@ -226,6 +229,72 @@ public class EditActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: passing name: " + ex_name);
                 Log.d(TAG, "onClick: passing date: " + Integer.parseInt(chosen_date));
                 Log.d(TAG, "onClick: passing id: " + chosen_id);
+
+                // Obtain display id and update display table
+
+                int exercise_display_id = -1;
+                Cursor display_data = historyDB.getDisplayID(ex_name, chosen_date);
+                while (display_data.moveToNext()) {
+                    exercise_display_id = display_data.getInt(0);
+                }
+                if (exercise_display_id > -1) {
+                    Toast.makeText(EditActivity.this, "itemID retrieved: " + exercise_display_id,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EditActivity.this, "No ID assoc. with name and date",
+                            Toast.LENGTH_SHORT).show();
+                }
+                // obtain contents of box1 and box2
+                EditText properties[] = {weight, set, rep, time, speed, rest};
+                int len_properties = properties.length;
+                StringBuilder box1 = new StringBuilder();
+                StringBuilder box2 = new StringBuilder();
+                int box1_pos = 0;
+
+                // sets box1 value
+                for (int i=0; i<len_properties; i++) {
+                    if (properties[i].getText().toString().length() > 0) {
+                        box1_pos = i;
+                        box1.append(properties[i].getText().toString());
+                        if (properties[i] == weight) {
+                            box1.append(chosen_weight_unit);
+                        } else if (properties[i] == time) {
+                            box1.append(chosen_time_unit);
+                        } else if (properties[i] == speed) {
+                            box1.append(chosen_speed_unit);
+                        } else if (properties[i] == set) {
+                            if (rep.getText().toString().length() > 0) {
+                                box1.append(" x ");
+                                box1.append(rep.getText().toString());
+                            }
+                            box1_pos++;
+                        }
+                        break;
+                    }
+                    box1_pos++;
+                }
+                // sets box2 value
+                for (int j=box1_pos+1; j<len_properties; j++) {
+                    if(properties[j].getText().toString().length() > 0) {
+                        box2.append(properties[j].getText().toString());
+                        if (properties[j] == speed) {
+                            box2.append(chosen_speed_unit);
+                        } else if (properties[j] == time) {
+                            box2.append(chosen_time_unit);
+                        } else if (properties[j] == set) {
+                            if (rep.getText().toString().length()>0) {
+                                box2.append(" x ");
+                                box2.append(rep.getText().toString());
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                Log.d(TAG, "onClick: updated box1 val : " + box1);
+                Log.d(TAG, "onClick: updated box2 val: " + box2);
+
+                historyDB.updateDisplay(exercise_display_id, chosen_date, box1.toString(), box2.toString());
 
                 Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
                 reviewIntent.putExtra("name", ex_name);

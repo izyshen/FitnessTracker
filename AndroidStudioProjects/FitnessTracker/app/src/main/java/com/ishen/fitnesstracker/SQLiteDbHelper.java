@@ -250,4 +250,25 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    public Cursor getDisplayID(String name, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + wkt_id + " FROM " + TABLE_DISPLAY + " WHERE " + wkt_name + " = '"
+                + name + "' AND " + wkt_date + " = '" + date + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+
+    }
+
+    public void updateDisplay(int disp_id, String date, String box1, String box2) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "UPDATE " + TABLE_DISPLAY + " SET " + wkt_box1 + " = '" + box1 + "', " +
+                wkt_box2 + " = '" + box2 + "'" + " WHERE " + wkt_id + " = '" + disp_id + "' AND " +
+                wkt_date + " = '" + date + "'";
+
+        Log.d(TAG, "updateDisplay: display query: " + query);
+
+        db.execSQL(query);
+    }
 }

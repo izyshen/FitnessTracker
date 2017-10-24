@@ -133,8 +133,10 @@ public class AddActivity extends AppCompatActivity {
                         } else if (properties[i] == speedview) {
                             exercise_b1.append(chosen_speed_unit);
                         } else if (properties[i] == setview) {      // gives sets x reps in workout_activity
-                            exercise_b1.append(" x ");
-                            exercise_b1.append(repview.getText().toString());
+                            if (repview.getText().toString().length() > 0) {
+                                exercise_b1.append(" x ");
+                                exercise_b1.append(repview.getText().toString());
+                            }
                             box1_pos++;
                         }
                         box1_pos += i;
