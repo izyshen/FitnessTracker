@@ -59,4 +59,13 @@
         <item name="android:textSize">20dp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
+
+    <!-- Calendar weekdays-->
+    <style name="WeekdaysText">
+        <item name="layout_width">0dp</item>
+        <item name="layout_height">wrap_content</item>
+        <item name="layout_weight">1</item>
+        <item name="gravity">center_horizontal</item>
+        <item name="textColor">#222222</item>
+    </style>
 </resources>

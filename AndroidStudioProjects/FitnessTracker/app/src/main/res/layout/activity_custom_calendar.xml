@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ishen.fitnesstracker.CustomCalendar">
+
+    <!-- month/header-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <!--Previous month button-->
+        <ImageView
+            android:id="@+id/prev_month_bt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/prev_icon" />
+
+        <!-- Curent month -->
+        <TextView
+            android:id="@+id/calendar_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/prev_month_bt"
+            android:layout_toLeftOf="@id/next_month_bt"
+            android:gravity="center"
+            android:textColor="#222222"
+            android:text="Current date" />
+
+        <!--Next month button-->
+        <ImageView
+            android:id="@+id/next_month_bt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/next_icon" />
+
+    </RelativeLayout>
+
+    <!-- Weekdays -->
+    <LinearLayout
+        android:id="@+id/calendar_weekdays"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="SUN"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="MON"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="TUES"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="WED"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="THURS"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="FRI"/>
+        <TextView
+            style="@style/WeekdaysText"
+            android:text="SAT"/>
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/calendar_days"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        android:numColumns="7"/>
+    
+</LinearLayout>
