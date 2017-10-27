@@ -3,7 +3,6 @@ package com.ishen.fitnesstracker;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ public class CalendarView extends LinearLayout {
     private TextView date;
     private GridView grid;
 
-    public CaldendarView(Context context) {
+    public CalendarView(Context context) {
         super(context);
         initControl(context);
     }
@@ -55,9 +54,10 @@ public class CalendarView extends LinearLayout {
         next_bt = (ImageView) findViewById(R.id.next_month_bt);
         date = (TextView) findViewById(R.id.calendar_month);
         grid = (GridView) findViewById(R.id.calendar_days);
+
     }
 
-    private void updateCalendar() {
+    private void updateCalendar(HashSet<Calendar> events) {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar)current_date.clone();
 
@@ -74,7 +74,7 @@ public class CalendarView extends LinearLayout {
         }
 
         // update grid
-        ((calendar_adapter)grid.getAdapter()).update_data(cells);
+        grid.setAdapter(new calendar_adapter(getContext(), cells, events));
 
         // update title
         SimpleDateFormat date_format = new SimpleDateFormat("MMM, YYYY");
@@ -83,10 +83,14 @@ public class CalendarView extends LinearLayout {
 
     private class calendar_adapter extends ArrayAdapter<Date> {
 
-        private HashSet<Date> event_days;
+        //private HashSet<Date> event_days;
+        private HashSet<Calendar> event_days = new HashSet<>();
+
+
+
         private LayoutInflater inflater;
 
-        public calendar_adapter(Context context, ArrayList<Date> days, HashSet<Date> event_days) {
+        public calendar_adapter(Context context, ArrayList<Date> days, HashSet<Calendar> event_days) {
             super(context, R.layout.activity_custom_calendar, days);
             this.event_days = event_days;
             inflater = LayoutInflater.from(context);
@@ -110,10 +114,10 @@ public class CalendarView extends LinearLayout {
 
             view.setBackgroundResource(0);
             if (event_days != null) {
-                for (Date event_date : event_days) {
-                    if (event_date.getDate() == day &&
-                            event_date.getMonth() == month &&
-                            event_date.getYear() == year) {
+                for (Calendar event_date : event_days) {
+                    if (event_date.DAY_OF_MONTH == day &&
+                            event_date.MONTH == month &&
+                            event_date.YEAR == year) {
                         view.setBackgroundResource(R.drawable.dot);
                         break;
                     }
@@ -122,19 +126,19 @@ public class CalendarView extends LinearLayout {
             }
 
             // clear styling
-            view.setTypeface(null, Typeface.NORMAL);
-            view.setTextColor(Color.BLACK);
+            ((TextView)view).setTypeface(null, Typeface.NORMAL);
+            ((TextView)view).setTextColor(Color.BLACK);
 
-            if (month != today.get(Calendar.MONTH) ||
-                    year != today.get(Calendar.YEAR)) {
-                view.setTextColor(Color.LTGRAY);
-            } else if (day == today.getDate()) {
-                view.setTypeface(null, Typeface.BOLD);
-                view.setTextColor(colorPrimaryDark);
+            if (month != today.MONTH ||
+                    year != today.YEAR) {
+                ((TextView)view).setTextColor(Color.LTGRAY);
+            } else if (day == today.DAY_OF_MONTH) {
+                ((TextView)view).setTypeface(null, Typeface.BOLD);
+                ((TextView)view).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
 
             // set date
-            view.setText(String.valueOf(date.getDate()));
+            ((TextView)view).setText(String.valueOf(chosen_cal_date.DAY_OF_MONTH));
 
             return view;
         }

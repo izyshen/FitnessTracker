@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
-    Button bt_workout, bt_history, bt_button, bt_settings;
+    Button bt_today, bt_history, bt_workoutplan, bt_settings;
     SQLiteDbHelper workoutDB;
 
     @Override
@@ -19,14 +19,14 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        bt_workout = (Button) findViewById(R.id.button);
+        bt_today = (Button) findViewById(R.id.button);
         bt_history = (Button) findViewById(R.id.button2);
-        bt_button = (Button) findViewById(R.id.button3);
+        bt_workoutplan = (Button) findViewById(R.id.button3);
         bt_settings = (Button) findViewById(R.id.button4);
         workoutDB = new SQLiteDbHelper(this);
 
         // takes user to workout activity
-        bt_workout.setOnClickListener(new View.OnClickListener() {
+        bt_today.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
                 Cursor cursor = workoutDB.getWKTListContents();
@@ -47,6 +47,14 @@ public class Home extends AppCompatActivity {
             public void onClick(View V) {
                 Intent historyIntent = new Intent(Home.this, HistoryCalendarView.class);
                 startActivity(historyIntent);
+            }
+        });
+
+        bt_workoutplan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent workoutIntent = new Intent(Home.this, AltCalendarView.class);
+                startActivity(workoutIntent);
             }
         });
     }

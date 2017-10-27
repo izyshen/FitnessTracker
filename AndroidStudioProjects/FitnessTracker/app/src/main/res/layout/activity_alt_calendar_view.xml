@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/calendar_dim_margin"
     android:paddingRight="@dimen/calendar_dim_margin"
-    android:paddingBottom="@dimen/calendar_dim_margin"
     android:paddingTop="@dimen/calendar_dim_margin"
-    tools:context=".CalendarMain">
+    android:paddingBottom="@dimen/calendar_dim_margin"
+    tools:context="com.ishen.fitnesstracker.AltCalendarView">
 
     <com.ishen.fitnesstracker.CalendarView
-        xmlns:calendarNS="http://schemas.android.com/apk/res/com.ishen.fitnesstracker"
-        android:id="@+id/calendar_view"
+        xmlns:calendarNS="http://schemas.android.com/apk/res/android"
+        android:id="@+/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMM YYYY"/>
+        calendarNS:dateFormat="MMM yyyy"/>
 
 
-</LinearLayout>
+</Linear>
