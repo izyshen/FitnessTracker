@@ -24,7 +24,7 @@ public class EditActivity extends AppCompatActivity {
     SQLiteDbHelper historyDB;
     String chosen_weight_unit, chosen_speed_unit, chosen_time_unit,
             ex_name, ex_weight_val, ex_set_val, ex_rep_val, ex_time_val, ex_speed_val, ex_rest_val,
-            chosen_date;
+            chosen_date, date_str;
     Button save;
     int chosen_id;
     ArrayList<ExerciseProperties> properties;
@@ -52,6 +52,7 @@ public class EditActivity extends AppCompatActivity {
         chosen_speed_unit = prev_intent.getStringExtra("speed_unit");
         ex_rest_val = prev_intent.getStringExtra("ex_rest");
         chosen_date = prev_intent.getStringExtra("chosen_date");
+        date_str = prev_intent.getStringExtra("date_str");
         chosen_id = prev_intent.getIntExtra("id", -1);
         setTitle(ex_name);
 
@@ -207,15 +208,18 @@ public class EditActivity extends AppCompatActivity {
 
                 // new strings are either empty or contain values with selected units
                 if (weight.getText().toString().length() > 0) {
-                    new_weight_str.append(weight.getText().toString() + chosen_weight_unit);
+                    new_weight_str.append(weight.getText().toString());
+                    new_weight_str.append(chosen_weight_unit);
                 }
                 new_set_str.append(set.getText().toString());
                 new_rep_str.append(rep.getText().toString());
                 if (time.getText().toString().length() > 0) {
-                    new_time_str.append(time.getText().toString() + chosen_time_unit);
+                    new_time_str.append(time.getText().toString());
+                    new_time_str.append(chosen_time_unit);
                 }
                 if (speed.getText().toString().length() > 0) {
-                    new_speed_str.append(speed.getText().toString() + chosen_speed_unit);
+                    new_speed_str.append(speed.getText().toString());
+                    new_speed_str.append(chosen_speed_unit);
                 }
                 new_rest_str.append(rest.getText().toString());
 
@@ -228,12 +232,13 @@ public class EditActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onClick: passing name: " + ex_name);
                 Log.d(TAG, "onClick: passing date: " + Integer.parseInt(chosen_date));
+                Log.d(TAG, "onClick: passing sdf: " + date_str);
                 Log.d(TAG, "onClick: passing id: " + chosen_id);
 
                 // Obtain display id and update display table
 
                 int exercise_display_id = -1;
-                Cursor display_data = historyDB.getDisplayID(ex_name, chosen_date);
+                Cursor display_data = historyDB.getDisplayID(ex_name, chosen_date, date_str);
                 while (display_data.moveToNext()) {
                     exercise_display_id = display_data.getInt(0);
                 }
@@ -294,11 +299,12 @@ public class EditActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: updated box1 val : " + box1);
                 Log.d(TAG, "onClick: updated box2 val: " + box2);
 
-                historyDB.updateDisplay(exercise_display_id, chosen_date, box1.toString(), box2.toString());
+                historyDB.updateDisplay(exercise_display_id, chosen_date, date_str, box1.toString(), box2.toString());
 
                 Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
                 reviewIntent.putExtra("name", ex_name);
                 reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
+                reviewIntent.putExtra("date_str", date_str);
                 reviewIntent.putExtra("id", chosen_id);
                 startActivity(reviewIntent);
             }
@@ -310,6 +316,7 @@ public class EditActivity extends AppCompatActivity {
         Intent reviewIntent = new Intent(EditActivity.this, ReviewActivity.class);
         reviewIntent.putExtra("name", ex_name);
         reviewIntent.putExtra("date", Integer.parseInt(chosen_date));
+        reviewIntent.putExtra("date_str", date_str);
         reviewIntent.putExtra("id", chosen_id);
         startActivity(reviewIntent);
     }

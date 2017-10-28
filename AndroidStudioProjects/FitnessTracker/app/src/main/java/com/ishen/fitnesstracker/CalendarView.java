@@ -102,7 +102,7 @@ public class CalendarView extends LinearLayout {
             Calendar chosen_cal_date = Calendar.getInstance();
             Date chosen_date = chosen_cal_date.getTime();
             int day = chosen_cal_date.get(Calendar.DAY_OF_MONTH);
-            int month = chosen_cal_date.get(Calendar.MONTH);
+            int month = chosen_cal_date.get(Calendar.MONTH+1);
             int year = chosen_cal_date.get(Calendar.YEAR);
 
             Calendar today = Calendar.getInstance();
@@ -116,7 +116,7 @@ public class CalendarView extends LinearLayout {
             if (event_days != null) {
                 for (Calendar event_date : event_days) {
                     if (event_date.DAY_OF_MONTH == day &&
-                            event_date.MONTH == month &&
+                            (event_date.MONTH+1) == month &&
                             event_date.YEAR == year) {
                         view.setBackgroundResource(R.drawable.dot);
                         break;
@@ -129,7 +129,7 @@ public class CalendarView extends LinearLayout {
             ((TextView)view).setTypeface(null, Typeface.NORMAL);
             ((TextView)view).setTextColor(Color.BLACK);
 
-            if (month != today.MONTH ||
+            if (month != (today.MONTH+1) ||
                     year != today.YEAR) {
                 ((TextView)view).setTextColor(Color.LTGRAY);
             } else if (day == today.DAY_OF_MONTH) {

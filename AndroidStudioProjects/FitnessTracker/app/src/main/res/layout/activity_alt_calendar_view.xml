@@ -15,10 +15,10 @@
 
     <com.ishen.fitnesstracker.CalendarView
         xmlns:calendarNS="http://schemas.android.com/apk/res/android"
-        android:id="@+/calendar_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMM yyyy"/>
+        calendarNS:layout_width="match_parent"
+        calendarNS:layout_height="wrap_content"
+        calendarNS:id="@+id/calendar_view"/>
+        <!--calendarNS:dateFormat="MMM yyyy"-->
 
 
-</Linear>
+</LinearLayout>

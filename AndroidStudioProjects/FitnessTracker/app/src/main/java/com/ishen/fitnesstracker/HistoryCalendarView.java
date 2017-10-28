@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CalendarView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HistoryCalendarView extends AppCompatActivity {
 
     private static final String TAG = "my_calendar_view";
 
     private CalendarView calendar;
+    private String date_str;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +36,11 @@ public class HistoryCalendarView extends AppCompatActivity {
                         day;
                 Log.d(TAG, "onSelectedDayChange: yyyymmdd " + date);
 
+                date_str = Integer.toString(year) + "-" + Integer.toString(month+1) + "-" + Integer.toString(day);
+
                 Intent chosen_date_intent = new Intent(HistoryCalendarView.this, HistoryDisplay.class);
                 chosen_date_intent.putExtra("chosen_date", Integer.toString(date));
+                chosen_date_intent.putExtra("date_str", date_str);
                 startActivity(chosen_date_intent);
             }
         });

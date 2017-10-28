@@ -2,6 +2,7 @@ package com.ishen.fitnesstracker;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.icu.text.SimpleDateFormat;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.ishen.fitnesstracker.R.id.add_activity;
 import static com.ishen.fitnesstracker.R.id.complete_workout;
@@ -23,6 +25,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private static final String TAG = "WorkoutActivity";
 
     int date;
+    String date_str;
     Button add_btn, done;
     SQLiteDbHelper workoutDB;
     ArrayList<Exercise> exercise_list;
@@ -44,6 +47,13 @@ public class WorkoutActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
         date = (year*10000) + (month*100) + day;
+
+        // stores date as a string in sdf
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        date_str = sdf.format(d.getTime());
+
+        Log.d(TAG, "onCreate: sdf time - " + date_str);
         Log.d(TAG, "onCreate: date value yyyy/mm/dd is " + date);
 
         // add brings you to add an existing activity
@@ -71,7 +81,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         } else {
             while(data.moveToNext()) {
-                if (Integer.parseInt(data.getString(4)) == date) {
+                if ((Integer.parseInt(data.getString(4)) == date)) {
                     exercise = new Exercise(data.getString(1), data.getString(2), data.getString(3));
                     exercise_list.add(exercise);
                 }
@@ -109,6 +119,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     reviewIntent.putExtra("id", itemID);
                     reviewIntent.putExtra("name", name);
                     reviewIntent.putExtra("date", date);
+                    reviewIntent.putExtra("date_str", date_str);
                     startActivity(reviewIntent);
                 } else {
                     Toast.makeText(WorkoutActivity.this, "No ID assoc. with name", Toast.LENGTH_LONG).show();

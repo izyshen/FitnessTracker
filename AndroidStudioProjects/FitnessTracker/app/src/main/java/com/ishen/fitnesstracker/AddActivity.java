@@ -2,6 +2,7 @@ package com.ishen.fitnesstracker;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -24,6 +26,7 @@ public class AddActivity extends AppCompatActivity {
     Button bt_add;
     String name;
     int date;
+    String date_str;
     EditText setview, weightview, repview, timeview, speedview, restview;
     Spinner weight_sp, time_sp, speed_sp, sp_type;
     ArrayList<ExerciseProperties> properties;
@@ -56,6 +59,14 @@ public class AddActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
         date = (year*10000) + (month*100) + day;
+
+        // stores date as a string in sdf
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        date_str = sdf.format(d.getTime());
+
+        Log.d(TAG, "onCreate: sdf time - " + date_str);
+        Log.d(TAG, "onCreate: calendar date:" + date + "in YYYYMMDD");
 
         // variable definitions
         bt_add = (Button) findViewById(R.id.button_add);
@@ -116,7 +127,7 @@ public class AddActivity extends AppCompatActivity {
 
                 // Stores info in historyDB
                 store_all(name, weight.toString(), set.toString(), rep.toString(), time.toString(),
-                        speed.toString(), "", Integer.toString(date));
+                        speed.toString(), "", Integer.toString(date), date_str);
 
                 // Stores info in workoutDB to be displayed in workout activity
                 StringBuilder exercise_b1 = new StringBuilder();
@@ -162,7 +173,8 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 if (chosen_exercise.length() != 0) {
-                    add_partial(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(), Integer.toString(date));
+                    add_partial(chosen_exercise, exercise_b1.toString(), exercise_b2.toString(),
+                            Integer.toString(date), date_str);
                     weightview.setText("");
                     setview.setText("");
                     timeview.setText("");
@@ -344,8 +356,9 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void store_all(String name, String weight, String set, String rep, String time, String speed, String rest, String date) {
-        boolean did_it_insert = historyDB.add_history(name, weight, set, rep, time, speed, rest, date);
+    public void store_all(String name, String weight, String set, String rep, String time,
+                          String speed, String rest, String date, String date_str) {
+        boolean did_it_insert = historyDB.add_history(name, weight, set, rep, time, speed, rest, date, date_str);
 
         if (did_it_insert == true) {
             Toast.makeText(AddActivity.this, "History Data inserted successfully.", Toast.LENGTH_LONG).show();
@@ -356,8 +369,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    public void add_partial(String name, String box1, String box2, String date) {
-        boolean insert_data = workoutDB.add_data(name, box1, box2, date);
+    public void add_partial(String name, String box1, String box2, String date, String date_str) {
+        boolean insert_data = workoutDB.add_data(name, box1, box2, date, date_str);
 
         if (insert_data == true) {
             Toast.makeText(AddActivity.this, "Data inserted successfully.", Toast.LENGTH_LONG).show();

@@ -16,7 +16,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     Button edit, delete;
     TextView name, weight, set, rep, time, speed, rest;
-    String chosen_name, chosen_date, weight_unit, time_unit, speed_unit;
+    String chosen_name, chosen_date, date_str, weight_unit, time_unit, speed_unit;
     SQLiteDbHelper historyDB;
     private int chosen_id;
 
@@ -39,6 +39,7 @@ public class ReviewActivity extends AppCompatActivity {
         Intent workoutIntent = getIntent();
         chosen_name = workoutIntent.getStringExtra("name");
         chosen_date = Integer.toString(workoutIntent.getIntExtra("date", -1));
+        date_str = workoutIntent.getStringExtra("date_str");
         chosen_id = workoutIntent.getIntExtra("id", -1);
 
         setTitle(chosen_name);
@@ -98,9 +99,6 @@ public class ReviewActivity extends AppCompatActivity {
                     break;
                 }
             }
-            Toast.makeText(ReviewActivity.this,
-                    "Activities done on " + chosen_date + " displayed",
-                    Toast.LENGTH_LONG).show();
         }
 
         // checks if there is a given weight for the corresponding exercise
@@ -148,6 +146,7 @@ public class ReviewActivity extends AppCompatActivity {
                 editIntent.putExtra("speed_unit", speed_unit);
                 editIntent.putExtra("ex_rest", stored_data.getString(7));
                 editIntent.putExtra("chosen_date", chosen_date);
+                editIntent.putExtra("date_str", date_str);
                 editIntent.putExtra("id", chosen_id);
                 startActivity(editIntent);
             }
@@ -158,6 +157,7 @@ public class ReviewActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent return_hist_display = new Intent(ReviewActivity.this, HistoryDisplay.class);
         return_hist_display.putExtra("chosen_date", chosen_date);
+        return_hist_display.putExtra("date_str", date_str);
         startActivity(return_hist_display);
     }
 }

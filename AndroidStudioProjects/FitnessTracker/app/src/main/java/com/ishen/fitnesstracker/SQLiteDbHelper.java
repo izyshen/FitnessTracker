@@ -41,6 +41,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String wkt_box1 = "BOX1";
     public static final String wkt_box2 = "BOX2";
     public static final String wkt_date = "DATE";
+    public static final String wkt_sdf = "DATE2";
 
     // history column names
     public static final String hist_id = "ID";
@@ -52,6 +53,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     public static final String hist_speed = "SPEED";
     public static final String hist_rest = "REST";
     public static final String hist_date = "DATE";
+    public static final String hist_sdf = "DATE2";
 
 
     public SQLiteDbHelper(Context context) {
@@ -68,14 +70,14 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     private static final String create_display_table = "CREATE TABLE " +
             TABLE_DISPLAY + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            " NAME TEXT," + " BOX1 TEXT," + " BOX2 TEXT," + " DATE TEXT);";
+            " NAME TEXT," + " BOX1 TEXT," + " BOX2 TEXT," + " DATE TEXT," + " DATE2 TEXT);";
 
     private static final String create_history_table = "CREATE TABLE " +
             TABLE_HISTORY +
             " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " NAME TEXT," + " WEIGHT TEXT," +
             " SETS TEXT," + " REPS TEXT," +
-            " TIME TEXT," + " SPEED TEXT," + " REST TEXT," + " DATE TEXT);";
+            " TIME TEXT," + " SPEED TEXT," + " REST TEXT," + " DATE TEXT," + " DATE2 TEXT);";
 
 
     // creating table
@@ -88,9 +90,9 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP IF TABLE EXISTS " + create_activity_table);
-        db.execSQL("DROP IF TABLE EXISTS " + create_display_table);
-        db.execSQL("DROP IF TABLE EXISTS " + create_history_table);
+        db.execSQL("DROP TABLE IF EXISTS create_activity_table");
+        db.execSQL("DROP TABLE IF EXISTS create_display_table");
+        db.execSQL("DROP TABLE IF EXISTS create_history_table");
         onCreate(db);
     }
 
@@ -132,13 +134,15 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
 
     // adding workout activities for the day in TABLE_DISPLAY
-    public boolean add_data(String name, String box1, String box2, String date) {
+    public boolean add_data(String name, String box1, String box2, String date, String date2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(wkt_name, name);
         content_values.put(wkt_box1, box1);
         content_values.put(wkt_box2, box2);
         content_values.put(wkt_date, date);
+        content_values.put(wkt_sdf, date2);
+
 
         long mid = 0;
 
@@ -174,7 +178,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     // storing values in TABLE_HISTORY
     public boolean add_history(String name, String weight, String sets, String reps,
-                                    String time, String speed, String rest, String date) {
+                                    String time, String speed, String rest, String date, String date2) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues entry_values = new ContentValues();
         entry_values.put(hist_name, name);
@@ -185,6 +189,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
         entry_values.put(hist_speed, speed);
         entry_values.put(hist_rest, rest);
         entry_values.put(hist_date, date);
+        entry_values.put(hist_sdf, date2);
 
         long mid = 0;
 
@@ -211,7 +216,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // returns an ID matching a date and name;
-    public Cursor getHistoryItemID(String name, String date) {
+    public Cursor getHistoryItemID(String name, String date, String date2) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + hist_id + " FROM " + TABLE_HISTORY + " WHERE " + hist_name
                 + " = '" + name + "'" + " AND " + hist_date + " = '" + date + "'";
@@ -250,7 +255,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public Cursor getDisplayID(String name, String date) {
+    public Cursor getDisplayID(String name, String date, String date2) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT " + wkt_id + " FROM " + TABLE_DISPLAY + " WHERE " + wkt_name + " = '"
                 + name + "' AND " + wkt_date + " = '" + date + "'";
@@ -259,7 +264,7 @@ public class SQLiteDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateDisplay(int disp_id, String date, String box1, String box2) {
+    public void updateDisplay(int disp_id, String date, String date2, String box1, String box2) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
